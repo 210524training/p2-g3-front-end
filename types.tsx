@@ -3,7 +3,9 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
+import { MediaHeader } from "./components/Media";
 import Restaurant from "./models/restaurant";
+import User from "./models/user";
 import { Cuisine } from "./screens/CuisineScreen";
 
 export type RootStackParamList = {
@@ -12,6 +14,20 @@ export type RootStackParamList = {
   ItemView: {
     restaurant: Restaurant;
   };
+  ChatRoom: {
+    name: string,
+    chatRoom: ChatRoom,
+  };
+  Contacts: {
+    user: User,
+  };
+  Camera: undefined;
+  FileView: {
+    type: MediaHeader,
+    width: number,
+    height: number,
+    uri: string,
+  },
 };
 
 export type BottomTabParamList = {
