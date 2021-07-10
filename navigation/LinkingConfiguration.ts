@@ -18,7 +18,7 @@ const config: LinkingOptions = {
               HomeScreen: 'home',
               // search for users
               UsersScreen: 'users',
-              RecommendedScreen: '',
+              RecommendedScreen: 'recommended',
               GeneralDiscussionsScreen: 'discussions',
               RecentChatsScreen: 'chats',
             },
@@ -33,16 +33,17 @@ const config: LinkingOptions = {
             screens: {
               ChatRoomScreen: 'chatroom',
               CameraScreen: 'camera',
-              EditChatRoomScreen: 'editchatroom',
+              EditChatRoomScreen: 'edit-chatroom',
               ViewMediaScreen: 'viewmedia',
-              UploadMediaScreen: 'uploadmedia',
+              UploadMediaScreen: 'upload-media',
             },
           },
           Profile: {
             screens: {
               LoginScreen: 'login',
               RegisterScreen: 'register',
-              ProfileScreen: 'profile',
+              ProfileScreen: 'u',
+              EditProfileScreen: 'edit-profile',
               HelpScreen: 'help',
               FriendsScreen: 'friends',
             },
