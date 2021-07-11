@@ -3,12 +3,10 @@
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ChatScreen from '../screens/ChatsScreen';
 import { BottomTabParamList } from '../types';
 import Media from '../components/Media';
 import t from '../Localization';
