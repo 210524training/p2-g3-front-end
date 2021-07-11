@@ -45,13 +45,13 @@ export default function BottomTabNavigator(): JSX.Element {
         }}
         
       /> */}
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Chats"
         component={ChatScreenNavigator}
         options={{
           title: t('chats')
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Status"
         component={Media}
@@ -59,44 +59,44 @@ export default function BottomTabNavigator(): JSX.Element {
           title: t('status')
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Calls"
         component={TabTwoNavigator}
         options={{
           title: t('calls')
         }}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+// const TabOneStack = createStackNavigator<TabOneParamList>();
 
-function ChatScreenNavigator() {
-  return (
-    <TabOneStack.Navigator headerMode={'none'}>
-      <TabOneStack.Screen
-        name="ChatScreen"
-        component={ChatScreen}
+// function ChatScreenNavigator() {
+//   return (
+//     <TabOneStack.Navigator headerMode={'none'}>
+//       <TabOneStack.Screen
+//         name="ChatScreen"
+//         component={ChatScreen}
         
-        options={{ headerTitle: 'Tab One Title',  }}
-      />
-    </TabOneStack.Navigator>
-  );
-}
+//         options={{ headerTitle: 'Tab One Title',  }}
+//       />
+//     </TabOneStack.Navigator>
+//   );
+// }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+// const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator headerMode={'none'}>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
-      />
-    </TabTwoStack.Navigator>
-  );
-}
+// function TabTwoNavigator() {
+//   return (
+//     <TabTwoStack.Navigator headerMode={'none'}>
+//       <TabTwoStack.Screen
+//         name="TabTwoScreen"
+//         component={TabTwoScreen}
+//         options={{ headerTitle: 'Tab Two Title' }}
+//       />
+//     </TabTwoStack.Navigator>
+//   );
+// }

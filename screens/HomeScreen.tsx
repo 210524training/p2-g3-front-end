@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Image, ScrollView, TextInput, Button, Dimensions } from 'react-native';
+import { StyleSheet, Image, ScrollView, TextInput } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { ImageSourcePropType } from 'react-native';
@@ -8,7 +8,7 @@ import { selectUser, UserState } from '../hooks/slices/user.slice';
 
 import { storefront, scooter, iphone } from '../assets';
 
-const HomeScreen: React.FC<unknown> = (props) => {
+const HomeScreen: React.FC<unknown> = () => {
   const [address, setAddress] = useState('');
   const user = useAppSelector<UserState>(selectUser);
   return (
@@ -78,11 +78,6 @@ const styles = StyleSheet.create({
     margin: 10,
     paddingLeft: 10,
     width: '100%',
-  },
-  separator: {
-    height: 1,
-    marginVertical: 30,
-    width: '80%',
   },
   subtitle: {
     color: 'black',

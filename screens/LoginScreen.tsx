@@ -6,8 +6,7 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
 import { useNavigation } from '@react-navigation/native';
 
-type Props = {};
-const LoginScreen: React.FC<Props> = () => {
+const LoginScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -68,7 +67,7 @@ const LoginScreen: React.FC<Props> = () => {
                 nav.navigate('RegisterScreen');
               }}
             >
-              Don't have an account?
+              Don&apos;t have an account?
             </Text>
           </View>
         </>

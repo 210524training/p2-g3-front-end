@@ -1,6 +1,3 @@
-declare module '*.png';
-declare module '*.jpg';
-declare module 'react-native-pixel-perfect';
 import InterestInterface from './interests'
 
 export type SecurityQuestion = {

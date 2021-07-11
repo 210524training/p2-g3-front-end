@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import { User } from '../types';
-import NewMessage from '../components/NewMessage';
 import ContactListItem from '../components/ContactListItem';
 import { getFriends } from '../remote/api/fetch.users';
+import { User } from '../@types';
 
 export type ContactsScreenProps = {
 
 };
 
-const ContactsScreen: React.FC<ContactsScreenProps> = ({ }): JSX.Element => {
+const ContactsScreen: React.FC<ContactsScreenProps> = (): JSX.Element => {
+
   const [users, setUsers] = useState<User[]>([]);
   const user: {id: string} = {id: 'u1'};
   useEffect(() => {

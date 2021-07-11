@@ -31,7 +31,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
       const msg: Message = {
         id: uuid(),
         createdAt: new Date().toISOString(),
-        user: room.users[1],
+        user: room.users[1].user,
         content: e.data as string,
       };
       messages.push(msg);

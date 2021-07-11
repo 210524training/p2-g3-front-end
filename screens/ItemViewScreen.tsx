@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, View } from '../components/Themed';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { StyleSheet, Image, ScrollView, TextInput, Button, Dimensions } from 'react-native';
+import { StyleSheet, ScrollView, Button } from 'react-native';
 import { RootStackParamList } from '../types';
 
 type ItemViewScreenRouteProp = RouteProp<
@@ -47,12 +47,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   navBar: {
-    paddingTop: 50,
-    // height: 60,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'red',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 50,
   },
   rightContainer: {
     alignItems: 'center',

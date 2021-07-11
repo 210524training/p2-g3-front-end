@@ -23,29 +23,31 @@ const RegisterScreen: React.FC<unknown> = (props) => {
   };
 
   const handleRegister = async () => {
-    const users = await getAllUsers();
-    let exists = false;
+    // TODO: implement backend
+    handleLogin();
+    // const users = await getAllUsers();
+    // let exists = false;
 
-    users.forEach(u => {
-      if (u.username === username) {
-        exists = true;
-      }
-    });
+    // users.forEach(u => {
+    //   if (u.username === username) {
+    //     exists = true;
+    //   }
+    // });
 
-    if (!exists) {
-      const { data: registered } = await grubdashClient.post<boolean>('/api/v1/users', {
-        username, password, address, phoneNumber
-      });
+    // if (!exists) {
+    //   const { data: registered } = await grubdashClient.post<boolean>('/api/v1/users', {
+    //     username, password, address, phoneNumber
+    //   });
 
-      if (registered) {
-        handleLogin();
-        return;
-      } 
-    } else {
-      Alert.alert('Username is already taken.');
-      return;
-    }
-    Alert.alert('Failed to register.');
+    //   if (registered) {
+    //     handleLogin();
+    //     return;
+    //   } 
+    // } else {
+    //   Alert.alert('Username is already taken.');
+    //   return;
+    // }
+    // Alert.alert('Failed to register.');
   };
   return (
     <View style={styles.container}>
