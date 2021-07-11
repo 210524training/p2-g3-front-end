@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Image, ScrollView, Pressable } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { v4 as uuid } from 'uuid';
 
 import Restaurant from '../models/restaurant';
 import { Text, View } from '../components/Themed';
@@ -81,8 +80,9 @@ const RestaurantsScreen: React.FC<Props> = ({ route }) => {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.itemContainer}>
         {
-          list.map((restaurant) => (
-            <Pressable onPress={() => handlePress(restaurant)} key={uuid()}>
+          // TODO: don't use index location for key prop
+          list.map((restaurant, idx) => (
+            <Pressable onPress={() => handlePress(restaurant)} key={restaurant.name+restaurant.cuisine+idx}>
               <View style={styles.item}>
                 <Image
                   style={styles.tinyLogo}
