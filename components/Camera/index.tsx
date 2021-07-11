@@ -13,9 +13,9 @@ export type CameraProps = {
 
 const CameraView: React.FC<CameraProps> = (): JSX.Element => {
   const [hasPermission, setHasPermission] = useState<MediaLibrary.PermissionStatus>();
-  // const [hasMicPermission, setHasMicPermission] = useState<MediaLibrary.PermissionStatus>();
+  const [hasMicPermission, setHasMicPermission] = useState<MediaLibrary.PermissionStatus>();
   const [grantedCameraAccess, setGrantedCameraAccess] = useState<boolean>(false);
-  // const [grantedMicAccess, setGrantedMicAccess] = useState<boolean>(false);
+  const [grantedMicAccess, setGrantedMicAccess] = useState<boolean>(false);
   const [cameraReady, setCameraReady] = useState<boolean>(false);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
@@ -28,13 +28,12 @@ const CameraView: React.FC<CameraProps> = (): JSX.Element => {
   useEffect(() => {
     (async () => {
       const cam = await Camera.requestPermissionsAsync();
-      // const m = await Camera.requi
-      // const mic = await Camera.requestMicrophonePermissionsAsync();
+      const mic = await Camera.requestMicrophonePermissionsAsync();
 
       setHasPermission(cam.status);
-      // setHasMicPermission(mic.status);
+      setHasMicPermission(mic.status);
       setGrantedCameraAccess(cam.status === 'granted');
-      // setGrantedMicAccess(mic.status === 'granted');
+      setGrantedMicAccess(mic.status === 'granted');
     })();
   }, []);
 

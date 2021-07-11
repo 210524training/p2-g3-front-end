@@ -1,9 +1,10 @@
 import { RouteProp } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { FlatList } from 'react-native';
+import { generate as shortid } from 'shortid';
+
 import ChatMessage from '../components/ChatMessage';
 import InputMessage from '../components/InputMessage';
-import { v4 as uuid } from 'uuid';
 import { RootStackParamList } from '../types';
 import { Message } from '../@types';
 
@@ -29,7 +30,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
     s.onmessage = (e) => {
       console.log('res', e);
       const msg: Message = {
-        id: uuid(),
+        id: shortid(),
         createdAt: new Date().toISOString(),
         user: room.users[1].user,
         content: e.data as string,
@@ -70,8 +71,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
         renderItem={({ item }) => (
           <ChatMessage message={item} />
         )}
-        keyExtractor={(item) => uuid()}
-        // inverted
+        keyExtractor={(item) => item.id}
       />
       <InputMessage
         socket={socket}

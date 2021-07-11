@@ -3,10 +3,9 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { ChatRoom } from './@types';
+import { ChatRoom, User } from './@types';
 import { MediaHeader } from './components/Media';
 import Restaurant from './models/restaurant';
-import User from './models/user';
 import { Cuisine } from './screens/CuisineScreen';
 
 export type RootStackParamList = {
@@ -32,6 +31,14 @@ export type RootStackParamList = {
   },
   UploadFile: undefined;
 
+};
+
+export type ChatsParamList = {
+  ChatScreen: undefined;
+};
+
+export type TabTwoParamList = {
+  TabTwoScreen: undefined;
 };
 
 export type BottomTabParamList = {

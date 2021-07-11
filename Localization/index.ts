@@ -13,12 +13,6 @@ i18n.translations = {
   es,
 };
 
-/**
- * 
- * @param key key value of the desired translation.
- * @returns returns the appropriate transaltion 
- * (from the provided bank) depending on the user's locale.
- */
 const t = (key: keyof Bank, options?: i18n.TranslateOptions): string => {
   return i18n.t(key, options);
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView, Pressable, ImageSourcePropType, Platform, TouchableNativeFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { v4 as uuid } from 'uuid';
 
 import GridItem from '../components/GridItem';
 import { burger, mexican, chinese, italian, sushi } from '../assets';
