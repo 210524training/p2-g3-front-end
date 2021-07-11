@@ -1,12 +1,11 @@
 import moment from 'moment';
 import React from 'react';
 import { Text, View } from 'react-native';
+import { Message } from '../../@types';
 import Colors from '../../constants/Colors';
 
 import useColorScheme from '../../hooks/useColorScheme';
-import { Message } from '../../types';
 import DDLText from '../DDLText';
-import Media, { MediaHeader } from '../Media';
 import createStyle from './style';
 
 export type ChatMessageProps = {
@@ -29,7 +28,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }): JSX.Element => {
       >
         {
           user.id !== message.user.id
-          && <Text style={style.name}>{message.user.name}</Text>
+          && <Text style={style.name}>{message.user.username}</Text>
         }<DDLText text={message.content} color={user.id !== message.user.id ? 'black' : Colors[colorScheme].background} />
         {/* {
           !isMedia
@@ -47,8 +46,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }): JSX.Element => {
   );
 };
 
-const isMedia = (message: string) => {
-  return message.startsWith('<img:') || message.startsWith('<video:')  || message.startsWith('<gif:');
-}
+// const isMedia = (message: string) => {
+//   return message.startsWith('<img:') || message.startsWith('<video:')  || message.startsWith('<gif:');
+// };
 
 export default ChatMessage;

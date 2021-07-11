@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React, { useRef, useState } from 'react';
 import { View, StyleSheet, Button } from 'react-native';
 import { Video, AVPlaybackStatus } from 'expo-av';
 
 const VideoPlayer: React.FC<{ uri: string }> = ({ uri }): JSX.Element => {
-  const video = React.useRef<Video>(null);
-  const [status, setStatus] = React.useState<AVPlaybackStatus | any>();
+  const video = useRef<Video>(null);
+  const [status, setStatus] = useState<AVPlaybackStatus | any>();
   return (
     <View 
       style={styles.container}
@@ -24,7 +24,7 @@ const VideoPlayer: React.FC<{ uri: string }> = ({ uri }): JSX.Element => {
           onPress={() => {
             if (video?.current) {
               console.log(status);
-              status?.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
+              status?.isPlaying ? video.current.pauseAsync() : video.current.playAsync();
             }
 
           }}
@@ -57,20 +57,20 @@ const VideoPlayer: React.FC<{ uri: string }> = ({ uri }): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
+  buttons: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
   container: {
+    backgroundColor: 'rgba(0,0,0,0)',
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0)',
   },
   video: {
     alignSelf: 'center',
-    width: 320,
     height: 200,
-  },
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 320,
   },
 });
 

@@ -1,13 +1,13 @@
 import React from 'react';
-import { Text, Image } from 'react-native';
+import { Text } from 'react-native';
 import Link from '../Link';
 
 // https://stackoverflow.com/a/3809435
 export const emailExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gi;
 export const emailRegex = new RegExp(emailExpression);
 
-export const isUrl = (text: string) => {
-  return text.match(emailRegex)
+export const isUrl = (text: string): RegExpMatchArray | null => {
+  return text.match(emailRegex);
 };
 
 export const injectStyling = (sentence: string, color?: string, linkColor?: string): JSX.Element[] => {

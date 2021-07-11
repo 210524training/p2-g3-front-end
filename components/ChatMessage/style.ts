@@ -5,35 +5,36 @@ const padding = 10;
 const borderRadius = 5;
 const margin = 50;
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
   container: {
-    padding: 10,
     backgroundColor: Colors[colorScheme].tabIconDefault,
+    padding: 10,
   },
   message: {
     backgroundColor: Colors[colorScheme].background,
-    marginRight: margin,
     borderRadius,
+    marginRight: margin,
     padding,
   },
-  outMessage: {
-    backgroundColor: Colors[colorScheme].tint,
-    marginLeft: margin,
-    borderRadius,
-    padding,
+  messageContent: {
+    
   },
   name: {
     color: Colors[colorScheme].tint,
     fontWeight: 'bold',
     marginBottom: 5,
   },
-  messageContent: {
-    
+  outMessage: {
+    backgroundColor: Colors[colorScheme].tint,
+    borderRadius,
+    marginLeft: margin,
+    padding,
   },
   timestamp: {
-    marginTop: 5,
     alignSelf: 'flex-end',
     fontStyle: 'italic',
+    marginTop: 5,
   },
 });
 

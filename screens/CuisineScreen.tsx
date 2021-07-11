@@ -32,8 +32,8 @@ const CuisineScreen: React.FC<Props> = (props) => {
       <Pressable onPress={() => handlePress(cuisine)}>
         <GridItem source={cuisine[0]} description={cuisine[1]} />
       </Pressable>
-      ));
-  }
+    ));
+  };
 
   const androidJSX = () => {
     return cuisines.map(cuisine => (
@@ -43,34 +43,34 @@ const CuisineScreen: React.FC<Props> = (props) => {
 
         <GridItem source={cuisine[0]} description={cuisine[1]} />
       </TouchableNativeFeedback>
-      ));
-  }
+    ));
+  };
 
   const handlePress = (cuisine: Cuisine) => {
     nav.navigate('RestaurantsScreen', {
       cuisine,
     });
-  }
+  };
 
   return (
-      <ScrollView style={styles.container}>
-        <View>
-          {
-            Platform.OS === 'android' ? 
+    <ScrollView style={styles.container}>
+      <View>
+        {
+          Platform.OS === 'android' ? 
             cuisineJSX() : cuisineJSX()
-          }
-        </View>
-      </ScrollView>
+        }
+      </View>
+    </ScrollView>
   );
 };
 
 const styles =  StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flex: 1,
-    height: "100%",
-    paddingHorizontal: 20,
+    height: '100%',
     marginTop: 10,
-    backgroundColor: "white",
+    paddingHorizontal: 20,
   }
 });
 

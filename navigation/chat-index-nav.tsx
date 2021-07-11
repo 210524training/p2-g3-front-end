@@ -18,14 +18,12 @@ import BottomTabNavigator from './MainNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import ChatRoomScreen from '../screens/ChatRoomScreen';
 import useColorScheme from '../hooks/useColorScheme';
-import Contacts from '../screens/ContactsScreen';
 import ContactsScreen from '../screens/ContactsScreen';
-import CameraView from '../components/Camera';
 import CameraScreen from '../screens/CameraScreen';
 import FileViewScreen from '../screens/FileViewScreen';
 import t from '../Localization';
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -33,7 +31,9 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
       <RootNavigator />
     </NavigationContainer>
   );
-}
+};
+
+export default Navigation;
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
@@ -77,7 +77,7 @@ function RootNavigator() {
                   color={Colors[colorScheme].background} 
                 />
               </View>
-            )
+            );
           },
         }}
       />

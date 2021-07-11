@@ -22,8 +22,8 @@ const ItemViewScreen: React.FC<Props> = ({route}) => {
         <View style={styles.leftContainer}>
           <Text style={[styles.text, { textAlign: 'left'} ]}>
             <Button 
-            title="Back"
-            onPress={() => nav.goBack()}
+              title="Back"
+              onPress={() => nav.goBack()}
             ></Button>
           </Text>
         </View>
@@ -36,10 +36,16 @@ const ItemViewScreen: React.FC<Props> = ({route}) => {
       </View>
     </ScrollView>
   );
-}
+};
 
 //https://stackoverflow.com/a/36010239
 const styles = StyleSheet.create({
+  leftContainer: {
+    backgroundColor: 'red',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
   navBar: {
     paddingTop: 50,
     // height: 60,
@@ -48,24 +54,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'red',
   },
-  leftContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    backgroundColor: 'red'
-  },
   rightContainer: {
+    alignItems: 'center',
+    backgroundColor: 'red',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: 'red',
   },
   rightIcon: {
-    height: 10,
-    width: 10,
-    resizeMode: 'contain',
     backgroundColor: 'red',
+    height: 10,
+    resizeMode: 'contain',
+    width: 10,
   },
   text: {
     color: 'white',

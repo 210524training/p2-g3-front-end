@@ -2,10 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as MediaLibrary from 'expo-media-library';
 import { Camera } from 'expo-camera';
-import { Pressable, View, Text, StyleSheet, StyleProp, ViewStyle, PressableStateCallbackType } from 'react-native';
+import { Pressable, View, StyleSheet, StyleProp, ViewStyle, PressableStateCallbackType } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import * as FileSystem from 'expo-file-system';
-import { v4 as uuid } from 'uuid';
 import { useNavigation } from '@react-navigation/native';
 import { MediaHeader } from '../Media';
 
@@ -13,11 +11,11 @@ export type CameraProps = {
 
 };
 
-const CameraView: React.FC<CameraProps> = ({ }): JSX.Element => {
+const CameraView: React.FC<CameraProps> = (): JSX.Element => {
   const [hasPermission, setHasPermission] = useState<MediaLibrary.PermissionStatus>();
-  const [hasMicPermission, setHasMicPermission] = useState<MediaLibrary.PermissionStatus>();
+  // const [hasMicPermission, setHasMicPermission] = useState<MediaLibrary.PermissionStatus>();
   const [grantedCameraAccess, setGrantedCameraAccess] = useState<boolean>(false);
-  const [grantedMicAccess, setGrantedMicAccess] = useState<boolean>(false);
+  // const [grantedMicAccess, setGrantedMicAccess] = useState<boolean>(false);
   const [cameraReady, setCameraReady] = useState<boolean>(false);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
@@ -30,24 +28,22 @@ const CameraView: React.FC<CameraProps> = ({ }): JSX.Element => {
   useEffect(() => {
     (async () => {
       const cam = await Camera.requestPermissionsAsync();
-      const mic = await Camera.requestMicrophonePermissionsAsync();
+      // const m = await Camera.requi
+      // const mic = await Camera.requestMicrophonePermissionsAsync();
 
       setHasPermission(cam.status);
-      setHasMicPermission(mic.status);
-      setGrantedCameraAccess(cam.status === 'granted')
-      setGrantedMicAccess(mic.status === 'granted')
+      // setHasMicPermission(mic.status);
+      setGrantedCameraAccess(cam.status === 'granted');
+      // setGrantedMicAccess(mic.status === 'granted');
     })();
   }, []);
 
   const btn: StyleProp<ViewStyle> | ((state: PressableStateCallbackType) => StyleProp<ViewStyle>) = ({
     pressed
   }) => [
-      {
-        opacity: pressed ? 0.5 : 1,
-        // transform: [{ rotate: pressed ? '90deg' : '0deg'}]
-      },
-      styles.button
-    ];
+    { opacity: pressed ? 0.5 : 1 },
+    styles.button
+  ];
 
   const handleTakePicture = () => {
     (async () => {
@@ -124,7 +120,7 @@ const CameraView: React.FC<CameraProps> = ({ }): JSX.Element => {
             onPress={() => {
               if (!recording) {
                 if (pictureMode) {
-                  handleTakePicture()
+                  handleTakePicture();
                 } else {
                   handleVideoRecording();
                 }
@@ -161,25 +157,25 @@ const CameraView: React.FC<CameraProps> = ({ }): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  button: {
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // justifyContent: 'space-evenly',
   },
   buttonContainer: {
+    alignItems: 'flex-end',
+    bottom: 10,
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-end',
     justifyContent: 'space-evenly',
-    bottom: 10,
     width: '100%',
     // height: 100,
   },
   camera: {
     flex: 1,
   },
-  button: {
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'space-evenly',
+  container: {
+    flex: 1,
   },
   icon: {
     color: 'white',

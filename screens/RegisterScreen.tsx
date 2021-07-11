@@ -5,9 +5,7 @@ import { Text, View } from '../components/Themed';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
 import { Alert } from 'react-native';
-import grubdashClient from '../remote/grubdash-backend/grubdash.client';
 import { useNavigation } from '@react-navigation/native';
-import { getAllUsers } from '../remote/grubdash-backend/grubdash.api';
 
 const RegisterScreen: React.FC<unknown> = (props) => {
   const user = useAppSelector<UserState>(selectUser);
@@ -22,7 +20,7 @@ const RegisterScreen: React.FC<unknown> = (props) => {
   const handleLogin = async () => {
     await dispatch(loginAsync({ username, password }));
     nav.navigate('Home');
-  }
+  };
 
   const handleRegister = async () => {
     const users = await getAllUsers();
@@ -48,7 +46,7 @@ const RegisterScreen: React.FC<unknown> = (props) => {
       return;
     }
     Alert.alert('Failed to register.');
-  }
+  };
   return (
     <View style={styles.container}>
       {user ? (
@@ -117,22 +115,22 @@ const RegisterScreen: React.FC<unknown> = (props) => {
       }
     </View >
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
+  },
+  separator: {
+    height: 1,
+    marginVertical: 30,
+    width: '80%',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });
 

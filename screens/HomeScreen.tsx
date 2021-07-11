@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import { StyleSheet, Image, ScrollView, TextInput, Button, Dimensions } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import iphone from '../assets/images/iphone.png';
-import scooter from '../assets/images/scooter.png';
-import storefront from '../assets/images/storefront.png';
 import { ImageSourcePropType } from 'react-native';
 import { useAppSelector } from '../hooks';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
-import { create, PREDEF_RES } from 'react-native-pixel-perfect';
 
-const dims = Dimensions.get('window');
+import { storefront, scooter, iphone } from '../assets';
 
 const HomeScreen: React.FC<unknown> = (props) => {
   const [address, setAddress] = useState('');
@@ -37,11 +33,11 @@ const HomeScreen: React.FC<unknown> = (props) => {
 
     </ScrollView>
   );
-}
+};
 
 const icon = (img: ImageSourcePropType, txt: string) => {
   return (
-    <View style={{ paddingTop: 20, paddingBottom: 20 }}>
+    <View style={styles.imgContainer}>
       <Image
         source={img}
         style={styles.img}
@@ -49,58 +45,57 @@ const icon = (img: ImageSourcePropType, txt: string) => {
       <Text style={styles.imgText}>{txt}</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    // height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
   },
   head: {
     backgroundColor: 'red',
-    width: '100%',
     padding: '5%',
     textAlign: 'center',
-  },
-  title: {
-    paddingTop: 50,
-    textAlign: 'center',
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  subtitle: {
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  search: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    backgroundColor: 'white',
     width: '100%',
-    color: 'black',
-    borderRadius: 20,
-    margin: 10,
-    paddingLeft: 10,
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
   img: {
-    width: 100,
     height: 100,
+    width: 100,
+  },
+  imgContainer: {
+    paddingBottom: 20, paddingTop: 20
   },
   imgText: {
     textAlign: 'center',
   },
-  button: {
-    color: '#f194ff',
+  search: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+    margin: 10,
+    paddingLeft: 10,
+    width: '100%',
+  },
+  separator: {
+    height: 1,
+    marginVertical: 30,
+    width: '80%',
+  },
+  subtitle: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  title: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+    paddingTop: 50,
+    textAlign: 'center',
   },
 });
 

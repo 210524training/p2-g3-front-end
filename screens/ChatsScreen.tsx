@@ -12,7 +12,7 @@ export default function TabOneScreen() {
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
 
   useEffect(() => {
-    getChatRooms().then(setChatRooms).catch(console.error)
+    getChatRooms().then(setChatRooms).catch(console.error);
   }, [chatRooms]);
 
   return (
@@ -39,8 +39,8 @@ export default function TabOneScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
   },
 });

@@ -1,41 +1,42 @@
 import { StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 
-const styles = (colorScheme: "light" | "dark" = 'light') => StyleSheet.create({
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const styles = (colorScheme: 'light' | 'dark' = 'light') => StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
     padding: 10,
+    width: '100%',
+  },
+  containerMetadata: {
+    justifyContent: 'space-around',
+  },
+  image: {
+    borderRadius: 50,
+    height: 60,
+    marginRight: 15,
+    width: 60,
   },
   leftSide: {
     flex: 1,
     flexDirection: 'row',
     // width: 50,
   },
-  containerMetadata: {
-    justifyContent: 'space-around',
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    marginRight: 15,
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: Colors[colorScheme].text,
-  },
   subtitle: {
+    color: 'grey',
     fontSize: 16,
     fontStyle: 'italic',
-    color: 'grey',
     width: '100%',
   },
   timestamp: {
-    fontSize: 14,
     color: 'grey',
+    fontSize: 14,
+  },
+  title: {
+    color: Colors[colorScheme].text,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

@@ -1,4 +1,4 @@
-import Bank from "./type";
+import Bank from './type';
 
 const en: Bank = {
   name: 'Chatapredu',

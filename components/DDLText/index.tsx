@@ -1,10 +1,11 @@
 import React from 'react';
 import { Text } from 'react-native';
+import { v4 as uuid } from 'uuid';
+
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 import { injectStyling } from './utils';
 
-import { v4 as uuid } from 'uuid';
 
 export type DDLTextProps = {
   text: string,

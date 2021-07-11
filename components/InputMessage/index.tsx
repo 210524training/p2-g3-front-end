@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { View, TextInput, Pressable, GestureResponderEvent, Image } from 'react-native';
-import { Entypo, FontAwesome5, Fontisto, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import React, { useEffect, useState } from 'react';
+import { View, TextInput, Pressable, Image, Platform } from 'react-native';
+import { Entypo, Fontisto, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
+
 import useColorScheme from '../../hooks/useColorScheme';
 import createStyle from './style';
 import Colors from '../../constants/Colors';
-import { useNavigation } from '@react-navigation/native';
-import * as DocumentPicker from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
 import { isVideo, MediaHeader } from '../Media';
 import t from '../../Localization';
 
@@ -20,14 +20,25 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
   const nav = useNavigation();
-  const [grantedMicAccess, setGrantedMicAccess] = useState<boolean>(false);
+  // const [grantedMicAccess, setGrantedMicAccess] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
 
   const onMessageChangeHandler = (text: string) => {
     setMessage(text);
   };
 
-  const onSendPressed = (event: GestureResponderEvent) => {
+  const onSendPressed = () => {
     if (message) {
       console.log('send:', message);
       if (socket) {
@@ -40,29 +51,25 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
       }
       setMessage('');
     } else {
-      console.log('activate microphone')
+      console.log('activate microphone');
       // const mic = await Camera.requestMicrophonePermissionsAsync();
     }
   };
 
-  const handleAttachementPress = (event: GestureResponderEvent) => {
+  const handleAttachementPress = () => {
     console.log('attach file');
     (async () => {
-      const file = await DocumentPicker.getDocumentAsync({
-        copyToCacheDirectory: false,
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
       });
-      if (file.type === 'success') {
-        let uri = file.uri;
 
-        // if (FileSystem.cacheDirectory) {
-        //   const cache = FileSystem.cacheDirectory + '/DocumentPicker';
-        //   const split = file.uri.split('/');
-        //   const filename = split[split.length - 1];
-        //   uri = `${cache}/${filename}`;
-        //   console.log(uri);
-        // } else {
-        //   uri = file.uri;
-        // }
+      console.log(result);
+
+      if (!result.cancelled) {
+        const { uri } = result;
         const video = isVideo(uri);
         let w = 400, h = 400;
 
@@ -71,7 +78,7 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
             w = width;
             h = height;
             console.log();
-          })
+          });
         }
         nav.navigate('FileView', {
           type: video ? MediaHeader.VIDEO : MediaHeader.IMAGE,
@@ -81,13 +88,13 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
     })();
   };
 
-  const handleCameraPress = (event: GestureResponderEvent) => {
+  const handleCameraPress = () => {
     console.log('open camera');
     nav.navigate('Camera');
   };
 
   const handleGifPress = () => {
-    
+    console.log('gif');
   };
 
   return (

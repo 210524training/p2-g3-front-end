@@ -5,7 +5,7 @@ export type CameraScreenProps = {
 
 };
 
-const CameraScreen: React.FC<CameraScreenProps> = ({}): JSX.Element => {
+const CameraScreen: React.FC<CameraScreenProps> = (): JSX.Element => {
   return (
     <CameraView />
   );

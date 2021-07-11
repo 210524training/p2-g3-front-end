@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import User from "../../models/user";
-import { sendLogin } from "../../remote/grubdash-backend/grubdash.api";
-import { RootState } from "../store";
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import User from '../../models/user';
+import { sendLogin } from '../../remote/grubdash-backend/grubdash.api';
+import { RootState } from '../store';
 import { AxiosError } from 'axios';
 
 export type UserState = User | null;
@@ -12,7 +12,7 @@ export type LoginCredentials = {
 }
 
 export function isAxiosError(error: any): error is AxiosError {
-  return "isAxiosError" in error;
+  return 'isAxiosError' in error;
 }
 
 export const loginAsync = createAsyncThunk<User, LoginCredentials>(

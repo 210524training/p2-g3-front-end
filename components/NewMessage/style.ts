@@ -1,17 +1,18 @@
 import { StyleSheet } from 'react-native';
 import Colors from '../../constants/Colors';
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
   container: {
-    backgroundColor: Colors[colorScheme].tint,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
+    backgroundColor: Colors[colorScheme].tint,
+    borderRadius: 25,
     bottom: 20,
+    height: 50,
+    justifyContent: 'center',
+    position: 'absolute',
     right: 20,
+    width: 50,
   },
   icon: {
     color: Colors[colorScheme].background

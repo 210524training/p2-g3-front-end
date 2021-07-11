@@ -15,7 +15,7 @@ const FileViewScreen: React.FC<FileViewScreenProps> = ({ route }): JSX.Element =
     <>
       <Media mediaType={type} uri={uri} width={width} height={height} />
     </>
-  )
+  );
 };
 
 export default FileViewScreen;

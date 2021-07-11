@@ -16,14 +16,14 @@ export default function MyAccountScreen() {
   const [address, setAddress] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
 
-  const [action, setAction] = useState<boolean>(true)
+  const [action, setAction] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const nav = useNavigation();
 
   const handleLogin = async () => {
     await dispatch(loginAsync({ username, password }));
     nav.navigate('Home');
-  }
+  };
 
   const handleRegister = async () => {
     const users = await getAllUsers();
@@ -49,7 +49,7 @@ export default function MyAccountScreen() {
       return;
     }
     Alert.alert('Failed to register.');
-  }
+  };
   return (
     <View style={styles.container}>
       {user ? (
@@ -159,17 +159,17 @@ export default function MyAccountScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
+  },
+  separator: {
+    height: 1,
+    marginVertical: 30,
+    width: '80%',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });

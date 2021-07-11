@@ -9,15 +9,13 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ChatScreen from '../screens/ChatsScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
-import { Fontisto } from '@expo/vector-icons';
-import CameraView from '../components/Camera';
+import { BottomTabParamList } from '../types';
 import Media from '../components/Media';
 import t from '../Localization';
 
 const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+export default function BottomTabNavigator(): JSX.Element {
   const colorScheme = useColorScheme();
 
   return (
@@ -37,7 +35,7 @@ export default function BottomTabNavigator() {
         },
         showIcon: true,
       }}
-      >
+    >
       {/* <BottomTab.Screen
         name="Camera"
         component={CameraView}

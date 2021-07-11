@@ -19,7 +19,7 @@ i18n.translations = {
  * @returns returns the appropriate transaltion 
  * (from the provided bank) depending on the user's locale.
  */
-const t = (key: keyof Bank, options?: i18n.TranslateOptions) => {
+const t = (key: keyof Bank, options?: i18n.TranslateOptions): string => {
   return i18n.t(key, options);
 };
 

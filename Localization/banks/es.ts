@@ -1,4 +1,4 @@
-import Bank from "./type";
+import Bank from './type';
 
 const es: Bank = {
   welcome: '¡Saludos!',

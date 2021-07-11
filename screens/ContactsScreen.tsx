@@ -15,7 +15,7 @@ const ContactsScreen: React.FC<ContactsScreenProps> = ({ }): JSX.Element => {
   const [users, setUsers] = useState<User[]>([]);
   const user: {id: string} = {id: 'u1'};
   useEffect(() => {
-    getFriends(user.id).then(setUsers).catch(console.error)
+    getFriends(user.id).then(setUsers).catch(console.error);
   }, [users]);
 
   return (
@@ -42,8 +42,8 @@ const ContactsScreen: React.FC<ContactsScreenProps> = ({ }): JSX.Element => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
   },
 });

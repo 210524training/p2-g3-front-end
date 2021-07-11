@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
-import { View, Text, Image, Pressable, GestureResponderEvent } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 
 import defaultImageUri from '../../constants/DefaultImageUri';
 import useColorScheme from '../../hooks/useColorScheme';
-import { User } from '../../types';
 import createStyle from '../ChatListItem/style';
+import { User } from '../../@types';
 
 export type ContactListItemProps = {
   user: User,
@@ -18,7 +17,7 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ user }) => {
 
   const nav = useNavigation();
 
-  const onPressHandler = (event: GestureResponderEvent) => {
+  const onPressHandler = () => {
     // nav.navigate('Profile', {
     //   user
     // });
@@ -28,9 +27,9 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ user }) => {
     <Pressable
       onPress={onPressHandler}
       style={({ pressed }) => [
-          { 
-            opacity: pressed ? 0.5 : 1 
-          }
+        { 
+          opacity: pressed ? 0.5 : 1 
+        }
       ]}
     >
       <View style={styles.container}>
@@ -42,7 +41,7 @@ const ContactListItem: React.FC<ContactListItemProps> = ({ user }) => {
             style={styles.image}
           />
           <View style={styles.containerMetadata}>
-            <Text style={styles.title}>{user.name}</Text>
+            <Text style={styles.title}>{user.username}</Text>
             <Text
               numberOfLines={1}
               style={styles.subtitle}

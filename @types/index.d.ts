@@ -3,27 +3,29 @@ declare module '*.jpg';
 declare module 'react-native-pixel-perfect';
 import InterestInterface from './interests'
 
-export type Question = string;
-export type Answer = string;
-export type SecurityQuestion = [Question, Answer];
+export type SecurityQuestion = {
+  question: string,
+  answer: string,
+};
 
 type Interest = keyof InterestInterface;
 export default Interest;
 
-const hey: Interest = ''
-
+export type ChatRoomId = string;
 export interface User {
   id: string,
   email: string,
   username: string,
   password: string,
+  contacts: User[],
+  interests: Interest[],
+  isSuperAdmin: boolean,
+  chatRooms: ChatRoomId[],
   imageUri?: string,
+  status?: string,
   securityQuestionOne: SecurityQuestion,
   securityQuestionTwo: SecurityQuestion,
   securityQuestionThree: SecurityQuestion,
-  interests: Interest[],
-  contacts: User[],
-  roomsId: string, // ?
 };
 
 export interface Message {
@@ -33,9 +35,15 @@ export interface Message {
   createdAt: string,
 };
 
+export type ChatRoomUser = {
+  user: User,
+  isModerator: boolean,
+  isAdmin: boolean,
+}
+
 export interface ChatRoom {
   id: string,
-  users: User[],
+  users: ChatRoomUser[],
   messages: Message[],
   lastMessage: Message,
 };

@@ -1,8 +1,8 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { GestureResponderEvent, Pressable } from 'react-native';
-import { View, Text } from 'react-native';
+import { Pressable } from 'react-native';
+import { View } from 'react-native';
 import useColorScheme from '../../hooks/useColorScheme';
 import createStyle from './style';
 
@@ -10,13 +10,13 @@ export type NewMessageProsp = {
 
 };
 
-const NewMessage: React.FC<NewMessageProsp> = ({ }): JSX.Element => {
+const NewMessage: React.FC<NewMessageProsp> = (): JSX.Element => {
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
 
   const nav = useNavigation();
 
-  const handleNewMessage = (event: GestureResponderEvent) => {
+  const handleNewMessage = () => {
     nav.navigate('Contacts');
   };
 

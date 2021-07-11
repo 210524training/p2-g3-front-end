@@ -1,19 +1,25 @@
 {
     "env": {
-        "node": true,
-        "es2021": true,
-        "jest": true,
-        "browser": true
+        "browser": true,
+        "react-native/react-native": true,
+        "es2021": true
     },
     "extends": [
-        "airbnb-base"
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
         "ecmaVersion": 12,
         "sourceType": "module"
     },
     "plugins": [
+        "react",
+        "react-native",
         "@typescript-eslint"
     ],
     "ignorePatterns": [
@@ -31,51 +37,17 @@
         "grubdash.map.js",
         ".env*",
         ".dockerignore",
-        ".gitignore"
+        ".gitignore",
+        "**/assets"
     ],
     "rules": {
-        "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": ["error"],
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "ts": "never"
-            }
-        ],
-        "import/prefer-default-export": "warn",
-        "key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
-        "@typescript-eslint/object-curly-spacing": ["error", "always"],
-        "no-useless-constructor": "off",
-        "@typescript-eslint/no-useless-constructor": "error",
-        "keyword-spacing": [
-            "error",
-            {
-                "overrides": {
-                    "if": {
-                        "after": false
-                    },
-                    "for": {
-                        "after": false
-                    },
-                    "while": {
-                        "after": false
-                    },
-                    "catch": {
-                        "after": false
-                    }
-                }
-            }
-        ],
-        "@typescript-eslint/no-explicit-any": "off",
-        "linebreak-style": "off",
-        "no-console": "off",
-        // To resolves issues with enums in TypeScript
-        "no-shadow": "off",
-        "@typescript-eslint/no-shadow": ["error"],
         "indent": [
             "error",
             2
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
         ],
         "quotes": [
             "error",
@@ -85,16 +57,27 @@
             "error",
             "always"
         ],
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": "error",
-        "no-empty-function": "off",
-        "@typescript-eslint/no-empty-function": "error"
+        
+        "react-native/no-color-literals": 0,
+        
+        "react/display-name": 0,
+        "react/prop-types": 0,
+        "react-native/no-unused-styles": 2,
+        "react-native/split-platform-components": 2,
+        "react-native/no-inline-styles": 0,
+        "react-native/no-raw-text": "off",
+        "react-native/sort-styles": [
+            "error",
+            "asc",
+            {
+                "ignoreClassNames": false,
+                "ignoreStyleProperties": false
+            }
+        ]
     },
     "settings": {
-        "import/resolver": {
-            "node": {
-                "extensions": [".js", ".ts"]
-            }
+        "react": {
+            "version": "detect"
         }
     }
 }

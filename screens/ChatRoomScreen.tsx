@@ -1,11 +1,11 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Text } from 'react-native';
+import { FlatList } from 'react-native';
 import ChatMessage from '../components/ChatMessage';
 import InputMessage from '../components/InputMessage';
-import { getChat } from '../remote/api/fetch.chats';
-import { ChatRoom, Message, RootStackParamList } from '../types';
 import { v4 as uuid } from 'uuid';
+import { RootStackParamList } from '../types';
+import { Message } from '../@types';
 
 type ChatRoomScreenRouteProp = RouteProp<RootStackParamList, 'ChatRoom'>;
 
@@ -24,7 +24,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
 
     s.onerror = (e) => {
       console.error('error:', e);
-    }
+    };
 
     s.onmessage = (e) => {
       console.log('res', e);
@@ -38,12 +38,12 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
       setMessages([
         ...messages,
       ]);
-    }
+    };
 
     s.onopen = (e) => {
       console.log('onopen', e);
-      console.log('connected')
-    }
+      console.log('connected');
+    };
 
     s.onclose = (e) => {
       console.log(e);
@@ -58,9 +58,9 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
     if (flatList && flatList.current && messages.length > 0) {
       flatList.current.scrollToEnd({
         animated: true
-      })
+      });
     }
-  }, [messages])
+  }, [messages]);
 
   return (
     <>
@@ -71,7 +71,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
           <ChatMessage message={item} />
         )}
         keyExtractor={(item) => uuid()}
-      // inverted
+        // inverted
       />
       <InputMessage
         socket={socket}

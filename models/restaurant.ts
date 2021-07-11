@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 export default interface Restaurant {
   name: string;
   menu: Food[];

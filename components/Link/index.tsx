@@ -19,24 +19,24 @@ const Link: React.FC<LinkProps> = ({ link, text, color  }): JSX.Element => {
       ]}
     >
       <Text style={{
-          color: color || Colors[colorScheme].tint || 'blue',
-          textDecorationLine: 'underline',
-        }}>
+        color: color || Colors[colorScheme].tint || 'blue',
+        textDecorationLine: 'underline',
+      }}>
         { text || cutURL(link) }
       </Text>
     </Pressable>
   );
 };
 
-const cutURL = (url: string, maxLen: number = 40): string => {
+const cutURL = (url: string, maxLen = 40): string => {
   if (url.length >= maxLen) {
     const half = Math.min(url.length / 2);
     const fourth = Math.min(half);
-    const start = url.substring(0, fourth)
-    const end = url.substring(half + fourth)
-    return `${start}...${end}`
+    const start = url.substring(0, fourth);
+    const end = url.substring(half + fourth);
+    return `${start}...${end}`;
   }
 
   return url;
-}
+};
 export default Link;

@@ -18,22 +18,22 @@ const GridItem: React.FC<Props> = (props) => {
 };
 
 const styles = StyleSheet.create({
+  gridItem: {
+    alignItems: 'center',
+    backgroundColor: '#a1becc',
+    marginVertical: 3,
+    paddingVertical: 10,
+  },
   image1: {
-    width: 200,
     height: 200,
     resizeMode: 'contain',
-  },
-  gridItem: {
-    backgroundColor: '#a1becc',
-    alignItems: 'center',
-    paddingVertical: 10,
-    marginVertical: 3,
+    width: 200,
   },
   label: {
-    fontWeight: "600",
+    color: '#262633',
+    fontFamily: '',
     fontSize: 20,
-    color: "#262633",
-    fontFamily: ""
+    fontWeight: '600'
   }
 });
 
