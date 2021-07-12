@@ -3,8 +3,10 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import Restaurant from "./models/restaurant";
-import { Cuisine } from "./screens/CuisineScreen";
+import { ChatRoom, User } from './@types';
+import { MediaHeader } from './components/Media';
+import Restaurant from './models/restaurant';
+import { Cuisine } from './screens/CuisineScreen';
 
 export type RootStackParamList = {
   Root: undefined;
@@ -12,16 +14,48 @@ export type RootStackParamList = {
   ItemView: {
     restaurant: Restaurant;
   };
+  ChatRoom: {
+    name: string,
+    chatRoom: ChatRoom,
+  };
+  EditChatRoom: undefined;
+  Contacts: {
+    user: User,
+  };
+  Camera: undefined;
+  FileView: {
+    type: MediaHeader,
+    width: number,
+    height: number,
+    uri: string,
+  },
+  UploadFile: undefined;
+
+};
+
+export type ChatsParamList = {
+  ChatScreen: undefined;
+};
+
+export type TabTwoParamList = {
+  TabTwoScreen: undefined;
 };
 
 export type BottomTabParamList = {
   Home: undefined;
   Cuisine: undefined;
   Profile: undefined;
+  Chats: undefined;
+  Status: undefined;
+  Calls: undefined;
 };
 
 export type HomeParamList = {
   HomeScreen: undefined;
+  UsersScreen: undefined;
+  RecommendedScreen: undefined;
+  GeneralDiscussionsScreen: undefined;
+  RecentChatsScreen: undefined;
 };
 
 export type CuisineParamList = {
@@ -34,4 +68,8 @@ export type CuisineParamList = {
 export type ProfileParamList = {
   LoginScreen: undefined;
   RegisterScreen: undefined;
+  ProfileScreen: undefined;
+  EditProfileScreen: undefined;
+  HelpScreen: undefined;
+  FriendsScreen: undefined;
 }

@@ -1,13 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView, Pressable, ImageSourcePropType, Platform, TouchableNativeFeedback } from 'react-native';
-import GridItem from '../components/GridItem';
-
-import burger from '../assets/images/burger.png';
-import mexican from '../assets/images/taco.png';
-import chinese from '../assets/images/chinese.png';
-import italian from '../assets/images/spaghetti.png';
-import sushi from '../assets/images/sushi.png';
 import { useNavigation } from '@react-navigation/native';
+
+import GridItem from '../components/GridItem';
+import { burger, mexican, chinese, italian, sushi } from '../assets';
 
 type Props = {
 
@@ -15,7 +11,7 @@ type Props = {
 
 export type Cuisine = [ImageSourcePropType, string];
 
-const CuisineScreen: React.FC<Props> = (props) => {
+const CuisineScreen: React.FC<Props> = () => {
 
   const nav = useNavigation();
 
@@ -27,50 +23,51 @@ const CuisineScreen: React.FC<Props> = (props) => {
     [sushi, 'Asian']
   ];
 
-  const cuisineJSX = () => {
+  const cuisineJSX = (): JSX.Element[] => {
     return cuisines.map(cuisine => (
-      <Pressable onPress={() => handlePress(cuisine)}>
+      <Pressable onPress={() => handlePress(cuisine)} key={cuisine[1]}>
         <GridItem source={cuisine[0]} description={cuisine[1]} />
       </Pressable>
-      ));
-  }
+    ));
+  };
 
-  const androidJSX = () => {
+  const androidJSX = (): JSX.Element[] => {
     return cuisines.map(cuisine => (
-      <TouchableNativeFeedback 
+      <TouchableNativeFeedback
         background={TouchableNativeFeedback.SelectableBackground()}
-        onPress={() => handlePress(cuisine)}>
-
+        onPress={() => handlePress(cuisine)}
+        key={cuisine[1]}
+      >
         <GridItem source={cuisine[0]} description={cuisine[1]} />
       </TouchableNativeFeedback>
-      ));
-  }
+    ));
+  };
 
   const handlePress = (cuisine: Cuisine) => {
     nav.navigate('RestaurantsScreen', {
       cuisine,
     });
-  }
+  };
 
   return (
-      <ScrollView style={styles.container}>
-        <View>
-          {
-            Platform.OS === 'android' ? 
+    <ScrollView style={styles.container}>
+      <View>
+        {
+          Platform.OS === 'android' ?
             cuisineJSX() : cuisineJSX()
-          }
-        </View>
-      </ScrollView>
+        }
+      </View>
+    </ScrollView>
   );
 };
 
-const styles =  StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flex: 1,
-    height: "100%",
-    paddingHorizontal: 20,
+    height: '100%',
     marginTop: 10,
-    backgroundColor: "white",
+    paddingHorizontal: 20,
   }
 });
 

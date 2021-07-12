@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, Image, ScrollView, Pressable } from 'react-native';
-import { Text, View } from '../components/Themed';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { CuisineParamList } from '../types';
+
 import Restaurant from '../models/restaurant';
+import { Text, View } from '../components/Themed';
+import { CuisineParamList } from '../types';
 
 type RestaurantsScreenRouteProp = RouteProp<
   CuisineParamList,
@@ -55,13 +56,13 @@ const prep = (cuisine: string): Restaurant[] => {
     list.push(list[0]);
   }
   return list;
-}
+};
 
 type Props = {
   route: RestaurantsScreenRouteProp,
 }
 
-const RestaurantsScreen: React.FC<Props> = ({route}) => {
+const RestaurantsScreen: React.FC<Props> = ({ route }) => {
   const { cuisine } = route.params;
 
   const list = prep(cuisine[1]);
@@ -71,7 +72,7 @@ const RestaurantsScreen: React.FC<Props> = ({route}) => {
     nav.navigate('ItemView', {
       restaurant,
     });
-  }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -79,8 +80,9 @@ const RestaurantsScreen: React.FC<Props> = ({route}) => {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <View style={styles.itemContainer}>
         {
-          list.map((restaurant) => (
-            <Pressable onPress={() => handlePress(restaurant)}>
+          // TODO: don't use index location for key prop
+          list.map((restaurant, idx) => (
+            <Pressable onPress={() => handlePress(restaurant)} key={restaurant.name+restaurant.cuisine+idx}>
               <View style={styles.item}>
                 <Image
                   style={styles.tinyLogo}
@@ -98,7 +100,7 @@ const RestaurantsScreen: React.FC<Props> = ({route}) => {
                   <Text
                     style={styles.subtitle}
                     numberOfLines={1}
-                    ellipsizeMode={"tail"}
+                    ellipsizeMode={'tail'}
                   >
                     {restaurant.location}
                   </Text>
@@ -110,49 +112,49 @@ const RestaurantsScreen: React.FC<Props> = ({route}) => {
       </View>
     </ScrollView>
   );
-}
+};
 
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
 
   },
-  title: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 30,
-    backgroundColor: 'red',
-    width: '100%',
-    padding: '5%',
-    paddingTop: 50,
-    textAlign: 'center',
-  },
-  separator: {
-    marginVertical: 10,
-    height: 1,
-    width: '80%',
-    backgroundColor: 'white',
-  },
-
-  tinyLogo: {
-    width: 75,
-    height: 75,
-    marginRight: 10,
-  },
-
-  itemContainer: {
-    flexDirection: 'column',
-  },
   item: {
     flexDirection: 'row',
     padding: 10,
     width: '80%',
   },
+  itemContainer: {
+    flexDirection: 'column',
+  },
+
   name: {
     fontSize: 20,
     fontWeight: 'bold',
   },
+
+  separator: {
+    backgroundColor: 'white',
+    height: 1,
+    marginVertical: 10,
+    width: '80%',
+  },
   subtitle: {
+  },
+  tinyLogo: {
+    height: 75,
+    marginRight: 10,
+    width: 75,
+  },
+  title: {
+    backgroundColor: 'red',
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+    padding: '5%',
+    paddingTop: 50,
+    textAlign: 'center',
+    width: '100%',
   },
 });
 

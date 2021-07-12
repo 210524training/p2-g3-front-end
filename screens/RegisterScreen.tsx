@@ -5,9 +5,7 @@ import { Text, View } from '../components/Themed';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
 import { Alert } from 'react-native';
-import grubdashClient from '../remote/grubdash-backend/grubdash.client';
 import { useNavigation } from '@react-navigation/native';
-import { getAllUsers } from '../remote/grubdash-backend/grubdash.api';
 
 const RegisterScreen: React.FC<unknown> = (props) => {
   const user = useAppSelector<UserState>(selectUser);
@@ -22,33 +20,35 @@ const RegisterScreen: React.FC<unknown> = (props) => {
   const handleLogin = async () => {
     await dispatch(loginAsync({ username, password }));
     nav.navigate('Home');
-  }
+  };
 
   const handleRegister = async () => {
-    const users = await getAllUsers();
-    let exists = false;
+    // TODO: implement backend
+    handleLogin();
+    // const users = await getAllUsers();
+    // let exists = false;
 
-    users.forEach(u => {
-      if (u.username === username) {
-        exists = true;
-      }
-    });
+    // users.forEach(u => {
+    //   if (u.username === username) {
+    //     exists = true;
+    //   }
+    // });
 
-    if (!exists) {
-      const { data: registered } = await grubdashClient.post<boolean>('/api/v1/users', {
-        username, password, address, phoneNumber
-      });
+    // if (!exists) {
+    //   const { data: registered } = await grubdashClient.post<boolean>('/api/v1/users', {
+    //     username, password, address, phoneNumber
+    //   });
 
-      if (registered) {
-        handleLogin();
-        return;
-      } 
-    } else {
-      Alert.alert('Username is already taken.');
-      return;
-    }
-    Alert.alert('Failed to register.');
-  }
+    //   if (registered) {
+    //     handleLogin();
+    //     return;
+    //   } 
+    // } else {
+    //   Alert.alert('Username is already taken.');
+    //   return;
+    // }
+    // Alert.alert('Failed to register.');
+  };
   return (
     <View style={styles.container}>
       {user ? (
@@ -117,22 +117,22 @@ const RegisterScreen: React.FC<unknown> = (props) => {
       }
     </View >
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
+  },
+  separator: {
+    height: 1,
+    marginVertical: 30,
+    width: '80%',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });
 

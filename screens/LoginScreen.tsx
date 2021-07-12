@@ -17,7 +17,7 @@ const LoginScreen: React.FC<unknown> = () => {
   const handleLogin = async () => {
     await dispatch(loginAsync({ username, password }));
     nav.navigate('Home');
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -67,7 +67,7 @@ const LoginScreen: React.FC<unknown> = () => {
                 nav.navigate('RegisterScreen');
               }}
             >
-              Don't have an account?
+              Don&apos;t have an account?
             </Text>
           </View>
         </>
@@ -75,22 +75,22 @@ const LoginScreen: React.FC<unknown> = () => {
       }
     </View >
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
+  },
+  separator: {
+    height: 1,
+    marginVertical: 30,
+    width: '80%',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });
 

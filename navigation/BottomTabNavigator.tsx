@@ -1,6 +1,5 @@
 /**
- * Learn more about createBottomTabNavigator:
- * https://reactnavigation.org/docs/bottom-tab-navigator
+ * NOT USED (OLD NAV) 
  */
 
 import { Ionicons } from '@expo/vector-icons';
@@ -19,7 +18,7 @@ import { BottomTabParamList, HomeParamList, CuisineParamList, ProfileParamList }
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+export default function BottomTabNavigator(): JSX.Element {
   const colorScheme = useColorScheme();
 
   return (

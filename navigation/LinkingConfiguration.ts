@@ -16,6 +16,11 @@ const config: LinkingOptions = {
           Home: {
             screens: {
               HomeScreen: 'home',
+              // search for users
+              UsersScreen: 'users',
+              RecommendedScreen: 'recommended',
+              GeneralDiscussionsScreen: 'discussions',
+              RecentChatsScreen: 'chats',
             },
           },
           Cuisine: {
@@ -24,10 +29,23 @@ const config: LinkingOptions = {
               RestaurantsScreen: 'restaurants',
             },
           },
+          ChatRoom: {
+            screens: {
+              ChatRoomScreen: 'chatroom',
+              CameraScreen: 'camera',
+              EditChatRoomScreen: 'edit-chatroom',
+              ViewMediaScreen: 'viewmedia',
+              UploadMediaScreen: 'upload-media',
+            },
+          },
           Profile: {
             screens: {
               LoginScreen: 'login',
-              RegisterScreen: 'register'
+              RegisterScreen: 'register',
+              ProfileScreen: 'u',
+              EditProfileScreen: 'edit-profile',
+              HelpScreen: 'help',
+              FriendsScreen: 'friends',
             },
           },
         },

@@ -6,15 +6,15 @@ import { Provider } from 'react-redux';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import Navigation from './navigation/index';
 import store from './hooks/store';
 
-export default function App() {
+const App: React.FC<unknown> = (): JSX.Element => {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
   if (!isLoadingComplete) {
-    return null;
+    return <></>;
   } else {
     return (
       <Provider store={store}>
@@ -25,4 +25,6 @@ export default function App() {
       </Provider>
     );
   }
-}
+};
+
+export default App;
