@@ -17,6 +17,7 @@ const config: LinkingOptions = {
             screens: {
               HomeScreen: 'home',
               // search for users
+              UserSearchPage: 'users-search',
               UsersScreen: 'users',
               RecommendedScreen: 'recommended',
               GeneralDiscussionsScreen: 'discussions',

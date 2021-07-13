@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ChatsScreen from '../screens/ChatsScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MyAccount from '../screens/MyAccount';
+import UserSearchPage from '../new_pages/UserSearch';
 
 const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
 
@@ -74,6 +75,13 @@ export default function BottomTabNavigator(): JSX.Element {
           title: t('users')
         }}
       />
+      <BottomTab.Screen
+        name="UserSearch"
+        component={UserSearchPage}
+        options={{
+          title: t('search')
+        }}
+        />
       {/* <BottomTab.Screen
         name="Calls"
         component={TabTwoNavigator}

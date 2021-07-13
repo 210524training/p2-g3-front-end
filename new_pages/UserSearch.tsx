@@ -2,18 +2,23 @@ import * as React from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Searchbar } from 'react-native-paper';
 import { useState } from 'react';
-import { Pressable, View, Text, Image, StyleSheet } from 'react-native';
+import { Pressable, View, Text, Image, StyleSheet, FlatList } from 'react-native';
 import { useEffect } from 'react';
-
-type User = {
-    username: string,
-    image: any,
-};
+import { User } from '../@types'
+import { getFriends } from '../remote/api/fetch.users';
+import ContactListItem from '../components/ContactListItem';
+import users from '../remote/data/Users';
 
 const styles = StyleSheet.create({
     searchBar: {
         marginTop: 50,
         marginBottom: 10,
+    },
+
+    newContainer: {
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
     },
 
     users: {
@@ -46,13 +51,14 @@ const styles = StyleSheet.create({
     },
 
     userText: {
-        
+
     }
 })
 
-const UserSearchPage: React.FC<unknown> = (props) => {
+const UserSearchPage: React.FC<unknown> = () => {
     const [search, setSearch] = useState<string>('');
-    const [userList, setUserList] = useState<User[]>();
+    const [exampleUsers, setExampleUsers] = useState<User[]>([]);
+    const [userList, setUserList] = useState<User[]>([]);
 
     const handleSearch = (text?: string) => {
         if (text) {
@@ -63,9 +69,10 @@ const UserSearchPage: React.FC<unknown> = (props) => {
         }
     }
 
-    const exampleUsers: User[] = [];
-    exampleUsers[0] = { username: 'Helen1957', image: require('../assets/images/taco.png') };
-    exampleUsers[1] = { username: 'somebody8', image: require('../assets/images/taco.png') };
+    useEffect(() => {
+        setExampleUsers(users);
+        setUserList(users);
+    }, []);
 
     useEffect(() => {
         if (search) {
@@ -79,30 +86,27 @@ const UserSearchPage: React.FC<unknown> = (props) => {
     }, [search]);
 
     return (
-        <ScrollView style={styles.page}>
+        <>
             <Searchbar
                 style={styles.searchBar}
                 placeholder="Search Users"
                 onChangeText={handleSearch}
                 value={search} />
-            <View>
+            <View style={styles.newContainer}>
                 {userList ? (
-                    userList.map((user) => (
-                        <View style={styles.users} key={user.username}>
-                            <Pressable>
-                                <View style={styles.userContainer}>
-                                    <Text style={styles.userText}>
-                                        <Image style={styles.images} source={user.image} />
-                                        {user.username}</Text>
-                                </View>
-                            </Pressable>
-                        </View>
-                    ))
+                    <FlatList
+                        style={{ width: '100%' }}
+                        data={userList}
+                        renderItem={({ item }) => (
+                            <ContactListItem user={item} />
+                        )}
+                        keyExtractor={(item) => item.id}
+                    />
                 ) : (
                     <Text>No Users Found</Text>
                 )}
             </View>
-        </ScrollView>
+        </>
     )
 }
 
