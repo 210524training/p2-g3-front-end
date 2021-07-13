@@ -17,7 +17,7 @@ export default function BottomTabNavigator(): JSX.Element {
   return (
     <BottomTab.Navigator
       initialRouteName="Chats"
-      tabBarOptions={{ 
+      tabBarOptions={{
         activeTintColor: Colors[colorScheme].background,
         style: {
           backgroundColor: Colors[colorScheme].tint,
@@ -52,7 +52,7 @@ export default function BottomTabNavigator(): JSX.Element {
         name="Status"
         component={Media}
         options={{
-          title: t('status')
+          title: t('profile')
         }}
       />
       {/* <BottomTab.Screen
@@ -76,8 +76,8 @@ function ChatScreenNavigator() {
       <TabOneStack.Screen
         name="ChatScreen"
         component={ChatsScreen}
-        
-        options={{ headerTitle: 'Tab One Title',  }}
+
+        options={{ headerTitle: 'Tab One Title', }}
       />
     </TabOneStack.Navigator>
   );

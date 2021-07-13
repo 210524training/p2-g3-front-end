@@ -2,6 +2,9 @@ type Bank = {
   /** Application Name (fallback will be en) */
   name?: string,
 
+  stop: string,
+  play: string,
+  mute: string,
   yes: string,
   no: string,
   cancel: string,

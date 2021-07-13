@@ -2,6 +2,9 @@ import Bank from './type';
 
 const es: Bank = {
   welcome: '¡Saludos!',
+  stop: 'Detener',
+  play: 'Iniciar',
+  mute: 'Silencio',
   yes: 'Sí',
   no: 'No',
   cancel: 'Cancelar',

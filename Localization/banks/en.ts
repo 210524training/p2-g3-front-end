@@ -2,7 +2,9 @@ import Bank from './type';
 
 const en: Bank = {
   name: 'Chatapredu',
-  
+  stop: 'stop',
+  play: 'play',
+  mute: 'mute',
   welcome: 'Welcome!',
   yes: 'Yes',
   no: 'No',

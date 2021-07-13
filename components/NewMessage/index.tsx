@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Pressable } from 'react-native';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import useColorScheme from '../../hooks/useColorScheme';
 import createStyle from './style';
 

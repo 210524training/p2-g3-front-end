@@ -45,7 +45,7 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
         beforeMessageSent && beforeMessageSent();
         socket.send(JSON.stringify({
           action: 'sendmessage',
-          data: message,
+          data: message, // send user dets {}
         }));
         afterMessageSent && afterMessageSent();
       }
@@ -100,7 +100,7 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Pressable
+        {/* <Pressable
           onPress={handleGifPress}
           style={({ pressed }) => [
             { opacity: pressed ? 0.5 : 1 }
@@ -112,7 +112,7 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
             color='grey'
             style={styles.icon}
           />
-        </Pressable>
+        </Pressable> */}
 
         <TextInput
           style={styles.inputField}
