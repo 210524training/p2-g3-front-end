@@ -8,6 +8,8 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation/index';
 import store from './hooks/store';
+import HelpPage from './new_pages/HelpPage';
+import UserSearchPage from './new_pages/UserSearch';
 
 const App: React.FC<unknown> = (): JSX.Element => {
   const isLoadingComplete = useCachedResources();
@@ -17,12 +19,7 @@ const App: React.FC<unknown> = (): JSX.Element => {
     return <></>;
   } else {
     return (
-      <Provider store={store}>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
-      </Provider>
+      <HelpPage/>
     );
   }
 };
