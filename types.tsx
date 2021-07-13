@@ -30,7 +30,7 @@ export type RootStackParamList = {
     uri: string,
   },
   UploadFile: undefined;
-
+  UserSearch: undefined;
 };
 
 export type ChatsParamList = {
@@ -48,6 +48,7 @@ export type BottomTabParamList = {
   Chats: undefined;
   Status: undefined;
   Calls: undefined;
+  UserSearch: undefined;
 };
 
 export type HomeParamList = {
