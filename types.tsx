@@ -4,7 +4,7 @@
  */
 
 import { ChatRoom, User } from './@types';
-import { MediaHeader } from './components/Media';
+import { MediaHeader } from './@types';
 import Restaurant from './models/restaurant';
 import { Cuisine } from './screens/CuisineScreen';
 
@@ -48,14 +48,11 @@ export type BottomTabParamList = {
   Chats: undefined;
   Status: undefined;
   Calls: undefined;
-<<<<<<< HEAD
   GeneralDiscussions: undefined;
   Users: undefined;
-=======
   Login: undefined;
   Register: undefined;
   EditProfile: undefined;
->>>>>>> 1791651 (Edited login, register, profile, edit profile and select interests pages)
 };
 
 export type HomeParamList = {
