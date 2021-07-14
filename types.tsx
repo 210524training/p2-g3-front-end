@@ -31,6 +31,7 @@ export type RootStackParamList = {
   },
   UploadFile: undefined;
   UserSearch: undefined;
+  Help: undefined;
 };
 
 export type ChatsParamList = {
@@ -51,6 +52,7 @@ export type BottomTabParamList = {
   GeneralDiscussions: undefined;
   Users: undefined;
   UserSearch: undefined;
+  Help: undefined;
 };
 
 export type HomeParamList = {

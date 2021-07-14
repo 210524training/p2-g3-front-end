@@ -10,6 +10,7 @@ import ChatsScreen from '../screens/ChatsScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MyAccount from '../screens/MyAccount';
 import UserSearchPage from '../new_pages/UserSearch';
+import HelpPage from '../new_pages/HelpPage';
 
 const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
 
@@ -82,6 +83,13 @@ export default function BottomTabNavigator(): JSX.Element {
           title: t('search')
         }}
         />
+      <BottomTab.Screen
+       name="Help"
+       component={HelpPage}
+       options={{
+         title: t('help')
+       }}
+       />
       {/* <BottomTab.Screen
         name="Calls"
         component={TabTwoNavigator}
