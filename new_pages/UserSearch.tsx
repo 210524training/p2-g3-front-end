@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Searchbar } from 'react-native-paper';
 import { useState } from 'react';
 import { Pressable, View, Text, Image, StyleSheet, FlatList } from 'react-native';
 import { useEffect } from 'react';
 import { User } from '../@types'
-import { getFriends } from '../remote/api/fetch.users';
 import ContactListItem from '../components/ContactListItem';
 import users from '../remote/data/Users';
 

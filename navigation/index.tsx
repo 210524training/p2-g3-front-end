@@ -23,6 +23,7 @@ import CameraScreen from '../screens/CameraScreen';
 import FileViewScreen from '../screens/FileViewScreen';
 import t from '../Localization';
 import UserSearchPage from '../new_pages/UserSearch';
+import HelpPage from '../new_pages/HelpPage';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -113,6 +114,10 @@ function RootNavigator() {
       <Stack.Screen
       name="UserSearch"
       component={UserSearchPage}
+      />
+      <Stack.Screen
+      name="Help"
+      component={HelpPage}
       />
       <Stack.Screen name="FileView" component={FileViewScreen} options={{ title: 'File View' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
