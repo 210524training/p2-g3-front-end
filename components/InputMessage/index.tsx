@@ -7,8 +7,10 @@ import * as ImagePicker from 'expo-image-picker';
 import useColorScheme from '../../hooks/useColorScheme';
 import createStyle from './style';
 import Colors from '../../constants/Colors';
-import { isVideo, MediaHeader } from '../Media';
+import { isVideo } from '../Media';
 import t from '../../Localization';
+import { Camera } from 'expo-camera';
+import { MediaHeader } from '../../@types/index.d';
 
 export type InputMessageProps = {
   socket?: WebSocket,
@@ -25,6 +27,7 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
 
   useEffect(() => {
     (async () => {
+      const { status } = await Camera.requestMicrophonePermissionsAsync();
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
@@ -45,14 +48,14 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
         beforeMessageSent && beforeMessageSent();
         socket.send(JSON.stringify({
           action: 'sendmessage',
-          data: message,
+          data: message, // send user dets {}
         }));
         afterMessageSent && afterMessageSent();
       }
       setMessage('');
     } else {
       console.log('activate microphone');
-      // const mic = await Camera.requestMicrophonePermissionsAsync();
+      // 
     }
   };
 
@@ -93,27 +96,9 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
     nav.navigate('Camera');
   };
 
-  const handleGifPress = () => {
-    console.log('gif');
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Pressable
-          onPress={handleGifPress}
-          style={({ pressed }) => [
-            { opacity: pressed ? 0.5 : 1 }
-          ]}
-        >
-          <MaterialCommunityIcons
-            name="gif"
-            size={24}
-            color='grey'
-            style={styles.icon}
-          />
-        </Pressable>
-
         <TextInput
           style={styles.inputField}
           multiline

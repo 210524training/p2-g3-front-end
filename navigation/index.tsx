@@ -6,9 +6,9 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
+import { ColorSchemeName, Text } from 'react-native';
 import { View } from '../components/Themed';
-import { Octicons, MaterialCommunityIcons} from '@expo/vector-icons';
+import { Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 
@@ -22,6 +22,7 @@ import ContactsScreen from '../screens/ContactsScreen';
 import CameraScreen from '../screens/CameraScreen';
 import FileViewScreen from '../screens/FileViewScreen';
 import t from '../Localization';
+import DDC from '../components/DropDown';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -42,7 +43,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   const colorScheme = useColorScheme();
   return (
-    <Stack.Navigator screenOptions={{ 
+    <Stack.Navigator screenOptions={{
       headerTintColor: Colors[colorScheme].background,
       headerTitleAlign: 'left',
       headerStyle: {
@@ -54,7 +55,7 @@ function RootNavigator() {
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
-        options={{ 
+        options={{
           title: t('name'),
           headerRight: () => {
             return (
@@ -65,25 +66,42 @@ function RootNavigator() {
                 flexDirection: 'row',
                 marginRight: 10,
                 width: 60,
-              }}>
-                <Octicons 
-                  name="search" 
-                  size={22} 
-                  color={Colors[colorScheme].background} 
+                marginTop: 10,
+              }}
+              >
+                <DDC
+                  render={(
+                    <MaterialCommunityIcons
+                      name="dots-vertical"
+                      size={22}
+                      color={Colors[colorScheme].background}
+                    />
+                  )}
+                  items={[
+                    { key: 'item-1', render: (<Text>Item 1</Text>), onClick: () => { alert('item 1 clicked'); } },
+                    { key: 'item-2', render: (<Text>Item 2</Text>), onClick: () => { alert('item 2 clicked'); } },
+                    { key: 'item-3', render: (<Text>Item 3</Text>), onClick: () => { alert('item 3 clicked'); } },
+                    { key: 'item-4', render: (<Text>Item 4</Text>), onClick: () => { alert('item 4 clicked'); } },
+                  ]}
                 />
-                <MaterialCommunityIcons 
-                  name="dots-vertical" 
-                  size={22} 
-                  color={Colors[colorScheme].background} 
-                />
+                {/* <Octicons
+                  name="search"
+                  size={22}
+                  color={Colors[colorScheme].background}
+                /> */}
+                {/* <MaterialCommunityIcons
+                  name="dots-vertical"
+                  size={22}
+                  color={Colors[colorScheme].background}
+                /> */}
               </View>
             );
           },
         }}
       />
-      <Stack.Screen 
-        name="ChatRoom" 
-        component={ChatRoomScreen} 
+      <Stack.Screen
+        name="ChatRoom"
+        component={ChatRoomScreen}
         options={({ route }) => ({
           title: route.params.name || 'No Name',
           headerRight: () => (
@@ -92,22 +110,22 @@ function RootNavigator() {
               alignItems: 'center',
               width: 50,
             }}>
-              <MaterialCommunityIcons 
-                name="dots-vertical" 
-                size={22} 
-                color={Colors[colorScheme].background} 
+              <MaterialCommunityIcons
+                name="dots-vertical"
+                size={22}
+                color={Colors[colorScheme].background}
               />
             </View>
           ),
-        })} 
+        })}
       />
-      <Stack.Screen 
-        name="Contacts" 
-        component={ContactsScreen} 
+      <Stack.Screen
+        name="Contacts"
+        component={ContactsScreen}
       />
-      <Stack.Screen 
-        name="Camera" 
-        component={CameraScreen} 
+      <Stack.Screen
+        name="Camera"
+        component={CameraScreen}
       />
       <Stack.Screen name="FileView" component={FileViewScreen} options={{ title: 'File View' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />

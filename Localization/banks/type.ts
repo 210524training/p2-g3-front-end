@@ -2,6 +2,12 @@ type Bank = {
   /** Application Name (fallback will be en) */
   name?: string,
 
+  users: string,
+  generalDiscussions: string,
+  discussions: string,
+  stop: string,
+  play: string,
+  mute: string,
   yes: string,
   no: string,
   cancel: string,

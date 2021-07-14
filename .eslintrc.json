@@ -3,7 +3,7 @@
         "browser": true,
         "jest": true,
         "react-native/react-native": true,
-        "es2021": true
+        "es2020": true
     },
     "extends": [
         "eslint:recommended",
@@ -48,10 +48,7 @@
             "error",
             2
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
+        "linebreak-style": 0,
         "quotes": [
             "error",
             "single"
@@ -61,13 +58,17 @@
             "always"
         ],
         
-        "react-native/no-color-literals": 0,
+        // use ./constants/Colors
+        "react-native/no-color-literals": [
+            "warn",
+            2
+        ],
+        "react-native/no-inline-styles": 0,
         
         "react/display-name": 0,
         "react/prop-types": 0,
         "react-native/no-unused-styles": 2,
         "react-native/split-platform-components": 2,
-        "react-native/no-inline-styles": 0,
         "react-native/no-raw-text": "off",
         "react-native/sort-styles": [
             "error",

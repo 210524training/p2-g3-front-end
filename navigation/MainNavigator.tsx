@@ -8,6 +8,7 @@ import t from '../Localization';
 import { createStackNavigator } from '@react-navigation/stack';
 import ChatsScreen from '../screens/ChatsScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import MyAccount from '../screens/MyAccount';
 
 const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
 
@@ -17,7 +18,7 @@ export default function BottomTabNavigator(): JSX.Element {
   return (
     <BottomTab.Navigator
       initialRouteName="Chats"
-      tabBarOptions={{ 
+      tabBarOptions={{
         activeTintColor: Colors[colorScheme].background,
         style: {
           backgroundColor: Colors[colorScheme].tint,
@@ -41,6 +42,15 @@ export default function BottomTabNavigator(): JSX.Element {
         }}
         
       /> */}
+      
+      <BottomTab.Screen
+        name="Profile"
+        component={MyAccount}
+        options={{
+          title: t('profile')
+        }}
+      />
+
       <BottomTab.Screen
         name="Chats"
         component={ChatScreenNavigator}
@@ -48,11 +58,20 @@ export default function BottomTabNavigator(): JSX.Element {
           title: t('chats')
         }}
       />
+
       <BottomTab.Screen
-        name="Status"
-        component={Media}
+        name="GeneralDiscussions"
+        component={MyAccount}
         options={{
-          title: t('status')
+          title: t('discussions').substring(0, 8) + '.'
+        }}
+      />
+      
+      <BottomTab.Screen
+        name="Users"
+        component={MyAccount}
+        options={{
+          title: t('users')
         }}
       />
       {/* <BottomTab.Screen
@@ -76,8 +95,8 @@ function ChatScreenNavigator() {
       <TabOneStack.Screen
         name="ChatScreen"
         component={ChatsScreen}
-        
-        options={{ headerTitle: 'Tab One Title',  }}
+
+        options={{ headerTitle: 'Tab One Title', }}
       />
     </TabOneStack.Navigator>
   );

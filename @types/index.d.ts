@@ -1,4 +1,9 @@
-import InterestInterface from './interests'
+import InterestInterface from './interests';
+
+export enum MediaHeader {
+  IMAGE,
+  VIDEO,
+};
 
 export type SecurityQuestion = {
   question: string,

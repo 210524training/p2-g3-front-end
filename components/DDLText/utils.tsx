@@ -3,11 +3,11 @@ import { Text } from 'react-native';
 import Link from '../Link';
 
 // https://stackoverflow.com/a/3809435
-export const emailExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gi;
-export const emailRegex = new RegExp(emailExpression);
+export const urlExpression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gi;
+export const urlRegex = new RegExp(urlExpression);
 
 export const isUrl = (text: string): RegExpMatchArray | null => {
-  return text.match(emailRegex);
+  return text.match(urlRegex);
 };
 
 export const injectStyling = (sentence: string, color?: string, linkColor?: string): JSX.Element[] => {

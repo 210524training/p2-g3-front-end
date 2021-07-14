@@ -1,6 +1,8 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
+import ImageView from './ImageView';
 import VideoPlayer from './VideoPlayer';
+import { MediaHeader } from '../../@types/index.d';
 
 export type MediaProps = {
   mediaType: MediaHeader
@@ -9,20 +11,14 @@ export type MediaProps = {
   height: number,
 };
 
-export enum MediaHeader {
-  IMAGE,
-  GIF,
-  VIDEO,
-}
-
 export const isVideo = (uri: string): boolean => {
   uri = uri.toLowerCase();
   return uri.endsWith('mp4') 
-  || uri.endsWith('mov')
-  || uri.endsWith('ogg')
-  || uri.endsWith('avi')
-  || uri.endsWith('webm')
-  || uri.endsWith('mpg');
+    || uri.endsWith('mov')
+    || uri.endsWith('ogg')
+    || uri.endsWith('avi')
+    || uri.endsWith('webm')
+    || uri.endsWith('mpg');
 
 };
 
@@ -31,17 +27,12 @@ const Media: React.FC<MediaProps> = ({ mediaType = MediaHeader.VIDEO, uri, width
   switch (mediaType) {
   case MediaHeader.VIDEO:
     content = (
-      <VideoPlayer
-        uri={uri}
-      />
+      <VideoPlayer uri={uri} />
     );
     break;
   default:
     content =  (
-      <Image source={{ uri }} style={{
-        width,
-        height,
-      }} />
+      <ImageView uri={uri} width={width} height={height} />
     );
     break;
   }
