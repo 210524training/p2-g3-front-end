@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import ImageView from './ImageView';
 import VideoPlayer from './VideoPlayer';
+import { MediaHeader } from '../../@types/index.d';
 
 export type MediaProps = {
   mediaType: MediaHeader
@@ -9,11 +10,6 @@ export type MediaProps = {
   width: number,
   height: number,
 };
-
-export enum MediaHeader {
-  IMAGE,
-  VIDEO,
-}
 
 export const isVideo = (uri: string): boolean => {
   uri = uri.toLowerCase();

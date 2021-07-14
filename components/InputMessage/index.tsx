@@ -7,9 +7,10 @@ import * as ImagePicker from 'expo-image-picker';
 import useColorScheme from '../../hooks/useColorScheme';
 import createStyle from './style';
 import Colors from '../../constants/Colors';
-import { isVideo, MediaHeader } from '../Media';
+import { isVideo } from '../Media';
 import t from '../../Localization';
 import { Camera } from 'expo-camera';
+import { MediaHeader } from '../../@types/index.d';
 
 export type InputMessageProps = {
   socket?: WebSocket,

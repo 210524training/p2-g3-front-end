@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
 import { Text, View } from '../components/Themed';
 import { getAllUsers } from '../remote/api/fetch.users';
+import DDC from '../components/DropDown';
 export default function MyAccountScreen(): JSX.Element {
   const user = useAppSelector<UserState>(selectUser);
   const [username, setUsername] = useState<string>('');
@@ -37,7 +38,6 @@ export default function MyAccountScreen(): JSX.Element {
             ></Button>
           </> : undefined
       }
-
     </View >
   );
 }
