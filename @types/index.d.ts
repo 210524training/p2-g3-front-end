@@ -49,3 +49,14 @@ export interface ChatRoom {
   messages: Message[],
   lastMessage: Message,
 };
+
+export interface Forum {
+  id: string,
+  user: User,
+  createdAt: string,
+  content: string,
+  likes: number,
+  imageUri?: string,
+  numberOfComments?: number,
+  comments?: Forum[]
+};

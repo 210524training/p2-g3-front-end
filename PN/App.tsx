@@ -2,6 +2,8 @@ import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, Button, Platform } from 'react-native';
+import { Subscription } from '@unimodules/core';
+import { useNavigation } from '@react-navigation/native';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -11,11 +13,12 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function PN() {
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
+export default function PN(): JSX.Element {
+  const [expoPushToken, setExpoPushToken] = useState<string | undefined>('');
+  const [notification, setNotification] = useState<Notification>();
+  const notificationListener = useRef<Subscription>();
+  const responseListener = useRef<Subscription>();
+  const nav = useNavigation();
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -27,7 +30,9 @@ export default function PN() {
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+      console.log('>>', response);
+      const {redirect, params} = response.notification.request.content.data;
+      console.log('nav', redirect, params);
     });
 
     return () => {
@@ -59,13 +64,16 @@ export default function PN() {
   );
 }
 
-async function sendPushNotification(expoPushToken: string, title?: string, body?: string) {
+async function sendPushNotification(expoPushToken: string, title?: string, body?: string, redirect?: string, params?: any) {
   const message = {
     to: expoPushToken,
     sound: 'default',
     title: title || 'Chatepredu',
     body: body || 'Something requires your attention',
-    data: {},
+    data: {
+      redirect: redirect,
+      params: params
+    },
   };
 
   await fetch('https://exp.host/--/api/v2/push/send', {
