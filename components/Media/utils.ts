@@ -1,4 +1,4 @@
-import { MediaHeader } from '.';
+import { MediaHeader } from '../../@types/index.d';
 
 export const re = /^<(img|video):(.*)>$/g;
 export type MediaAndUri = {
