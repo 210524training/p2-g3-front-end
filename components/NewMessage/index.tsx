@@ -40,4 +40,34 @@ const NewMessage: React.FC<NewMessageProsp> = (): JSX.Element => {
   );
 };
 
-export default NewMessage;
+const EditIcon: React.FC<unknown> = (): JSX.Element =>{
+  const colorScheme = useColorScheme();
+  const styles = createStyle(colorScheme);
+
+  const nav = useNavigation();
+
+  const handleEditIcon = () => {
+    nav.navigate('EditProfile');
+  };
+
+  return (
+    <View style={styles.container}>
+      <Pressable
+        onPress={handleEditIcon}
+        style={({ pressed }) => [
+          { opacity: pressed ? 0.5 : 1 }
+        ]}
+        hitSlop={10}
+      >
+        <MaterialCommunityIcons
+          name='pencil'
+          size={28}
+          color='white'
+          style={styles.icon}
+        />
+      </Pressable>
+    </View>
+  );
+};
+
+export default NewMessage; EditIcon;

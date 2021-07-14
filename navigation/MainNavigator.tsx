@@ -9,6 +9,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ChatsScreen from '../screens/ChatsScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MyAccount from '../screens/MyAccount';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 
 const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
 
@@ -81,6 +85,34 @@ export default function BottomTabNavigator(): JSX.Element {
           title: t('calls')
         }}
       /> */}
+      <BottomTab.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          title: t('login')
+        }}
+      />
+      <BottomTab.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{
+          title: t('register')
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          title: t('profile')
+        }}
+      />
+      <BottomTab.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{
+          title: t('edit')
+        }}
+      />
     </BottomTab.Navigator>
   );
 }

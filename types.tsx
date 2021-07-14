@@ -48,8 +48,14 @@ export type BottomTabParamList = {
   Chats: undefined;
   Status: undefined;
   Calls: undefined;
+<<<<<<< HEAD
   GeneralDiscussions: undefined;
   Users: undefined;
+=======
+  Login: undefined;
+  Register: undefined;
+  EditProfile: undefined;
+>>>>>>> 1791651 (Edited login, register, profile, edit profile and select interests pages)
 };
 
 export type HomeParamList = {

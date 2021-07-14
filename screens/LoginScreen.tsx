@@ -40,13 +40,13 @@ const LoginScreen: React.FC<unknown> = () => {
 
           <View style={{ width: '100%', padding: 25, }}>
             <TextInput
-              style={{ fontSize: 18, margin: 10 }}
+              style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
               placeholder="Username"
               onChangeText={text => setUsername(text)}
               defaultValue={username}
             />
             <TextInput
-              style={{ fontSize: 18, margin: 10 }}
+              style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
               placeholder="Password"
               onChangeText={text => setPassword(text)}
               defaultValue={password}
@@ -55,7 +55,7 @@ const LoginScreen: React.FC<unknown> = () => {
             <Button
               onPress={handleLogin}
               title="Sign in"
-              color="red"
+              color="green"
             />
             <Text
               style={{
