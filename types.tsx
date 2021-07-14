@@ -48,13 +48,13 @@ export type BottomTabParamList = {
   Chats: undefined;
   Status: undefined;
   Calls: undefined;
+  GeneralDiscussions: undefined;
+  Users: undefined;
 };
 
 export type HomeParamList = {
   HomeScreen: undefined;
-  UsersScreen: undefined;
   RecommendedScreen: undefined;
-  GeneralDiscussionsScreen: undefined;
   RecentChatsScreen: undefined;
 };
 

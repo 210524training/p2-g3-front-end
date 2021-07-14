@@ -71,7 +71,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
         renderItem={({ item }) => (
           <ChatMessage message={item} />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => shortid()}
       />
       <InputMessage
         socket={socket}

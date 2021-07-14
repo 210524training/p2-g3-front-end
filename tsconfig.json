@@ -5,7 +5,11 @@
     "jsx": "react",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "typeRoots": ["./@types", "./node_modules/@types", "./@types/index.d.ts"],
+    "typeRoots": [
+      "./@types",
+      "./node_modules/@types",
+      "./@types/index.d.ts"
+    ],
     "resolveJsonModule": true
   }
 }

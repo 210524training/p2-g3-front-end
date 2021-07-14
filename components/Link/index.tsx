@@ -22,7 +22,7 @@ const Link: React.FC<LinkProps> = ({ link, text, color  }): JSX.Element => {
         color: color || Colors[colorScheme].tint || 'blue',
         textDecorationLine: 'underline',
       }}>
-        { text || cutURL(link) }
+        { text || link }
       </Text>
     </Pressable>
   );
