@@ -59,7 +59,7 @@ function RootNavigator() {
         name="Root"
         component={BottomTabNavigator}
         options={{
-          title: t('name'),
+          title: t('_name'),
           headerRight: () => {
             return (
               <View style={{
@@ -72,7 +72,7 @@ function RootNavigator() {
                 marginTop: 10,
               }}
               >
-                <DDC
+                {/* <DDC
                   render={(
                     <MaterialCommunityIcons
                       name="dots-vertical"
@@ -85,7 +85,7 @@ function RootNavigator() {
                     { key: `settings-${shortid()}`, render: (<Text>{t('settings')}</Text>), onClick: () => { alert('item 4 clicked'); } },
                     { key: `close-${shortid()}`, render: (<Text>{t('close')}</Text>), onClick: () => { console.log('close dropdown'); } },
                   ]}
-                />
+                /> */}
                 {/* <Octicons
                   name="search"
                   size={22}

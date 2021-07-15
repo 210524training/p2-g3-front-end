@@ -1,7 +1,7 @@
 type Bank = {
   /** Application Name (fallback will be en) */
-  name?: string,
-
+  _name?: string,
+  name: string,
   users: string,
   generalDiscussions: string,
   discussions: string,

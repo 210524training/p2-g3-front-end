@@ -1,7 +1,8 @@
 import Bank from './type';
 
 const en: Bank = {
-  name: 'Chatapredu',
+  _name: 'Chatapredu',
+  name: 'Name',
   users: 'Users',
   generalDiscussions: 'General Discussions',
   discussions: 'Discussions',

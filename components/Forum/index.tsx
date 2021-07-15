@@ -16,7 +16,7 @@ const ForumView: React.FC<ForumProps> = ({ forum }): JSX.Element => {
   return (
     <View>
       <LeftContainer user={forum.user} />
-      <MainContainer />
+      <MainContainer forum={forum} />
     </View>
   );
 };

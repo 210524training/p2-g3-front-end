@@ -2,6 +2,7 @@ import Bank from './type';
 
 const es: Bank = {
   welcome: '¡Saludos!',
+  name: 'Nombre',
   users: 'Usuarios',
   generalDiscussions: 'Discursos Generales',
   discussions: 'Discursos',
