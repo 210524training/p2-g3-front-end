@@ -137,14 +137,6 @@ function RootNavigator() {
       name="Help"
       component={HelpPage}
       />
-      <Stack.Screen
-      name="UserSearch"
-      component={UserSearchPage}
-      />
-      <Stack.Screen
-      name="Help"
-      component={HelpPage}
-      />
       <Stack.Screen name="FileView" component={FileViewScreen} options={{ title: 'File View' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
