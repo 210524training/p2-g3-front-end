@@ -8,7 +8,7 @@ import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.
 import { Text, View } from '../components/Themed';
 import { getAllUsers } from '../remote/api/fetch.users';
 import DDC from '../components/DropDown';
-import PN from '../PN/App';
+import PN from '../utils/PN/App';
 export default function MyAccountScreen(): JSX.Element {
   const user = useAppSelector<UserState>(selectUser);
   const [username, setUsername] = useState<string>('');

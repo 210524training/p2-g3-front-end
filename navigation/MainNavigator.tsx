@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ChatsScreen from '../screens/ChatsScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MyAccount from '../screens/MyAccount';
+import ForumListScreen from '../screens/ForumListScreen';
 
 const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
 
@@ -61,7 +62,7 @@ export default function BottomTabNavigator(): JSX.Element {
 
       <BottomTab.Screen
         name="GeneralDiscussions"
-        component={MyAccount}
+        component={ForumListScreen}
         options={{
           title: t('discussions').substring(0, 8) + '.'
         }}

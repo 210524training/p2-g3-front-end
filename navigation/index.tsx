@@ -3,13 +3,14 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName, Text } from 'react-native';
-import { View } from '../components/Themed';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { generate as shortid } from 'shortid';
 
+import { View } from '../components/Themed';
 import Colors from '../constants/Colors';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -22,6 +23,7 @@ import CameraScreen from '../screens/CameraScreen';
 import FileViewScreen from '../screens/FileViewScreen';
 import t from '../Localization';
 import DDC from '../components/DropDown';
+import ForumScreen from '../screens/ForumScreen';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -77,10 +79,9 @@ function RootNavigator() {
                     />
                   )}
                   items={[
-                    { key: 'item-1', render: (<Text>Item 1</Text>), onClick: () => { alert('item 1 clicked'); } },
-                    { key: 'item-2', render: (<Text>Item 2</Text>), onClick: () => { alert('item 2 clicked'); } },
-                    { key: 'item-3', render: (<Text>Item 3</Text>), onClick: () => { alert('item 3 clicked'); } },
-                    { key: 'item-4', render: (<Text>Item 4</Text>), onClick: () => { alert('item 4 clicked'); } },
+                    { key: `profile-${shortid()}`, render: (<Text>{t('profile')}</Text>), onClick: () => { alert('item 3 clicked'); } },
+                    { key: `settings-${shortid()}`, render: (<Text>{t('settings')}</Text>), onClick: () => { alert('item 4 clicked'); } },
+                    { key: `close-${shortid()}`, render: (<Text>{t('close')}</Text>), onClick: () => { console.log('close dropdown'); } },
                   ]}
                 />
                 {/* <Octicons
@@ -121,6 +122,10 @@ function RootNavigator() {
       <Stack.Screen
         name="Contacts"
         component={ContactsScreen}
+      />
+      <Stack.Screen
+        name="ForumScreen"
+        component={ForumScreen}
       />
       <Stack.Screen
         name="Camera"
