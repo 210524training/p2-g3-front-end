@@ -1,15 +1,16 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import t from '../Localization';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { BottomTabParamList, ChatsParamList, TabTwoParamList } from '../types';
-import Media from '../components/Media';
-import t from '../Localization';
-import { createStackNavigator } from '@react-navigation/stack';
 import ChatsScreen from '../screens/ChatsScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MyAccount from '../screens/MyAccount';
 import ForumListScreen from '../screens/ForumListScreen';
+import UserSearchPage from '../new_pages/UserSearch';
+import HelpPage from '../new_pages/HelpPage';
 
 const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
 
@@ -43,7 +44,7 @@ export default function BottomTabNavigator(): JSX.Element {
         }}
         
       /> */}
-      
+
       <BottomTab.Screen
         name="Profile"
         component={MyAccount}
@@ -67,12 +68,26 @@ export default function BottomTabNavigator(): JSX.Element {
           title: t('discussions').substring(0, 8) + '.'
         }}
       />
-      
+
       <BottomTab.Screen
         name="Users"
         component={MyAccount}
         options={{
           title: t('users')
+        }}
+      />
+      <BottomTab.Screen
+        name="UserSearch"
+        component={UserSearchPage}
+        options={{
+          title: t('search')
+        }}
+      />
+      <BottomTab.Screen
+        name="Help"
+        component={HelpPage}
+        options={{
+          title: t('help')
         }}
       />
       {/* <BottomTab.Screen

@@ -32,6 +32,8 @@ export type RootStackParamList = {
   ForumScreen: {
     forum: Forum,
   },
+  UserSearch: undefined;
+  Help: undefined;
 };
 
 export type ChatsParamList = {
@@ -51,6 +53,8 @@ export type BottomTabParamList = {
   Calls: undefined;
   GeneralDiscussions: undefined;
   Users: undefined;
+  UserSearch: undefined;
+  Help: undefined;
 };
 
 export type HomeParamList = {
