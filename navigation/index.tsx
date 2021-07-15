@@ -3,12 +3,12 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName, Text } from 'react-native';
+import { ColorSchemeName, Pressable, Text } from 'react-native';
 import { View } from '../components/Themed';
-import { Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Octicons, MaterialCommunityIcons, Feather, AntDesign } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 
@@ -23,6 +23,7 @@ import CameraScreen from '../screens/CameraScreen';
 import FileViewScreen from '../screens/FileViewScreen';
 import t from '../Localization';
 import DDC from '../components/DropDown';
+import EditChatRoom from '../screens/EditChatRoom';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -42,6 +43,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const colorScheme = useColorScheme();
+
   return (
     <Stack.Navigator screenOptions={{
       headerTintColor: Colors[colorScheme].background,
@@ -58,6 +60,7 @@ function RootNavigator() {
         options={{
           title: t('name'),
           headerRight: () => {
+            const nav = useNavigation();
             return (
               <View style={{
                 backgroundColor: Colors[colorScheme].tint,
@@ -69,21 +72,7 @@ function RootNavigator() {
                 marginTop: 10,
               }}
               >
-                <DDC
-                  render={(
-                    <MaterialCommunityIcons
-                      name="dots-vertical"
-                      size={22}
-                      color={Colors[colorScheme].background}
-                    />
-                  )}
-                  items={[
-                    { key: 'item-1', render: (<Text>Item 1</Text>), onClick: () => { alert('item 1 clicked'); } },
-                    { key: 'item-2', render: (<Text>Item 2</Text>), onClick: () => { alert('item 2 clicked'); } },
-                    { key: 'item-3', render: (<Text>Item 3</Text>), onClick: () => { alert('item 3 clicked'); } },
-                    { key: 'item-4', render: (<Text>Item 4</Text>), onClick: () => { alert('item 4 clicked'); } },
-                  ]}
-                />
+
                 {/* <Octicons
                   name="search"
                   size={22}
@@ -104,19 +93,32 @@ function RootNavigator() {
         component={ChatRoomScreen}
         options={({ route }) => ({
           title: route.params.name || 'No Name',
-          headerRight: () => (
-            <View style={{
-              backgroundColor: Colors[colorScheme].tint,
-              alignItems: 'center',
-              width: 50,
-            }}>
-              <MaterialCommunityIcons
-                name="dots-vertical"
-                size={22}
-                color={Colors[colorScheme].background}
-              />
-            </View>
-          ),
+          headerRight: () => {
+            const nav = useNavigation();
+            return (
+              <View style={{
+                backgroundColor: Colors[colorScheme].tint,
+                alignItems: 'center',
+                width: 50,
+              }}>
+                <Pressable
+                  onPress={() => {
+                    nav.navigate('EditChatRoom', {
+                      chatRoom: route.params.chatRoom,
+                    });
+                  }}
+                  style={({ pressed }) => [
+                    { 
+                      opacity: pressed ? 0.5 : 1 
+                    }
+                  ]}
+                >
+                  <Feather name="edit" size={24} color={Colors[colorScheme].background} />
+                </Pressable>
+                
+              </View>
+            );
+          },
         })}
       />
       <Stack.Screen
@@ -127,6 +129,38 @@ function RootNavigator() {
         name="Camera"
         component={CameraScreen}
       />
+      <Stack.Screen name="EditChatRoom" component={EditChatRoom} 
+        options={({ route }) => ({
+          title: route.params.chatRoom.title || 'No Name',
+
+          headerRight: () => {
+            // TODO: Maybe pass it in route?
+            const nav = useNavigation();
+            return (
+              <View style={{
+                backgroundColor: Colors[colorScheme].tint,
+                alignItems: 'center',
+                width: 50,
+              }}>
+                {/* <Pressable
+                  onPress={() => {
+                    nav.navigate('tr', {
+                      chatRoom: route.params.chatRoom,
+                    });
+                  }}
+                  style={({ pressed }) => [
+                    { 
+                      opacity: pressed ? 0.5 : 1 
+                    }
+                  ]}
+                >
+                  <AntDesign name="adduser" size={24} color={Colors[colorScheme].background} />
+                </Pressable> */}
+              
+              </View>
+            );
+          },
+        })} />
       <Stack.Screen name="FileView" component={FileViewScreen} options={{ title: 'File View' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
