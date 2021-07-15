@@ -5,6 +5,7 @@ import { Text, View } from '../components/Themed';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
 import { useNavigation } from '@react-navigation/native';
+import { Auth } from 'aws-amplify';
 
 const LoginScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
