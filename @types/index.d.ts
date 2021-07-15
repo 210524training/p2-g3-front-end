@@ -28,6 +28,7 @@ export interface User {
   securityQuestionOne: SecurityQuestion,
   securityQuestionTwo: SecurityQuestion,
   securityQuestionThree: SecurityQuestion,
+  aboutMe: string,
 };
 
 export interface Message {

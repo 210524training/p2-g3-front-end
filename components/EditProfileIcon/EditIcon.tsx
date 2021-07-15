@@ -4,33 +4,29 @@ import React from 'react';
 import { Pressable } from 'react-native';
 import { View, Text } from 'react-native';
 import useColorScheme from '../../hooks/useColorScheme';
-import createStyle from './style';
+import createStyle from '../NewMessage/style';
 
-export type NewMessageProsp = {
-
-};
-
-const NewMessage: React.FC<NewMessageProsp> = (): JSX.Element => {
+const EditIcon: React.FC<unknown> = (): JSX.Element =>{
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
 
   const nav = useNavigation();
 
-  const handleNewMessage = () => {
-    nav.navigate('Contacts');
+  const handleEditIcon = () => {
+    nav.navigate('EditProfile');
   };
 
   return (
     <View style={styles.container}>
       <Pressable
-        onPress={handleNewMessage}
+        onPress={handleEditIcon}
         style={({ pressed }) => [
           { opacity: pressed ? 0.5 : 1 }
         ]}
         hitSlop={10}
       >
         <MaterialCommunityIcons
-          name='message-reply-text'
+          name='pencil'
           size={28}
           color='white'
           style={styles.icon}
@@ -40,4 +36,4 @@ const NewMessage: React.FC<NewMessageProsp> = (): JSX.Element => {
   );
 };
 
-export default NewMessage;
+export default EditIcon;

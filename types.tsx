@@ -4,7 +4,7 @@
  */
 
 import { ChatRoom, User } from './@types';
-import { MediaHeader } from './@types';
+import { MediaHeader } from './@types/index.d';
 import Restaurant from './models/restaurant';
 import { Cuisine } from './screens/CuisineScreen';
 
@@ -23,6 +23,8 @@ export type RootStackParamList = {
     user: User,
   };
   Camera: undefined;
+  Register: undefined;
+  EditProfile: undefined;
   FileView: {
     type: MediaHeader,
     width: number,
@@ -51,8 +53,6 @@ export type BottomTabParamList = {
   GeneralDiscussions: undefined;
   Users: undefined;
   Login: undefined;
-  Register: undefined;
-  EditProfile: undefined;
 };
 
 export type HomeParamList = {

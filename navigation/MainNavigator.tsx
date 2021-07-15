@@ -47,13 +47,13 @@ export default function BottomTabNavigator(): JSX.Element {
         
       /> */}
       
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Profile"
         component={MyAccount}
         options={{
           title: t('profile')
         }}
-      />
+      /> */}
 
       <BottomTab.Screen
         name="Chats"
@@ -93,24 +93,10 @@ export default function BottomTabNavigator(): JSX.Element {
         }}
       />
       <BottomTab.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{
-          title: t('register')
-        }}
-      />
-      <BottomTab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
           title: t('profile')
-        }}
-      />
-      <BottomTab.Screen
-        name="EditProfile"
-        component={EditProfileScreen}
-        options={{
-          title: t('edit')
         }}
       />
     </BottomTab.Navigator>

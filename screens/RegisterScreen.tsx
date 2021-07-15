@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-unused-styles */
 import * as React from 'react';
 import { useState } from 'react';
 import { Button, ScrollView, StyleSheet, TextInput } from 'react-native';
@@ -7,9 +8,14 @@ import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from 'react-native';
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
 const RegisterScreen: React.FC<unknown> = (props) => {
   const user = useAppSelector<UserState>(selectUser);
+  const colorScheme = useColorScheme();
+  const styles = createStyle(colorScheme);
+
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -82,31 +88,31 @@ const RegisterScreen: React.FC<unknown> = (props) => {
 
             <View style={{ width: '100%', padding: 25, }}>
               <TextInput
-                style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+                style={styles.text}
                 placeholder="Email"
                 onChangeText={text => setEmail(text)}
                 defaultValue={email}
               />
               <TextInput
-                style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+                style={styles.text}
                 placeholder="Username"
                 onChangeText={text => setUsername(text)}
                 defaultValue={username}
               />
               <TextInput
-                style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+                style={styles.text}
                 placeholder="Password"
                 onChangeText={text => setPassword(text)}
                 defaultValue={password}
               />
               <TextInput
-                style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+                style={styles.text}
                 placeholder="Confirm Password"
                 onChangeText={text => setConfirmPassword(text)}
                 defaultValue={confirmPassword}
               />
               <TextInput
-                style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+                style={styles.text}
                 placeholder="Phone Number"
                 onChangeText={text => setPhoneNumber(text)}
                 defaultValue={phoneNumber}
@@ -118,7 +124,7 @@ const RegisterScreen: React.FC<unknown> = (props) => {
               </Text>
               <Picker
                 selectedValue={questionOne}
-                style={{ height: 50, width: '100%', fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+                style={styles.questions}
                 onValueChange={(itemValue, itemIndex) => setQuestionOne(itemValue)}
               >
                 <Picker.Item label="What was your childhood nickname?" value="What was your childhood nickname?" />
@@ -140,7 +146,7 @@ const RegisterScreen: React.FC<unknown> = (props) => {
               />
               <Picker
                 selectedValue={questionTwo}
-                style={{ height: 50, width: '100%', fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+                style={styles.questions}
                 onValueChange={(itemValue, itemIndex) => setQuestionTwo(itemValue)}
               >
                 <Picker.Item label="What was your childhood nickname?" value="What was your childhood nickname?" />
@@ -162,7 +168,7 @@ const RegisterScreen: React.FC<unknown> = (props) => {
               />
               <Picker
                 selectedValue={questionThree}
-                style={{ height: 50, width: '100%', fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+                style={styles.questions}
                 onValueChange={(itemValue, itemIndex) => setQuestionThree(itemValue)}
               >
                 <Picker.Item label="What was your childhood nickname?" value="What was your childhood nickname?" />
@@ -193,9 +199,9 @@ const RegisterScreen: React.FC<unknown> = (props) => {
                   padding: 10,
                   textAlign: 'right'
                 }}
-                onPress={() => nav.navigate('LoginScreen')}
+                onPress={() => nav.navigate('Login')}
               >
-              Login?
+              Already Have An Account?
               </Text>
             </View>
           </>
@@ -206,22 +212,37 @@ const RegisterScreen: React.FC<unknown> = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
+  },
+  questions: {
+    borderWidth: 1,
+    fontSize: 18,
+    height: 50,
+    margin: 10,
+    paddingHorizontal: 10,
+    width: '100%' 
   },
   separator: {
     height: 1,
     marginVertical: 30,
     width: '80%',
   },
+  text: { 
+    borderWidth: 1,
+    color: Colors['dark'].background,
+    fontSize: 18, 
+    margin: 10,
+    padding: 10, 
+  },
   title: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
     padding: 20,
-  },
+  }
 });
 
 export default RegisterScreen;

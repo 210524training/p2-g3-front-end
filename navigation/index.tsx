@@ -23,6 +23,8 @@ import CameraScreen from '../screens/CameraScreen';
 import FileViewScreen from '../screens/FileViewScreen';
 import t from '../Localization';
 import DDC from '../components/DropDown';
+import RegisterScreen from '../screens/RegisterScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -126,6 +128,14 @@ function RootNavigator() {
       <Stack.Screen
         name="Camera"
         component={CameraScreen}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
       />
       <Stack.Screen name="FileView" component={FileViewScreen} options={{ title: 'File View' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />

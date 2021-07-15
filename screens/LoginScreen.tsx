@@ -64,7 +64,7 @@ const LoginScreen: React.FC<unknown> = () => {
                 textAlign: 'right'
               }}
               onPress={() => {
-                nav.navigate('RegisterScreen');
+                nav.navigate('Register');
               }}
             >
               Don&apos;t have an account?
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   title: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
   },
 });

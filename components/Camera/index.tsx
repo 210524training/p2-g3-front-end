@@ -5,7 +5,7 @@ import { Camera } from 'expo-camera';
 import { Pressable, View, StyleSheet, StyleProp, ViewStyle, PressableStateCallbackType } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { MediaHeader } from '../../@types';
+import { MediaHeader } from '../../@types/index.d';
 
 export type CameraProps = {
 
