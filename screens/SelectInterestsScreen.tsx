@@ -19,7 +19,7 @@ const SelectInterests: React.FC<unknown> = () => {
 
   const [selectInterests, setSelectInterests] = useState<{label: string, value: string}[]>([]);
 
-  const fruits = [
+  const interests = [
     { label: 'Art', value: 'art' },
     { label: 'Animation', value: 'anime' },
     { label: 'Automotive', value: 'auto' },
@@ -41,21 +41,26 @@ const SelectInterests: React.FC<unknown> = () => {
   };
 
   const handleSumbitInterests = () => {
-    nav.navigate('Home');
+    nav.navigate('Chats');
   };
 
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.title}>
+      <Text style={styles.title}>
           Select Your Interests:
-        </Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      </View>
+      </Text>
+      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <SelectMultiple
-        items={fruits}
+        items={interests}
         selectedItems={selectInterests}
         onSelectionsChange={onSelectionsChange} />
+      <View style={{ width: '100%', padding: 25 }}>  
+        <Button 
+          onPress={() => handleSumbitInterests()}
+          title="Next"
+          color="green"
+        />
+      </View>
     </ScrollView>
   );
 };
