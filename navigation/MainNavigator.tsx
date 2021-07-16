@@ -14,6 +14,7 @@ import HelpPage from '../new_pages/HelpPage';
 import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import SelectSomethingScreen from '../screens/SelectSomethingScreen';
 
 const ios: boolean = Platform.OS === 'ios';
 const BottomTab = ios ? createBottomTabNavigator<BottomTabParamList>() : createMaterialTopTabNavigator<BottomTabParamList>();
@@ -79,7 +80,7 @@ export default function BottomTabNavigator(): JSX.Element {
 
       <BottomTab.Screen
         name="Users"
-        component={MyAccount}
+        component={SelectSomethingScreen}
         options={{
           title: t('users'),
           tabBarIcon: ios

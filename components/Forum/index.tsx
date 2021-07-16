@@ -5,6 +5,7 @@ import useColorScheme from '../../hooks/useColorScheme';
 import LeftContainer from './LC';
 import MainContainer from './MC';
 import createStyle from './styles';
+import SelectMultiple from 'react-native-select-multiple';
 
 export type ForumProps = {
   forum: Forum;
