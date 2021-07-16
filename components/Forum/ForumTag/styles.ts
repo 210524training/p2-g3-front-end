@@ -11,6 +11,13 @@ const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
     marginRight: 15,
     width: 60,
   },
+  tag: {
+    borderRadius: 5,
+    borderWidth: 0.5,
+    fontWeight: 'bold',
+    margin: 2,
+    padding: 2,
+  }
 });
 
 export default createStyle;

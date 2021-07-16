@@ -1,9 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import SelectMultiple from 'react-native-select-multiple';
 import { InterestValues } from '../../@types/index.d';
-
-const fruits = InterestValues;
+import SelectMultiple from 'react-native-select-multiple';
 
 export type CheckBoxItem = {
   label: string,

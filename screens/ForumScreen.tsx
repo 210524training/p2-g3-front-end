@@ -1,6 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import ForumView from '../components/Forum';
 import useColorScheme from '../hooks/useColorScheme';
 import { RootStackParamList } from '../types';
@@ -17,7 +18,8 @@ const ForumScreen: React.FC<ForumScreenProps> = ({ route }): JSX.Element => {
   const { forum } = route.params;
 
   return (
-    <ForumView forum={forum} />
+    <ScrollView><ForumView forum={forum} /></ScrollView>
+    
   );
 };
 

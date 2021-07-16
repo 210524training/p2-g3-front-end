@@ -7,6 +7,8 @@ import Colors from '../../../constants/Colors';
 const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors[colorScheme].background,
+    marginVertical: 5,
   },
   header: {
     // flex: 1,

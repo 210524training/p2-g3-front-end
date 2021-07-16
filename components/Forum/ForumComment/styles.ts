@@ -3,7 +3,9 @@ import { StyleSheet } from 'react-native';
 
 const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
   contianer: {
-
+    // flex: 1,
+    flexDirection: 'row',
+    // width: '100%',
   },
   image: {
     borderRadius: 50,
