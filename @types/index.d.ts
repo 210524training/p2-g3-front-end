@@ -48,7 +48,6 @@ export type ChatRoomUser = {
 export interface ChatRoom {
   id: string,
   title: string,
-  tags: Interest[],
   users: ChatRoomUser[],
   messages: Message[],
   lastMessage: Message,

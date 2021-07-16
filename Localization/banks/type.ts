@@ -1,7 +1,12 @@
 type Bank = {
   /** Application Name (fallback will be en) */
   name?: string,
-
+  deleteChatRoom: string,
+  remove: string,
+  searchForUser: string,
+  none: string,
+  administrator: string,
+  moderator: string,
   users: string,
   generalDiscussions: string,
   discussions: string,
