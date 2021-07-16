@@ -91,7 +91,7 @@ const UserSearchPage: React.FC<unknown> = () => {
     <>
       <Searchbar
         style={styles.searchBar}
-        placeholder={t('search')}
+        placeholder={t('searchForUser')}
         onChangeText={handleSearch}
         value={search}
       />
@@ -106,7 +106,7 @@ const UserSearchPage: React.FC<unknown> = () => {
             keyExtractor={(item) => item.id}
           />
         ) : (
-          <Text>No Users Found</Text>
+          <Text>{t('noUsersFound')}</Text>
         )}
       </View>
     </>

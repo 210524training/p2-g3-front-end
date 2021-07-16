@@ -6,59 +6,30 @@ import Modal from 'react-native-modal';
 import createStyle from '../components/ChatListItem/style';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
+import t from '../Localization';
+import Link from '../components/Link';
 
-type FAQItem = {
-    header: string,
-    content: string,
+export type FAQItem = {
+  header: string,
+  content: string | JSX.Element,
 }
 
-// const styles = StyleSheet.create({
-//     FAQ: {
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         margin: 10,
-//         padding: 5,
-//     },
+const FAQItems: FAQItem[] = [
+  {
+    header: 'How to...',
+    content: 'Figure it out!',
+  },
+  {
+    header: 'How not to...',
+    content: 'Simple, don\'t figure it out!',
+  },
+  {
+    header: 'Do this',
+    content: <Link link={'https://google.com'} />,
+  },
+];
 
-//     FAQContainer: {
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         margin: 5,
-//         padding: 10,
-//         borderWidth: 1,
-//         backgroundColor: '#F9F9F9',
-//         borderColor: '#d3d3d3',
-//         borderRadius: 20,
-//         paddingLeft: 75,
-//         paddingRight: 75,
-//     },
-
-//     page: {
-//         backgroundColor: '#cdf0ea',
-//     },
-
-//     title: {
-//         color: '#beaee2',
-//         fontSize: 20,
-//         fontWeight: 'bold',
-//         justifyContent: 'center',
-//         marginTop: 75,
-//         marginBottom: 10,
-//     },
-
-//     titleView: {
-//         justifyContent: 'center',
-//         alignItems:'center',
-//     },
-
-//     input: {
-//         height: 500,
-//         width: 250,
-//         backgroundColor: '#FFFFFF',
-//     }
-// });
-
-const HelpPage: React.FC<unknown> = (props) => {
+const HelpPage: React.FC<unknown> = (): JSX.Element => {
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
 
@@ -68,19 +39,12 @@ const HelpPage: React.FC<unknown> = (props) => {
   const [modalViewHelp, setModalViewHelp] = useState(false);
   const [helpMessageText, setHelpMessageText] = useState('');
 
-  const FAQItems: FAQItem[] = [];
-  for (let i = 0; i < 5; i++) {
-    FAQItems[i] = { header: '', content: '' };
-    FAQItems[i].header = `Topic ${i + 1} -- Test`;
-    FAQItems[i].content = 'Figure it out.';
-  }
-
   const closeModal = () => {
     setModalView(false);
   };
 
   const submitHelpMessage = () => {
-
+    console.log('submitHelpMessage');
   };
 
   return (
@@ -92,13 +56,16 @@ const HelpPage: React.FC<unknown> = (props) => {
         width: '100%',
         alignItems: 'center'
       }}>
-        <Text style={styles.title}>Frequently Asked Questions</Text>
+        <Text style={styles.title}>{t('faq')}</Text>
       </View>
       <View>
         {
           FAQItems.map((FAQ) => (
             <View key={FAQ.header}>
-              <Pressable onPress={() => { setModalView(true); setCurrentTopic(FAQ) }}>
+              <Pressable onPress={() => {
+                setModalView(true);
+                setCurrentTopic(FAQ);
+              }}>
                 <View style={{
                   flexDirection: 'row',
                   justifyContent: 'center',
@@ -156,7 +123,7 @@ const HelpPage: React.FC<unknown> = (props) => {
           ))
         }
         <View>
-          <Pressable onPress={() => { setModalViewHelp(true) }}>
+          <Pressable onPress={() => { setModalViewHelp(true); }}>
             <View style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -164,7 +131,7 @@ const HelpPage: React.FC<unknown> = (props) => {
               width: '100%',
               alignItems: 'center'
             }}>
-              <Text style={{ color: 'blue' }}>Request Help From An Admin</Text>
+              <Text style={{ color: 'blue' }}>{t('requestHelp')}</Text>
             </View>
           </Pressable>
           <ScrollView>
@@ -184,7 +151,7 @@ const HelpPage: React.FC<unknown> = (props) => {
                   color: Colors[colorScheme].text,
                   fontSize: 12,
                   fontWeight: 'bold',
-                }}>Describe your issue below:</Text>
+                }}>{t('describeYourIssue')}</Text>
               </View>
               <View style={{
                 flexDirection: 'row',
@@ -198,13 +165,13 @@ const HelpPage: React.FC<unknown> = (props) => {
                   multiline={true}
                   numberOfLines={10}
                   onChangeText={(text) => setHelpMessageText(text)}
-                  placeholder='Begin Typing'
+                  placeholder={t('myIssue')}
                   value={helpMessageText}
                 />
               </View>
               <Button
-                title='Submit'
-                color='blue'
+                title={t('submit')}
+                color={Colors[colorScheme].tint}
                 onPress={submitHelpMessage}
               />
             </Modal>
@@ -212,7 +179,7 @@ const HelpPage: React.FC<unknown> = (props) => {
         </View>
       </View>
     </ScrollView >
-  )
-}
+  );
+};
 
 export default HelpPage;
