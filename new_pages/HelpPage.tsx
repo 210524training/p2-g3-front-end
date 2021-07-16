@@ -59,160 +59,160 @@ type FAQItem = {
 // });
 
 const HelpPage: React.FC<unknown> = (props) => {
-    const colorScheme = useColorScheme();
-    const styles = createStyle(colorScheme);
+  const colorScheme = useColorScheme();
+  const styles = createStyle(colorScheme);
 
 
-    const [modalView, setModalView] = useState(false);
-    const [currentTopic, setCurrentTopic] = useState<FAQItem>();
-    const [modalViewHelp, setModalViewHelp] = useState(false);
-    const [helpMessageText, setHelpMessageText] = useState('');
+  const [modalView, setModalView] = useState(false);
+  const [currentTopic, setCurrentTopic] = useState<FAQItem>();
+  const [modalViewHelp, setModalViewHelp] = useState(false);
+  const [helpMessageText, setHelpMessageText] = useState('');
 
-    const FAQItems: FAQItem[] = [];
-    for (let i = 0; i < 5; i++) {
-        FAQItems[i] = { header: "", content: "" };
-        FAQItems[i].header = `Topic ${i + 1} -- Test`;
-        FAQItems[i].content = "Figure it out.";
-    }
+  const FAQItems: FAQItem[] = [];
+  for (let i = 0; i < 5; i++) {
+    FAQItems[i] = { header: '', content: '' };
+    FAQItems[i].header = `Topic ${i + 1} -- Test`;
+    FAQItems[i].content = 'Figure it out.';
+  }
 
-    const closeModal = () => {
-        setModalView(false);
-    }
+  const closeModal = () => {
+    setModalView(false);
+  };
 
-    const submitHelpMessage = () => {
+  const submitHelpMessage = () => {
 
-    }
+  };
 
-    return (
-        <ScrollView>
+  return (
+    <ScrollView>
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        padding: 10,
+        width: '100%',
+        alignItems: 'center'
+      }}>
+        <Text style={styles.title}>Frequently Asked Questions</Text>
+      </View>
+      <View>
+        {
+          FAQItems.map((FAQ) => (
+            <View key={FAQ.header}>
+              <Pressable onPress={() => { setModalView(true); setCurrentTopic(FAQ) }}>
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  padding: 10,
+                  width: '100%',
+                  alignItems: 'center'
+                }}>
+                  <Text style={{
+                    color: Colors[colorScheme].text,
+                    fontSize: 12,
+                    fontWeight: 'bold',
+                  }}>{FAQ.header}</Text>
+                </View>
+              </Pressable>
+              {currentTopic ? (
+                <ScrollView>
+                  <Modal isVisible={modalView}
+                    animationIn='slideInUp'
+                    backdropColor='#DDDDDD'
+                    backdropOpacity={1}
+                    onBackdropPress={() => { setModalView(false); }}>
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      padding: 10,
+                      width: '100%',
+                      alignItems: 'center'
+                    }}>
+                      <Text style={{ fontWeight: 'bold' }}>{currentTopic.header}</Text>
+                    </View>
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      padding: 10,
+                      width: '100%',
+                      alignItems: 'center'
+                    }}>
+                      <Text>{currentTopic.content}</Text>
+                    </View>
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      padding: 10,
+                      width: '100%',
+                      alignItems: 'center'
+                    }}>
+                      <Button
+                        title='Close'
+                        color='blue'
+                        onPress={closeModal} />
+                    </View>
+                  </Modal>
+                </ScrollView>) : <></>}
+            </View>
+          ))
+        }
+        <View>
+          <Pressable onPress={() => { setModalViewHelp(true) }}>
             <View style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              padding: 10,
+              width: '100%',
+              alignItems: 'center'
+            }}>
+              <Text style={{ color: 'blue' }}>Request Help From An Admin</Text>
+            </View>
+          </Pressable>
+          <ScrollView>
+            <Modal isVisible={modalViewHelp}
+              animationIn='slideInUp'
+              backdropColor='#DDDDDD'
+              backdropOpacity={1}
+              onBackdropPress={() => { setModalViewHelp(false); }}>
+              <View style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
                 padding: 10,
                 width: '100%',
-                alignItems: 'center'
-            }}>
-                <Text style={styles.title}>Frequently Asked Questions</Text>
-            </View>
-            <View>
-                {
-                    FAQItems.map((FAQ) => (
-                        <View key={FAQ.header}>
-                            <Pressable onPress={() => { setModalView(true); setCurrentTopic(FAQ) }}>
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    padding: 10,
-                                    width: '100%',
-                                    alignItems: 'center'
-                                }}>
-                                    <Text style={{
-                                        color: Colors[colorScheme].text,
-                                        fontSize: 12,
-                                        fontWeight: 'bold',
-                                    }}>{FAQ.header}</Text>
-                                </View>
-                            </Pressable>
-                            {currentTopic ? (
-                                <ScrollView>
-                                    <Modal isVisible={modalView}
-                                        animationIn='slideInUp'
-                                        backdropColor='#DDDDDD'
-                                        backdropOpacity={1}
-                                        onBackdropPress={() => { setModalView(false); }}>
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'center',
-                                            padding: 10,
-                                            width: '100%',
-                                            alignItems: 'center'
-                                        }}>
-                                            <Text style={{ fontWeight: 'bold' }}>{currentTopic.header}</Text>
-                                        </View>
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'center',
-                                            padding: 10,
-                                            width: '100%',
-                                            alignItems: 'center'
-                                        }}>
-                                            <Text>{currentTopic.content}</Text>
-                                        </View>
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'center',
-                                            padding: 10,
-                                            width: '100%',
-                                            alignItems: 'center'
-                                        }}>
-                                            <Button
-                                                title='Close'
-                                                color='blue'
-                                                onPress={closeModal} />
-                                        </View>
-                                    </Modal>
-                                </ScrollView>) : <></>}
-                        </View>
-                    ))
-                }
-                <View>
-                    <Pressable onPress={() => { setModalViewHelp(true) }}>
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            padding: 10,
-                            width: '100%',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{ color: 'blue' }}>Request Help From An Admin</Text>
-                        </View>
-                    </Pressable>
-                    <ScrollView>
-                        <Modal isVisible={modalViewHelp}
-                            animationIn='slideInUp'
-                            backdropColor='#DDDDDD'
-                            backdropOpacity={1}
-                            onBackdropPress={() => { setModalViewHelp(false); }}>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                padding: 10,
-                                width: '100%',
-                                alignItems: 'center',
-                            }}>
-                                <Text style={{
-                                    color: Colors[colorScheme].text,
-                                    fontSize: 12,
-                                    fontWeight: 'bold',
-                                }}>Describe your issue below:</Text>
-                            </View>
-                            <View style={{
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                padding: 10,
-                                width: '100%',
-                                alignItems: 'center',
-                            }}>
-                                <TextInput
-                                    style={{ backgroundColor: 'white', flex: 1, height: 500 }}
-                                    multiline={true}
-                                    numberOfLines={10}
-                                    onChangeText={(text) => setHelpMessageText(text)}
-                                    placeholder='Begin Typing'
-                                    value={helpMessageText}
-                                />
-                            </View>
-                            <Button
-                                title='Submit'
-                                color='blue'
-                                onPress={submitHelpMessage}
-                            />
-                        </Modal>
-                    </ScrollView>
-                </View>
-            </View>
-        </ScrollView >
-    )
+                alignItems: 'center',
+              }}>
+                <Text style={{
+                  color: Colors[colorScheme].text,
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                }}>Describe your issue below:</Text>
+              </View>
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                padding: 10,
+                width: '100%',
+                alignItems: 'center',
+              }}>
+                <TextInput
+                  style={{ backgroundColor: 'white', flex: 1, height: 500 }}
+                  multiline={true}
+                  numberOfLines={10}
+                  onChangeText={(text) => setHelpMessageText(text)}
+                  placeholder='Begin Typing'
+                  value={helpMessageText}
+                />
+              </View>
+              <Button
+                title='Submit'
+                color='blue'
+                onPress={submitHelpMessage}
+              />
+            </Modal>
+          </ScrollView>
+        </View>
+      </View>
+    </ScrollView >
+  )
 }
 
 export default HelpPage;

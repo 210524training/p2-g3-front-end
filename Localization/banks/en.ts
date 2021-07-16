@@ -83,6 +83,7 @@ const en: Bank = {
   calls: 'Calls',
   typeAMessage: 'Type a message',
   contacts: 'Contacts',
+  
 };
 
 export default en;
