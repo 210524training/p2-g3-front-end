@@ -56,12 +56,21 @@ export interface ChatRoom {
 export interface Forum {
   id: string,
   title: string,
-  tags: string[],
+  tags?: string[],
   user: User,
   createdAt: string,
   content: string,
   likes: number,
-  imageUri?: string,
   numberOfComments?: number,
-  comments?: Forum[]
+  comments?: ForumComment[]
+};
+
+export interface ForumComment {
+  id: string,
+  user: User,
+  createdAt: string,
+  content: string,
+  likes: number,
+  numberOfComments?: number,
+  comments?: ForumComment[]
 };
