@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Text } from 'react-native';
 import { generate as shortid } from 'shortid';
 
@@ -15,16 +15,13 @@ export type DDLTextProps = {
 
 const DDLText: React.FC<DDLTextProps> = ({ text, color, linkColor }): JSX.Element => {
   const colorScheme = useColorScheme();
+  const inject = useMemo(() => injectStyling(
+    text,
+    color || Colors[colorScheme].background || 'black',
+    'blue'
+  ), [text]);
   return (
-    <Text key={shortid()}>
-      {
-        injectStyling(
-          text, 
-          color || Colors[colorScheme].background || 'black', 
-          'blue'
-        )
-      }
-    </Text>
+    <Text key={shortid()}>{inject}</Text>
   );
 };
 

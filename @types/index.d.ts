@@ -53,6 +53,7 @@ export interface ChatRoom {
 export interface Forum {
   id: string,
   title: string,
+  tags: string[],
   user: User,
   createdAt: string,
   content: string,

@@ -2,6 +2,7 @@ export default [
   {
     id: 'f1',
     title: 'No knowing!',
+    tags: ['this', 'that', 'tag'],
     user: {
       id: 'u1',
       username: 'Dustin',

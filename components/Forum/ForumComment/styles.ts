@@ -5,6 +5,12 @@ const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
   contianer: {
 
   },
+  image: {
+    borderRadius: 50,
+    height: 60,
+    marginRight: 15,
+    width: 60,
+  },
 });
 
 export default createStyle;

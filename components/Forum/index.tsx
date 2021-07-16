@@ -14,7 +14,7 @@ const ForumView: React.FC<ForumProps> = ({ forum }): JSX.Element => {
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
   return (
-    <View>
+    <View style={styles.contianer}>
       <LeftContainer user={forum.user} />
       <MainContainer forum={forum} />
     </View>
