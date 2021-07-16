@@ -28,11 +28,11 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
   const iconSize = 30;
 
   const handleOnForumEdit = () => {
-
+    console.log('navigate to edit');
   };
 
   const handleOnForumDelete = () => {
-
+    console.log('Delete forum');
   };
 
   return (
