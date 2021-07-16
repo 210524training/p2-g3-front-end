@@ -33,10 +33,10 @@ const EditChatRoom: React.FC<ChatRoomEditProps> = ({ route }): JSX.Element => {
   const [titleText, setTitleText] = useState<string>(chatRoom.title);
   const [searchForUserText, setSearchForUserText] = useState<string>('');
 
-  if (!user) {
-    nav.navigate('LoginScreen');
-    return <></>;
-  }
+  // if (!user) {
+  //   nav.navigate('LoginScreen');
+  //   return <></>;
+  // }
 
   const onTitleChange = (text: string) => {
     const ncr = {...newChatRoom};
@@ -61,23 +61,23 @@ const EditChatRoom: React.FC<ChatRoomEditProps> = ({ route }): JSX.Element => {
   const canDeleteRoom = (u: User): boolean => {
     let elevated = false;
     for (let i = 0; i < chatRoom.users.length; i++) {
-      if (chatRoom.users[i].user.id === u.id) {
+      if (chatRoom.users[i].user.id === u?.id) {
         elevated = chatRoom.users[i].isAdmin;
         break;
       }
     }
-    return !elevated;
+    return elevated;
   };
 
   const canModifyRoom = (u: User): boolean => {
     let elevated = false;
     for (let i = 0; i < chatRoom.users.length; i++) {
-      if (chatRoom.users[i].user.id === u.id) {
+      if (chatRoom.users[i].user.id === u?.id) {
         elevated = chatRoom.users[i].isAdmin || chatRoom.users[i].isModerator;
         break;
       }
     }
-    return !elevated;
+    return elevated;
   };
 
   const onPressHandlerSendChatRoom = () => {
@@ -228,9 +228,9 @@ const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
   },
   userContainer: {
     alignItems: 'center',
-
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-evenly'
   },
 });
 

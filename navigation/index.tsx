@@ -24,6 +24,8 @@ import FileViewScreen from '../screens/FileViewScreen';
 import t from '../Localization';
 import DDC from '../components/DropDown';
 import EditChatRoom from '../screens/EditChatRoom';
+import UserSearchPage from '../new_pages/UserSearch';
+import HelpPage from '../new_pages/HelpPage';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -132,35 +134,15 @@ function RootNavigator() {
       <Stack.Screen name="EditChatRoom" component={EditChatRoom} 
         options={({ route }) => ({
           title: route.params.chatRoom.title || 'No Name',
-
-          headerRight: () => {
-            // TODO: Maybe pass it in route?
-            const nav = useNavigation();
-            return (
-              <View style={{
-                backgroundColor: Colors[colorScheme].tint,
-                alignItems: 'center',
-                width: 50,
-              }}>
-                {/* <Pressable
-                  onPress={() => {
-                    nav.navigate('tr', {
-                      chatRoom: route.params.chatRoom,
-                    });
-                  }}
-                  style={({ pressed }) => [
-                    { 
-                      opacity: pressed ? 0.5 : 1 
-                    }
-                  ]}
-                >
-                  <AntDesign name="adduser" size={24} color={Colors[colorScheme].background} />
-                </Pressable> */}
-              
-              </View>
-            );
-          },
         })} />
+      <Stack.Screen
+        name="UserSearch"
+        component={UserSearchPage}
+      />
+      <Stack.Screen
+        name="Help"
+        component={HelpPage}
+      />
       <Stack.Screen name="FileView" component={FileViewScreen} options={{ title: 'File View' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
