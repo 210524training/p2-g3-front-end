@@ -1,7 +1,8 @@
 import Bank from './type';
 
 const en: Bank = {
-  name: 'Chatapredu',
+  _name: 'Chatapredu',
+  name: 'Name',
   deleteChatRoom: 'Delete Chat Room',
   remove: 'Remove',
   none: 'None',

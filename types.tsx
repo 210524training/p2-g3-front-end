@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { ChatRoom, MediaHeader, User } from './@types';
+import { ChatRoom, Forum, MediaHeader, User } from './@types/index.d';
 import Restaurant from './models/restaurant';
 import { Cuisine } from './screens/CuisineScreen';
 
@@ -30,7 +30,10 @@ export type RootStackParamList = {
     height: number,
     uri: string,
   },
-  UploadFile: undefined;
+  UploadFile: undefined,
+  ForumScreen: {
+    forum: Forum,
+  },
   UserSearch: undefined;
   Help: undefined;
 };

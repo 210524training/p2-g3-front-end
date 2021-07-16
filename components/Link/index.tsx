@@ -1,5 +1,6 @@
 import React from 'react';
 import { Linking, Pressable, Text } from 'react-native';
+import { generate as shortid } from 'shortid';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 
@@ -9,10 +10,11 @@ export type LinkProps = {
   color?: string,
 };
 
-const Link: React.FC<LinkProps> = ({ link, text, color  }): JSX.Element => {
+const Link: React.FC<LinkProps> = ({ link, text, color }): JSX.Element => {
   const colorScheme = useColorScheme();
   return (
     <Pressable
+      key={shortid()}
       onPress={() => Linking.openURL(link)}
       style={({ pressed }) => [
         { opacity: pressed ? 0.5 : 1 }
@@ -22,7 +24,7 @@ const Link: React.FC<LinkProps> = ({ link, text, color  }): JSX.Element => {
         color: color || Colors[colorScheme].tint || 'blue',
         textDecorationLine: 'underline',
       }}>
-        { text || link }
+        {text || link}
       </Text>
     </Pressable>
   );

@@ -3,15 +3,15 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
+import * as React from 'react';
+import { generate as shortid } from 'shortid';
 import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
 import { ColorSchemeName, Pressable, Text } from 'react-native';
 import { View } from '../components/Themed';
 import { Octicons, MaterialCommunityIcons, Feather, AntDesign } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
-
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './MainNavigator';
@@ -23,6 +23,7 @@ import CameraScreen from '../screens/CameraScreen';
 import FileViewScreen from '../screens/FileViewScreen';
 import t from '../Localization';
 import DDC from '../components/DropDown';
+import ForumScreen from '../screens/ForumScreen';
 import EditChatRoom from '../screens/EditChatRoom';
 import UserSearchPage from '../new_pages/UserSearch';
 import HelpPage from '../new_pages/HelpPage';
@@ -60,7 +61,7 @@ function RootNavigator() {
         name="Root"
         component={BottomTabNavigator}
         options={{
-          title: t('name'),
+          title: t('_name'),
           headerRight: () => {
             const nav = useNavigation();
             return (
@@ -74,7 +75,6 @@ function RootNavigator() {
                 marginTop: 10,
               }}
               >
-
                 {/* <Octicons
                   name="search"
                   size={22}
@@ -126,6 +126,10 @@ function RootNavigator() {
       <Stack.Screen
         name="Contacts"
         component={ContactsScreen}
+      />
+      <Stack.Screen
+        name="ForumScreen"
+        component={ForumScreen}
       />
       <Stack.Screen
         name="Camera"

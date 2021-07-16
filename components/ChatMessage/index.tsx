@@ -20,7 +20,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }): JSX.Element => {
   const style = createStyle(colorScheme);
   const user: { id: string } = { id: 'u1' };
   const res = extractHeaderAndURL(message.content);
-  
+ 
   return (
     <View style={style.container} key={`${user.id}-${message.id}-${shortid()}`}>
       <View

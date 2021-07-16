@@ -3,6 +3,7 @@ import { RootState } from '../store';
 import { AxiosError } from 'axios';
 import { User } from '../../@types';
 import { sendLogin } from '../../remote/api/fetch.users';
+import { Auth } from 'aws-amplify';
 
 export type UserState = User | null;
 
@@ -17,14 +18,19 @@ export function isAxiosError(error: any): error is AxiosError {
 
 export const loginAsync = createAsyncThunk<User, LoginCredentials>(
   'user/login/async',
-  async ({username, password}, thunkAPI) => {
+  async ({ username, password }, thunkAPI) => {
 
     try {
-      const response = await sendLogin(username, password);
-
-      return response;
-    } catch(error) {
-      console.log(`error is an AxiosError: ${isAxiosError(error)}`);
+      const user: User = await Auth.signIn(username, password).then(cognitoUser => {
+        console.debug(cognitoUser);
+        return {
+          username: cognitoUser.username,
+          password: cognitoUser.password,
+        } as User;
+      });
+      return user;
+    } catch (error) {
+      // console.log(`error is an AxiosError: ${isAxiosError(error)}`);
       return thunkAPI.rejectWithValue(error);
     }
   }

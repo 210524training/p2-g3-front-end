@@ -2,6 +2,7 @@ import Bank from './type';
 
 const es: Bank = {
   welcome: '¡Saludos!',
+  name: 'Nombre',
   deleteChatRoom: 'Borrar Sala',
   remove: 'Remover',
   none: 'Ninguno',
