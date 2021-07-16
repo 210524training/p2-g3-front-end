@@ -27,15 +27,15 @@ export default class DDC extends React.Component<DDCProps, DDCState> {
   }
 
   showDropDown = (event: GestureResponderEvent): void => {
-    // const { locationX, locationY } = event.nativeEvent;
+    const { locationX, locationY } = event.nativeEvent;
     if (this.button) {
       this.button.measure((x, y, width, height, pageX, pageY) => {
         console.log(x, y, width, height, pageX, pageY);
         this.setState({
           show: true, 
           position: {
-            x: x,
-            y: y,
+            x: locationX,
+            y: locationY,
           }
         });
       });

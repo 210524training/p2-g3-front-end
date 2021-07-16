@@ -3,8 +3,7 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { ChatRoom, User } from './@types';
-import { MediaHeader } from './components/Media';
+import { ChatRoom, MediaHeader, User } from './@types';
 import Restaurant from './models/restaurant';
 import { Cuisine } from './screens/CuisineScreen';
 
@@ -18,7 +17,9 @@ export type RootStackParamList = {
     name: string,
     chatRoom: ChatRoom,
   };
-  EditChatRoom: undefined;
+  EditChatRoom: {
+    chatRoom: ChatRoom,
+  };
   Contacts: {
     user: User,
   };

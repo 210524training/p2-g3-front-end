@@ -1,5 +1,7 @@
 export default [{
   id: '1',
+  title: 'Where the streets have not name',
+  tags: [],
   users: [{
     user: {
       id: 'u1',
