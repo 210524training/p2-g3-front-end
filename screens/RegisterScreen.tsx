@@ -33,7 +33,7 @@ const RegisterScreen: React.FC<unknown> = (props) => {
 
   const handleLogin = async () => {
     await dispatch(loginAsync({ username, password }));
-    nav.navigate('Home');
+    nav.navigate('SelectInterests');
   };
 
   const handleRegister = async () => {

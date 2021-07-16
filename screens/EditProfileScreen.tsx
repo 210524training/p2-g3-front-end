@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-unused-styles */
 import React, { useState } from 'react';
-import { Button, StyleSheet, TextInput } from 'react-native';
+import { Button, ScrollView, StyleSheet, TextInput } from 'react-native';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../hooks';
@@ -26,52 +26,55 @@ const EditProfileScreen: React.FC<unknown> = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        Edit Profile
-      </Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text>
-        {user?.id}
-      </Text>
-      <Text>
-        {user?.username}
-      </Text>
-      <Text>
-        {user?.email}
-      </Text>
-      <Text style={{ fontSize: 20 }}>
-        New Password
-      </Text>
-      <TextInput
-        style={styles.text} 
-        placeholder="Enter Password"
-        onChangeText={text => setPassword(text)}
-      />
-      <Text style={{ fontSize: 20 }}>
-        Confirm New Password
-      </Text>
-      <TextInput
-        style={styles.text}
-        placeholder="Re-Enter Password"
-        onChangeText={text => setVerifyPassword(text)}
-      />
-      <Text style={{ fontSize: 20 }}>
-        About Me
-      </Text>
-      <TextInput
-        style={styles.text}
-        placeholder="Type Here!"
-        onChangeText={text => setAboutMe(text)}
-      />
-      <View style={{ width: '100%', padding: 25 }}>  
-        <Button 
-          onPress={() => handleSaveProfile()}
-          title="Save"
-          color="green"
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          Edit Profile
+        </Text>
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        <Text style={{ fontSize: 18 }}>
+          {user?.id}
+        </Text>
+        <Text style={{ fontSize: 18 }}>
+          {user?.username}
+        </Text>
+        <Text style={{ fontSize: 18 }}>
+          {user?.email}
+        </Text>
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        <Text style={{ fontSize: 20 }}>
+          New Password
+        </Text>
+        <TextInput
+          style={styles.text} 
+          placeholder="Enter Password"
+          onChangeText={text => setPassword(text)}
         />
+        <Text style={{ fontSize: 20 }}>
+          Confirm New Password
+        </Text>
+        <TextInput
+          style={styles.text}
+          placeholder="Re-Enter Password"
+          onChangeText={text => setVerifyPassword(text)}
+        />
+        <Text style={{ fontSize: 20 }}>
+          About Me
+        </Text>
+        <TextInput
+          style={styles.text}
+          placeholder="Type Here!"
+          onChangeText={text => setAboutMe(text)}
+        />
+        <View style={{ width: '100%', padding: 25 }}>  
+          <Button 
+            onPress={() => handleSaveProfile()}
+            title="Save"
+            color="green"
+          />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

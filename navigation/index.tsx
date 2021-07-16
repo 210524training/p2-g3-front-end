@@ -25,6 +25,7 @@ import t from '../Localization';
 import DDC from '../components/DropDown';
 import RegisterScreen from '../screens/RegisterScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
+import SelectInterestsScreen from '../screens/SelectInterestsScreen';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -136,6 +137,10 @@ function RootNavigator() {
       <Stack.Screen
         name="EditProfile"
         component={EditProfileScreen}
+      />
+      <Stack.Screen
+        name="SelectInterests"
+        component={SelectInterestsScreen}
       />
       <Stack.Screen name="FileView" component={FileViewScreen} options={{ title: 'File View' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
