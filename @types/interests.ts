@@ -1,7 +1,7 @@
 /**
  * Data scraped from https://en.wikipedia.org/wiki/List_of_hobbies
  */
-interface InterestInterface {
+export default {
   '3D printing': undefined,
   'Acroyoga': undefined,
   'Playing piano': undefined,
@@ -580,6 +580,4 @@ interface InterestInterface {
   'Satellite watching': undefined,
   'Trainspotting': undefined,
   'Whale watching': undefined,
-}
-
-export default InterestInterface;
+};

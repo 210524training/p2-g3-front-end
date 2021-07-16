@@ -3,6 +3,12 @@ import Bank from './type';
 const en: Bank = {
   _name: 'Chatapredu',
   name: 'Name',
+  deleteChatRoom: 'Delete Chat Room',
+  remove: 'Remove',
+  none: 'None',
+  administrator: 'Administrator',
+  moderator: 'Moderator',
+  searchForUser: 'Search for user',
   users: 'Users',
   generalDiscussions: 'General Discussions',
   discussions: 'Discussions',

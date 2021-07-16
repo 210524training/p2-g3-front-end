@@ -17,7 +17,9 @@ export type RootStackParamList = {
     name: string,
     chatRoom: ChatRoom,
   };
-  EditChatRoom: undefined;
+  EditChatRoom: {
+    chatRoom: ChatRoom,
+  };
   Contacts: {
     user: User,
   };
