@@ -10,35 +10,13 @@ import { getAllUsers } from '../remote/api/fetch.users';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 import SelectMultiple from 'react-native-select-multiple';
+import CheckBox from '../components/CheckBox';
 
 const SelectInterests: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
   const nav = useNavigation();
-
-  const [selectInterests, setSelectInterests] = useState<{label: string, value: string}[]>([]);
-
-  const interests = [
-    { label: 'Art', value: 'art' },
-    { label: 'Animation', value: 'anime' },
-    { label: 'Automotive', value: 'auto' },
-    { label: 'Baking', value: 'bake' },
-    { label: 'Crafts', value: 'craft' },
-    { label: 'Fashion', value: 'fashion' },
-    { label: 'Gaming', value: 'gaming' },
-    { label: 'Technology', value: 'tech' },
-    { label: 'Music', value: 'music' },
-    { label: 'Poetry', value: 'poetry' },
-    { label: 'Sports', value: 'sports' },
-    { label: 'Education', value: 'education' },
-    { label: 'Design', value: 'design' },
-  ];
- 
-  const onSelectionsChange = (selectItems: any) => {
-    // selectedFruits is array of { label, value }
-    setSelectInterests({...selectItems});
-  };
 
   const handleSumbitInterests = () => {
     nav.navigate('Chats');
@@ -50,10 +28,7 @@ const SelectInterests: React.FC<unknown> = () => {
           Select Your Interests:
       </Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <SelectMultiple
-        items={interests}
-        selectedItems={selectInterests}
-        onSelectionsChange={onSelectionsChange} />
+      <CheckBox />
       <View style={{ width: '100%', padding: 25 }}>  
         <Button 
           onPress={() => handleSumbitInterests()}

@@ -2,8 +2,8 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
-import { ChatRoom } from '../../@types';
 
+import { ChatRoom } from '../../@types';
 import defaultImageUri from '../../constants/DefaultImageUri';
 import useColorScheme from '../../hooks/useColorScheme';
 import createStyle from './style';

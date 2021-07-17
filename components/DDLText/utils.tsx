@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
+import { generate as shortid } from 'shortid';
 import Link from '../Link';
 
 // https://stackoverflow.com/a/3809435
@@ -20,7 +21,7 @@ export const injectStyling = (sentence: string, color?: string, linkColor?: stri
       );
     } else if (word.startsWith('*') && word.endsWith('*') && word.length > 2) {
       builder.push(
-        <Text style={{
+        <Text key={shortid()} style={{
           fontWeight: 'bold',
           color,
         }}>
@@ -29,15 +30,15 @@ export const injectStyling = (sentence: string, color?: string, linkColor?: stri
       );
     } else if (word.startsWith('_') && word.endsWith('_') && word.length > 2) {
       builder.push(
-        <Text style={{
+        <Text key={shortid()} style={{
           fontStyle: 'italic',
           color,
         }}>
-          {word.substring(1, word.length - 1) + ' '} 
+          {word.substring(1, word.length - 1) + ' '}
         </Text>
       );
     } else {
-      builder.push(<Text style={{color}}>{word} </Text>);
+      builder.push(<Text key={shortid()} style={{ color }}>{word} </Text>);
     }
   }
 

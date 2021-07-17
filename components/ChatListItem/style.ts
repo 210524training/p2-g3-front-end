@@ -18,6 +18,11 @@ const styles = (colorScheme: 'light' | 'dark' = 'light') => StyleSheet.create({
     marginRight: 15,
     width: 60,
   },
+  imageSquare: {
+    height: 60,
+    marginRight: 15,
+    width: 60,
+  },
   leftSide: {
     flex: 1,
     flexDirection: 'row',

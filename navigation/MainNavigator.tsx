@@ -1,106 +1,132 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import t from '../Localization';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { BottomTabParamList, ChatsParamList, TabTwoParamList } from '../types';
-import Media from '../components/Media';
-import t from '../Localization';
-import { createStackNavigator } from '@react-navigation/stack';
 import ChatsScreen from '../screens/ChatsScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import MyAccount from '../screens/MyAccount';
-import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
+import ForumListScreen from '../screens/ForumListScreen';
+import UserSearchPage from '../new_pages/UserSearch';
+import HelpPage from '../new_pages/HelpPage';
+import { Platform } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import CheckBox from '../components/CheckBox';
 import ProfileScreen from '../screens/ProfileScreen';
-import EditProfileScreen from '../screens/EditProfileScreen';
+import LoginScreen from '../screens/LoginScreen';
 
-const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
+const ios: boolean = Platform.OS === 'ios';
+const BottomTab = ios ? createBottomTabNavigator<BottomTabParamList>() : createMaterialTopTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator(): JSX.Element {
   const colorScheme = useColorScheme();
 
+  const tabBarOptions = ios
+    ? { activeTintColor: Colors[colorScheme].tint }
+    : {
+      activeTintColor: Colors[colorScheme].background,
+      style: {
+        backgroundColor: Colors[colorScheme].tint,
+      },
+      indicatorStyle: {
+        backgroundColor: Colors[colorScheme].background,
+        height: 2.5
+      },
+      labelStyle: {
+        fontWeight: 'bold',
+      },
+      showIcon: true,
+    };
+
   return (
     <BottomTab.Navigator
       initialRouteName="Chats"
-      tabBarOptions={{
-        activeTintColor: Colors[colorScheme].background,
-        style: {
-          backgroundColor: Colors[colorScheme].tint,
-        },
-        indicatorStyle: {
-          backgroundColor: Colors[colorScheme].background,
-          height: 2.5
-        },
-        labelStyle: {
-          fontWeight: 'bold',
-        },
-        showIcon: true,
-      }}
+      tabBarOptions={tabBarOptions}
     >
-      {/* <BottomTab.Screen
-        name="Camera"
-        component={CameraView}
-        options={{
-          tabBarIcon: ({ color }) => <Fontisto name="camera" color={color} size={18} />,
-          tabBarLabel: () => null,
-        }}
-        
-      /> */}
-      
-      {/* <BottomTab.Screen
+      <BottomTab.Screen
         name="Profile"
-        component={MyAccount}
+        component={ProfileScreen}
         options={{
-          title: t('profile')
+          title: t('profile'),
+          tabBarIcon: ios
+            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            : undefined,
+
         }}
-      /> */}
+      />
 
       <BottomTab.Screen
         name="Chats"
         component={ChatScreenNavigator}
         options={{
-          title: t('chats')
+          title: t('chats'),
+          tabBarIcon: ios
+            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            : undefined,
         }}
       />
 
       <BottomTab.Screen
         name="GeneralDiscussions"
-        component={MyAccount}
+        component={ForumListScreen}
         options={{
-          title: t('discussions').substring(0, 8) + '.'
+          title: t('discussions').substring(0, 8) + '.',
+          tabBarIcon: ios
+            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            : undefined,
         }}
       />
-      
+
       <BottomTab.Screen
         name="Users"
-        component={MyAccount}
+        component={CheckBox}
         options={{
-          title: t('users')
+          title: t('users'),
+          tabBarIcon: ios
+            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            : undefined,
         }}
       />
-      {/* <BottomTab.Screen
-        name="Calls"
-        component={TabTwoNavigator}
+      <BottomTab.Screen
+        name="UserSearch"
+        component={UserSearchPage}
         options={{
-          title: t('calls')
+          title: t('search'),
+          tabBarIcon: ios
+            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            : undefined,
         }}
-      /> */}
+      />
+      <BottomTab.Screen
+        name="Help"
+        component={HelpPage}
+        options={{
+          title: t('help'),
+          tabBarIcon: ios
+            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            : undefined,
+        }}
+      />
       <BottomTab.Screen
         name="Login"
         component={LoginScreen}
         options={{
-          title: t('login')
+          title: t('login'),
+          tabBarIcon: ios
+            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            : undefined,
         }}
       />
-      <BottomTab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          title: t('profile')
-        }}
-      />
+
     </BottomTab.Navigator>
   );
+}
+
+function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
+  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:

@@ -10,8 +10,10 @@ export type SecurityQuestion = {
   answer: string,
 };
 
-type Interest = keyof InterestInterface;
-export default Interest;
+export const InterestValues = Object.keys(InterestInterface);
+
+export type InterestType = typeof InterestInterface;
+export type Interest = keyof InterestType;
 
 export type ChatRoomId = string;
 export interface User {
@@ -46,7 +48,30 @@ export type ChatRoomUser = {
 
 export interface ChatRoom {
   id: string,
+  title: string,
   users: ChatRoomUser[],
   messages: Message[],
   lastMessage: Message,
+};
+
+export interface Forum {
+  id: string,
+  title: string,
+  tags?: string[],
+  user: User,
+  createdAt: string,
+  content: string,
+  likes: number,
+  numberOfComments?: number,
+  comments?: ForumComment[]
+};
+
+export interface ForumComment {
+  id: string,
+  user: User,
+  createdAt: string,
+  content: string,
+  likes: number,
+  numberOfComments?: number,
+  comments?: ForumComment[]
 };

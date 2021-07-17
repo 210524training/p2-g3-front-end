@@ -1,7 +1,14 @@
 import Bank from './type';
 
 const en: Bank = {
-  name: 'Chatapredu',
+  _name: 'Chatapredu',
+  name: 'Name',
+  deleteChatRoom: 'Delete Chat Room',
+  remove: 'Remove',
+  none: 'None',
+  administrator: 'Administrator',
+  moderator: 'Moderator',
+  searchForUser: 'Search for user',
   users: 'Users',
   generalDiscussions: 'General Discussions',
   discussions: 'Discussions',
@@ -76,6 +83,7 @@ const en: Bank = {
   calls: 'Calls',
   typeAMessage: 'Type a message',
   contacts: 'Contacts',
+  
 };
 
 export default en;

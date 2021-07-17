@@ -3,8 +3,7 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { ChatRoom, User } from './@types';
-import { MediaHeader } from './@types/index.d';
+import { ChatRoom, Forum, MediaHeader, User } from './@types/index.d';
 import Restaurant from './models/restaurant';
 import { Cuisine } from './screens/CuisineScreen';
 
@@ -18,7 +17,9 @@ export type RootStackParamList = {
     name: string,
     chatRoom: ChatRoom,
   };
-  EditChatRoom: undefined;
+  EditChatRoom: {
+    chatRoom: ChatRoom,
+  };
   Contacts: {
     user: User,
   };
@@ -32,8 +33,12 @@ export type RootStackParamList = {
     height: number,
     uri: string,
   },
-  UploadFile: undefined;
-
+  UploadFile: undefined,
+  ForumScreen: {
+    forum: Forum,
+  },
+  UserSearch: undefined;
+  Help: undefined;
 };
 
 export type ChatsParamList = {
@@ -53,6 +58,8 @@ export type BottomTabParamList = {
   Calls: undefined;
   GeneralDiscussions: undefined;
   Users: undefined;
+  UserSearch: undefined;
+  Help: undefined;
   Login: undefined;
 };
 
