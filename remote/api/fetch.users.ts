@@ -1,7 +1,8 @@
-import { User } from '../../@types';
+import { Interest, User } from '../../@types';
 import client from './client';
 import users from '../data/Users';
-
+import { Auth } from 'aws-amplify';
+import { CognitoUser } from '@aws-amplify/auth';
 //TODO: refactor code to use backend
 
 export const getFriends = (id: string): Promise<User[]> => {
@@ -20,18 +21,30 @@ export const getAllUsers = (): Promise<User[]> => {
 
 export const sendLogin = async (username: string, password: string): Promise<User> => {
   console.log(username, password);
-
-  // const { data: user } = await client.post<User>('/login', {
-  //   username,
-  //   password,
-  // });
-
-  const user = users[0];
-  user.username = username;
-  user.password = password;
-
-  return new Promise<User>((resolve, reject) => {
-    resolve(user);
+  return Auth.signIn(username, password).then((cu: CognitoUser) => {
+    const values = cu.signInUserSession.idToken.payload;
+    console.log(values);
+    return {
+      username: values['cognito:username'] as string,
+      email: values['email'] as string,
+      password: '<you thought!>',
+      isSuperAdmin: values['isSuperAdmin'] ? true : false,
+      status: values['custom:status'] as string,
+      interests: JSON.parse(values['custom:interest'] ? values['custom:interest'] : '[]'),
+      imageUri: values['custom:imageUri'] as string || '',
+      securityQuestionOne: {
+        question: values['custom:questionOne'] as string,
+        answer: values['custom:answerOne'] as string
+      },
+      securityQuestionTwo: {
+        question: values['custom:questionTwo'] as string,
+        answer: values['custom:answerTwo'] as string
+      },
+      securityQuestionThree: {
+        question: values['custom:questionThree'] as string,
+        answer: values['custom:answerThree'] as string
+      },
+    };
   });
 };
 
