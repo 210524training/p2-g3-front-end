@@ -21,13 +21,13 @@ export const loginAsync = createAsyncThunk<User, LoginCredentials>(
   async ({ username, password }, thunkAPI) => {
 
     try {
-      const user: User = await Auth.signIn(username, password).then(cognitoUser => {
-        console.debug(cognitoUser);
-        return {
-          username: cognitoUser.username,
-          password: cognitoUser.password,
-        } as User;
-      });
+      const user: User = await Auth.signIn(username, password, {
+        role: '$context.authorizer.claims[\'custom:role\']' 
+      }).then(cu => ({
+        username: cu.username,
+        email: cu.email,
+      }));
+      console.log(user);
       return user;
     } catch (error) {
       // console.log(`error is an AxiosError: ${isAxiosError(error)}`);

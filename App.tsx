@@ -4,8 +4,9 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import Amplify from 'aws-amplify';
-import awsmobile from './src/aws-exports';
+// import { withAuthenticator } from 'aws-amplify-react-native';
 
+import awsmobile from './src/aws-exports';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation/index';

@@ -13,9 +13,9 @@ export type CheckBoxProps = {
   onChange?: (items: CheckBoxItem[]) => void,
 };
 
-const CheckBox: React.FC<CheckBoxProps> = ({ items = InterestValues, onChange = (items) => {console.log(items);} }) => {
+const CheckBox: React.FC<CheckBoxProps> = ({ items = InterestValues, onChange = (items) => { console.log(items); } }) => {
   const [selected, setSelected] = useState<CheckBoxItem[]>([]);
-  const onSelectionsChange = (s:  CheckBoxItem[]): void => {
+  const onSelectionsChange = (s: CheckBoxItem[]): void => {
     setSelected([...s]);
     onChange([...s]);
   };

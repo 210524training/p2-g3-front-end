@@ -6,13 +6,13 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Auth } from 'aws-amplify';
 
 const RegisterScreen: React.FC<unknown> = (props) => {
   const user = useAppSelector<UserState>(selectUser);
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
 
   const dispatch = useAppDispatch();
   const nav = useNavigation();
@@ -23,31 +23,18 @@ const RegisterScreen: React.FC<unknown> = (props) => {
   };
 
   const handleRegister = async () => {
-    // TODO: implement backend
-    handleLogin();
-    // const users = await getAllUsers();
-    // let exists = false;
-
-    // users.forEach(u => {
-    //   if (u.username === username) {
-    //     exists = true;
-    //   }
-    // });
-
-    // if (!exists) {
-    //   const { data: registered } = await grubdashClient.post<boolean>('/api/v1/users', {
-    //     username, password, address, phoneNumber
-    //   });
-
-    //   if (registered) {
-    //     handleLogin();
-    //     return;
-    //   } 
-    // } else {
-    //   Alert.alert('Username is already taken.');
-    //   return;
-    // }
-    // Alert.alert('Failed to register.');
+    try {
+      const { user } = await Auth.signUp({
+        username,
+        password,
+        attributes: {
+          email,
+        }
+      });
+      handleLogin();
+    } catch (error) {
+      console.log('error signing up:', error);
+    }
   };
   return (
     <View style={styles.container}>
@@ -61,8 +48,10 @@ const RegisterScreen: React.FC<unknown> = (props) => {
             title="Logout"
             color="red"
             onPress={() => {
-              dispatch(logout());
-
+              (async () => {
+                await Auth.signOut();
+                dispatch(logout());
+              })();
             }}
           ></Button>
         </>
@@ -80,22 +69,17 @@ const RegisterScreen: React.FC<unknown> = (props) => {
             />
             <TextInput
               style={{ fontSize: 18, margin: 10 }}
+              placeholder="email"
+              onChangeText={text => setEmail(text)}
+              defaultValue={email}
+            />
+            <TextInput
+              style={{ fontSize: 18, margin: 10 }}
               placeholder="Password"
               onChangeText={text => setPassword(text)}
               defaultValue={password}
             />
-            <TextInput
-              style={{ fontSize: 18, margin: 10 }}
-              placeholder="Phone Number"
-              onChangeText={text => setPhoneNumber(text)}
-              defaultValue={address}
-            />
-            <TextInput
-              style={{ fontSize: 18, margin: 10 }}
-              placeholder="Address"
-              onChangeText={text => setAddress(text)}
-              defaultValue={address}
-            />
+
             <Button
               onPress={handleRegister}
               title="Register"
