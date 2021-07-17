@@ -23,7 +23,6 @@ export const sendLogin = async (username: string, password: string): Promise<Use
   console.log(username, password);
   return Auth.signIn(username, password).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
-    console.log(values);
     return {
       username: values['cognito:username'] as string,
       email: values['email'] as string,
