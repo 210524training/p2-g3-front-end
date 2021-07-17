@@ -18,39 +18,14 @@ export function isAxiosError(error: any): error is AxiosError {
   return 'isAxiosError' in error;
 }
 
-export const loginAsync = createAsyncThunk<User, LoginCredentials>(
+export const loginAsync = createAsyncThunk<UserState, LoginCredentials>(
   'user/login/async',
   async ({ username, password }, thunkAPI) => {
     try {
-      console.log(username, password);
-      const cognitoUser = await Auth.signIn(username, password);
-      const payload = cognitoUser.signInUserSession.idToken.payload;
-      console.log(cognitoUser);
-      const user: User = {
-        username: payload['cognito:username'] as string,
-        email: payload['email'] as string,
-        password: '<you thought!>',
-        isSuperAdmin: !!payload['isSuperAdmin'],
-        status: payload['custom:status'] as string,
-        interests: JSON.parse(payload['custom:interest']) as Interest[],
-        imageUri: payload['custom:imageUri'] as string,
-        securityQuestionOne: {
-          question: payload['custom:questionOne'] as string,
-          answer: payload['custom:answerOne'] as string
-        },
-        securityQuestionTwo: {
-          question: payload['custom:questionTwo'] as string,
-          answer: payload['custom:answerTwo'] as string
-        },
-        securityQuestionThree: {
-          question: payload['custom:questionThree'] as string,
-          answer: payload['custom:answerThree'] as string
-        },
-        
-      };
 
-      console.log(user);
-      return user;
+      const res = sendLogin(username, password);
+      console.log('response', res);
+      return res;
     } catch (error) {
       console.log('Login error');
       return thunkAPI.rejectWithValue(error);
@@ -62,7 +37,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: null as UserState,
   reducers: {
-    login: (state, action: PayloadAction<User>) => {
+    login: (state, action: PayloadAction<UserState>) => {
       return action.payload;
     },
     logout: (state) => {
