@@ -10,4 +10,11 @@ export default {
   'Art': undefined,
   'History': undefined,
   'Gaming': undefined,
+  'Animation': undefined,
+  'Music': undefined,
+  'Sports': undefined,
+  'Design': undefined,
+  'Literature': undefined,
+  'Foods': undefined,
+  'Automotive': undefined,
 };

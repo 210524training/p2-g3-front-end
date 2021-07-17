@@ -15,7 +15,8 @@ import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import CheckBox from '../components/CheckBox';
-
+import ProfileScreen from '../screens/ProfileScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const ios: boolean = Platform.OS === 'ios';
 const BottomTab = ios ? createBottomTabNavigator<BottomTabParamList>() : createMaterialTopTabNavigator<BottomTabParamList>();
@@ -47,7 +48,7 @@ export default function BottomTabNavigator(): JSX.Element {
     >
       <BottomTab.Screen
         name="Profile"
-        component={MyAccount}
+        component={ProfileScreen}
         options={{
           title: t('profile'),
           tabBarIcon: ios
@@ -104,6 +105,16 @@ export default function BottomTabNavigator(): JSX.Element {
         component={HelpPage}
         options={{
           title: t('help'),
+          tabBarIcon: ios
+            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            : undefined,
+        }}
+      />
+      <BottomTab.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          title: t('login'),
           tabBarIcon: ios
             ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
             : undefined,
