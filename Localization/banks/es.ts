@@ -3,6 +3,8 @@ import Bank from './type';
 const es: Bank = {
   welcome: '¡Saludos!',
   name: 'Nombre',
+  confirm: 'Confirmar',
+  resendConfirmationCode: 'Reenviar el código de confirmación',
   deleteChatRoom: 'Borrar Sala',
   remove: 'Remover',
   none: 'Ninguno',

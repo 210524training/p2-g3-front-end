@@ -103,7 +103,7 @@ const UserSearchPage: React.FC<unknown> = () => {
             renderItem={({ item }) => (
               <ContactListItem user={item} />
             )}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.username}
           />
         ) : (
           <Text>{t('noUsersFound')}</Text>

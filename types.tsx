@@ -40,6 +40,9 @@ export type RootStackParamList = {
   },
   UserSearch: undefined;
   Help: undefined;
+  ConfirmCode: {
+    username: string,
+  }
 };
 
 export type ChatsParamList = {

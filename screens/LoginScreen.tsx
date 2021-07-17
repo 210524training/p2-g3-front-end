@@ -13,8 +13,8 @@ import LogoutButton from '../components/LogoutButton';
 
 const LoginScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>('dustindiaz');
+  const [password, setPassword] = useState<string>('password12345');
 
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
@@ -22,7 +22,7 @@ const LoginScreen: React.FC<unknown> = () => {
 
   const handleLogin = async () => {
     await dispatch(loginAsync({ username, password }));
-    nav.navigate('Home');
+    nav.navigate('Chats');
   };
 
   return (
@@ -46,12 +46,14 @@ const LoginScreen: React.FC<unknown> = () => {
               placeholder={t('username')}
               onChangeText={text => setUsername(text)}
               defaultValue={username}
+              // value={'dustindiaz'}
             />
             <TextInput
               style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
               placeholder={t('password')}
               onChangeText={text => setPassword(text)}
               defaultValue={password}
+              // value={'password12345'}
             />
 
             <Button

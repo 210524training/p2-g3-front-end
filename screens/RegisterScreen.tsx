@@ -1,47 +1,60 @@
+/* eslint-disable react-native/no-color-literals */
 /* eslint-disable react-native/no-unused-styles */
-import * as React from 'react';
-import { useState } from 'react';
-import { Button, ScrollView, StyleSheet, TextInput } from 'react-native';
-import { Text, View } from '../components/Themed';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
+import React, { useState } from 'react';
+import { Button, ScrollView, StyleSheet, TextInput, Picker } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
-import { Picker } from 'react-native';
+
+import { Text, View } from '../components/Themed';
+import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 import t from '../Localization';
 import LogoutButton from '../components/LogoutButton';
+import CheckBox, { CheckBoxItem } from '../components/CheckBox';
+import { InterestValues } from '../@types/index.d';
 
 const RegisterScreen: React.FC<unknown> = (props) => {
   const user = useAppSelector<UserState>(selectUser);
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
 
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [questionOne, setQuestionOne] = useState<string>('');
-  const [questionTwo, setQuestionTwo] = useState<string>('');
-  const [questionThree, setQuestionThree] = useState<string>('');
-  const [answerOne, setAnswerOne] = useState<string>('');
-  const [answerTwo, setAnswerTwo] = useState<string>('');
-  const [answerThree, setAnswerThree] = useState<string>('');
+  const [username, setUsername] = useState<string>('dustindiaz');
+  const [password, setPassword] = useState<string>('password12345');
+  const [email, setEmail] = useState<string>('hi.dustin.diaz@gmail.com');
+  const [phoneNumber, setPhoneNumber] = useState<string>('7874782095');
+  const [confirmPassword, setConfirmPassword] = useState<string>('password12345');
+  const [questionOne, setQuestionOne] = useState<string>('What was your childhood nickname?');
+  const [questionTwo, setQuestionTwo] = useState<string>('What was your childhood nickname?');
+  const [questionThree, setQuestionThree] = useState<string>('What was your childhood nickname?');
+  const [answerOne, setAnswerOne] = useState<string>('yes');
+  const [answerTwo, setAnswerTwo] = useState<string>('yes');
+  const [answerThree, setAnswerThree] = useState<string>('yes');
+  const [interests, setInterests] = useState<string[]>([]);
   const [error, setError] = useState<string>('');
 
   const dispatch = useAppDispatch();
   const nav = useNavigation();
 
   const handleLogin = async () => {
-    await dispatch(loginAsync({ username, password }));
-    nav.navigate('SelectInterests');
+    // await dispatch(loginAsync({ username, password }));
+    nav.navigate('ConfirmCode');
+  };
+
+  const tooLong = (...args: any[]): boolean => {
+    return JSON.stringify(args).length > 2048;
+  };
+
+  const onInterestsChange = (items: CheckBoxItem[]) => {
+    const values = items.map(item => item.value);
+    setInterests(values);
+    console.log(values);
   };
 
   const handleRegister = async () => {
 
-    if (!(username && password && email && answerOne && answerTwo && answerThree)) {
+    if (!(username && password && email && answerOne && answerTwo && answerThree && interests && interests.length > 0)) {
       setError('Missing field');
       return;
     }
@@ -51,36 +64,42 @@ const RegisterScreen: React.FC<unknown> = (props) => {
       return;
     }
 
+    if (tooLong(interests)) {
+      setError('Too many interests! Take a chill pill, and select less interests.');
+      return;
+    }
+
     try {
+      console.log('>>', questionOne);
       const { user } = await Auth.signUp({
         username,
         password,
         attributes: {
           email,
-          // 'custom:phoneNumber': phoneNumber,
-          // 'custom:securityQuestionOne': {
-          //   question: questionOne,
-          //   answer: answerOne,
-          // },
-          // 'custom:securityQuestionTwo': {
-          //   question: questionTwo,
-          //   answer: answerTwo,
-          // },
-          // 'custom:securityQuestionThree': {
-          //   question: questionThree,
-          //   answer: answerThree,
-          // },
-          // 'custom:imageUri': '',
-          // 'custom:isSuperAdmin': false,
-          // 'custom:interests': [],
-          // 'custom:contacts': [],
-          // 'custom:status': 'No status'
+          'custom:role': 'User',
+          'custom:phoneNumber': phoneNumber,
+          'custom:questionOne': questionOne,
+          'custom:questionTwo': questionTwo,
+          'custom:questionThree': questionThree,
+
+          'custom:answerOne': answerOne,
+          'custom:answerTwo': answerTwo,
+          'custom:answerThree': answerThree,
+
+          'custom:isSuperAdmin': '',
+          'custom:imageUri': '',
+          'custom:interests': JSON.stringify(interests),
+          'custom:status': 'No status'
         }
       });
       console.log(user);
+      nav.navigate('ConfirmCode', {
+        username
+      });
       // handleLogin();
     } catch (error) {
       console.log('error signing up:', error);
+      setError(error.message);
     }
   };
   return (
@@ -138,7 +157,10 @@ const RegisterScreen: React.FC<unknown> = (props) => {
               <Picker
                 selectedValue={questionOne}
                 style={styles.questions}
-                onValueChange={(itemValue, itemIndex) => setQuestionOne(itemValue)}
+                onValueChange={(itemValue, itemIndex) => {
+                  const str = itemValue + '';
+                  setQuestionOne(str);
+                }}
               >
                 <Picker.Item label="What was your childhood nickname?" value="What was your childhood nickname?" />
                 <Picker.Item label="In what city did you meet your spouse/significant other?" value="In what city did you meet your spouse/significant other?" />
@@ -160,7 +182,10 @@ const RegisterScreen: React.FC<unknown> = (props) => {
               <Picker
                 selectedValue={questionTwo}
                 style={styles.questions}
-                onValueChange={(itemValue, itemIndex) => setQuestionTwo(itemValue)}
+                onValueChange={(itemValue, itemIndex) => {
+                  const str = itemValue + '';
+                  setQuestionTwo(str);
+                }}
               >
                 <Picker.Item label="What was your childhood nickname?" value="What was your childhood nickname?" />
                 <Picker.Item label="In what city did you meet your spouse/significant other?" value="In what city did you meet your spouse/significant other?" />
@@ -182,7 +207,10 @@ const RegisterScreen: React.FC<unknown> = (props) => {
               <Picker
                 selectedValue={questionThree}
                 style={styles.questions}
-                onValueChange={(itemValue, itemIndex) => setQuestionThree(itemValue)}
+                onValueChange={(itemValue, itemIndex) => {
+                  const str = itemValue + '';
+                  setQuestionThree(str);
+                }}
               >
                 <Picker.Item label="What was your childhood nickname?" value="What was your childhood nickname?" />
                 <Picker.Item label="In what city did you meet your spouse/significant other?" value="In what city did you meet your spouse/significant other?" />
@@ -201,12 +229,22 @@ const RegisterScreen: React.FC<unknown> = (props) => {
                 onChangeText={text => setAnswerThree(text)}
                 defaultValue={answerThree}
               />
+              <Text
+                style={{ fontSize: 18, padding: 10 }}
+              >
+                Select your interests:
+              </Text>
+              <CheckBox
+                items={InterestValues}
+                onChange={onInterestsChange}
+              />
+
               <Button
                 onPress={handleRegister}
                 title={t('register')}
                 color={Colors[colorScheme].tint}
               />
-              <Text style={{ fontSize: 18, color: 'red',}}>{error}</Text>
+              <Text style={{ fontSize: 18, color: 'red', }}>{error}</Text>
               <Text
                 style={{
                   color: 'blue',
@@ -215,7 +253,7 @@ const RegisterScreen: React.FC<unknown> = (props) => {
                 }}
                 onPress={() => nav.navigate('Login')}
               >
-                {t('createNewAccount')}
+                {t('alreadyHaveAnAccountLogin')}
               </Text>
             </View>
           </>

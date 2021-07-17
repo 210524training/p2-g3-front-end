@@ -52,7 +52,7 @@ export default function BottomTabNavigator(): JSX.Element {
         options={{
           title: t('profile'),
           tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            ? (({ color }) => (<TabBarIcon name="person-outline" color={color} />))
             : undefined,
 
         }}
@@ -64,7 +64,7 @@ export default function BottomTabNavigator(): JSX.Element {
         options={{
           title: t('chats'),
           tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            ? (({ color }) => (<TabBarIcon name="chatbubble-ellipses-outline" color={color} />))
             : undefined,
         }}
       />
@@ -75,7 +75,7 @@ export default function BottomTabNavigator(): JSX.Element {
         options={{
           title: t('discussions').substring(0, 8) + '.',
           tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            ? (({ color }) => (<TabBarIcon name="chatbox-ellipses-outline" color={color} />))
             : undefined,
         }}
       />
@@ -86,7 +86,7 @@ export default function BottomTabNavigator(): JSX.Element {
         options={{
           title: t('search'),
           tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            ? (({ color }) => (<TabBarIcon name="person-add-outline" color={color} />))
             : undefined,
         }}
       />

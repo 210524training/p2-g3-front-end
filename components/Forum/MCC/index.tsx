@@ -23,7 +23,7 @@ const MainCommentContainer: React.FC<MCCProps> = ({ comment }): JSX.Element => {
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
 
-  const isOwner = user?.id === comment.user.id || user?.isSuperAdmin;
+  const isOwner = user?.username === comment.user.username || user?.isSuperAdmin;
 
   const iconColor = Colors[colorScheme].tabIconDefault;
   const iconSize = 30;

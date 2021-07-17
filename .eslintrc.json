@@ -41,7 +41,8 @@
         ".gitignore",
         "**/assets",
         "LICENSE",
-        "**/*.md"
+        "**/*.md",
+        "**/*.yml"
     ],
     "rules": {
         "indent": [

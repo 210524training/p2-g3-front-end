@@ -20,7 +20,7 @@ const ProfileScreen: React.FC<unknown> = () => {
   const [action, setAction] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const nav = useNavigation();
-
+  console.log(user);
   return (
     <View style={styles.container}>
       {
@@ -44,7 +44,7 @@ const ProfileScreen: React.FC<unknown> = () => {
                 Interests
               </Text>
               <Text style={styles.text}>
-                {user.interests.join(', ')}
+                {user.interests?.join(', ')}
               </Text>
               <LogoutButton />
               <EditIcon />

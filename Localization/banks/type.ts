@@ -2,6 +2,8 @@ type Bank = {
   /** Application Name (fallback will be en) */
   _name?: string,
   name: string,
+  confirm: string,
+  resendConfirmationCode: string,
   deleteChatRoom: string,
   remove: string,
   searchForUser: string,
