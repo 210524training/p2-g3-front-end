@@ -30,7 +30,7 @@ export const sendLogin = async (username: string, password: string): Promise<Use
       password: '<you thought!>',
       isSuperAdmin: values['isSuperAdmin'] ? true : false,
       status: values['custom:status'] as string,
-      interests: JSON.parse(values['custom:interest'] ? values['custom:interest'] : '[]'),
+      interests: JSON.parse(values['custom:interests'] ? values['custom:interests'] : '[]'),
       imageUri: values['custom:imageUri'] as string || '',
       securityQuestionOne: {
         question: values['custom:questionOne'] as string,
