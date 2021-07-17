@@ -27,6 +27,7 @@ export type RootStackParamList = {
   Register: undefined;
   EditProfile: undefined;
   SelectInterests: undefined;
+  PickImage: undefined;
   FileView: {
     type: MediaHeader,
     width: number,

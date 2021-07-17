@@ -10,6 +10,7 @@ import { getAllUsers } from '../remote/api/fetch.users';
 import defaultImageUri from '../constants/DefaultImageUri';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
+import PickImage from '../components/ProfileImage';
 
 const EditProfileScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
@@ -21,6 +22,10 @@ const EditProfileScreen: React.FC<unknown> = () => {
   const [verifyPassword, setVerifyPassword] = useState<string>('');
   const [aboutMe, setAboutMe] = useState<string>('');
 
+  const handleChangeImage = () => {
+    nav.navigate('PickImage');
+  };
+
   const handleSaveProfile = () => {
     nav.navigate('Profile');
   };
@@ -28,6 +33,12 @@ const EditProfileScreen: React.FC<unknown> = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
+        <View>
+          <Button
+            onPress={() => handleChangeImage}
+            title="Change Image"
+          />
+        </View>
         <Text style={styles.title}>
           Edit Profile
         </Text>

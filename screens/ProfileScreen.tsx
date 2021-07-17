@@ -21,37 +21,37 @@ const ProfileScreen: React.FC<unknown> = () => {
   const dispatch = useAppDispatch();
   const nav = useNavigation();
 
-  if (!user) {
-    nav.navigate('Login');
-    return (<></>);
-  }
+  // if (!user) {
+  //   nav.navigate('Login');
+  //   return (<></>);
+  // }
 
   return (
     <View style={styles.container}>
       <Image source={{
-        uri: user.imageUri || defaultImageUri
+        uri: /*user.imageUri ||*/ defaultImageUri
       }} />
       <Text style={styles.title}>
-              Hello, {user.username}!
+              Hello, {/*user.username*/}!
       </Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text style={{ fontSize: 20 }}>
               User Id
       </Text>
       <Text style={styles.text}>
-        {user.id}
+        {/*user.id*/}
       </Text>
       <Text style={{ fontSize: 20 }}>
               Email
       </Text>
       <Text style={styles.text}>
-        {user.email}
+        {/*user.email*/}
       </Text>
       <Text style={{ fontSize: 20 }}>
               Interests
       </Text>
       <Text style={styles.text}>
-        {user.interests}
+        {/*user.interests*/}
       </Text>
       <Button
         title="Logout"
