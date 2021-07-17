@@ -28,8 +28,8 @@ const ProfileScreen: React.FC<unknown> = () => {
           ? (
             <>
               <Image source={{
-                uri: user.imageUri || defaultImageUri
-              }} width={100} height={100} />
+                uri: user.imageUri?.trim() || defaultImageUri
+              }} style={{width: 100, height: 100, margin: 10, borderRadius: 10}} />
               <Text style={styles.title}>
                 Hello, {user.username}!
               </Text>
