@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { InterestValues } from '../../@types/index.d';
 import SelectMultiple from 'react-native-select-multiple';
@@ -9,13 +9,13 @@ export type CheckBoxItem = {
 };
 
 export type CheckBoxProps = {
-  items?: string[],
+  items: string[],
   onChange?: (items: CheckBoxItem[]) => void,
 };
 
-const CheckBox: React.FC<CheckBoxProps> = ({ items = InterestValues, onChange = (items) => {console.log(items);} }) => {
+const CheckBox: React.FC<CheckBoxProps> = ({ items, onChange = (items) => { console.log(items); } }) => {
   const [selected, setSelected] = useState<CheckBoxItem[]>([]);
-  const onSelectionsChange = (s:  CheckBoxItem[]): void => {
+  const onSelectionsChange = (s: CheckBoxItem[]): void => {
     setSelected([...s]);
     onChange([...s]);
   };

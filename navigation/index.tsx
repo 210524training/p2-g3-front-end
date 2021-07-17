@@ -25,12 +25,14 @@ import t from '../Localization';
 import DDC from '../components/DropDown';
 import RegisterScreen from '../screens/RegisterScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
-import SelectInterestsScreen from '../screens/SelectInterestsScreen';
 import ForumScreen from '../screens/ForumScreen';
 import EditChatRoom from '../screens/EditChatRoom';
 import UserSearchPage from '../new_pages/UserSearch';
 import HelpPage from '../new_pages/HelpPage';
+import PressableIcon from '../components/Forum/PressebleIcon';
 import PickImage from '../components/ProfileImage/index';
+import LoginScreen from '../screens/LoginScreen';
+import ConfirmCode from '../screens/ConfirmCode';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -67,27 +69,54 @@ function RootNavigator() {
         options={{
           title: t('_name'),
           headerRight: () => {
-            const nav = useNavigation();
             return (
               <View style={{
                 backgroundColor: Colors[colorScheme].tint,
-                justifyContent: 'space-between',
+                justifyContent: 'space-evenly',
                 alignItems: 'center',
+                flex: 1,
                 flexDirection: 'row',
                 marginRight: 10,
                 width: 60,
                 marginTop: 10,
               }}
               >
-                {/* <Octicons
-                  name="search"
-                  size={22}
-                  color={Colors[colorScheme].background}
-                /> */}
-                {/* <MaterialCommunityIcons
-                  name="dots-vertical"
-                  size={22}
-                  color={Colors[colorScheme].background}
+                {/* <PressableIcon
+                  IconProvider={AntDesign}
+                  props={{
+                    name: 'search1',
+                    size: 22,
+                    color: Colors[colorScheme].background,
+                  }}
+                  style={{
+                    paddingRight: 15,
+                  }}
+                />
+                <PressableIcon
+                  IconProvider={AntDesign}
+                  props={{
+                    name: 'user',
+                    size: 22,
+                    color: Colors[colorScheme].background,
+                  }}
+                  style={{
+                    paddingRight: 10,
+                  }}
+                />
+                <PressableIcon
+                  IconProvider={AntDesign}
+                  props={{
+                    name: 'question',
+                    size: 24,
+                    color: Colors[colorScheme].background,
+                  }}
+                  style={{
+                    paddingRight: 10,
+                  }}
+                  onPress={() => {
+                    const nav = useNavigation();
+                    nav.navigate('Help');
+                  }}
                 /> */}
               </View>
             );
@@ -114,14 +143,14 @@ function RootNavigator() {
                     });
                   }}
                   style={({ pressed }) => [
-                    { 
-                      opacity: pressed ? 0.5 : 1 
+                    {
+                      opacity: pressed ? 0.5 : 1
                     }
                   ]}
                 >
                   <Feather name="edit" size={24} color={Colors[colorScheme].background} />
                 </Pressable>
-                
+
               </View>
             );
           },
@@ -140,16 +169,20 @@ function RootNavigator() {
         component={CameraScreen}
       />
       <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+      />
+      <Stack.Screen
         name="Register"
         component={RegisterScreen}
       />
       <Stack.Screen
-        name="EditProfile"
-        component={EditProfileScreen}
+        name="ConfirmCode"
+        component={ConfirmCode}
       />
       <Stack.Screen
-        name="SelectInterests"
-        component={SelectInterestsScreen}
+        name="EditProfile"
+        component={EditProfileScreen}
       />
       <Stack.Screen
         name="PickImage"

@@ -7,10 +7,29 @@ import { useAppSelector } from '../hooks';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 
 import { storefront, scooter, iphone } from '../assets';
+import { Auth } from 'aws-amplify';
+import {CognitoUserSession} from 'amazon-cognito-identity-js';
 
 const HomeScreen: React.FC<unknown> = () => {
   const [address, setAddress] = useState('');
   const user = useAppSelector<UserState>(selectUser);
+  console.log(user);
+  if (user) {
+    
+    // user.getSession((err: Error | null, session: CognitoUserSession) => {
+    //   if (!session) {
+    //     console.log(err);
+    //   }
+    //   console.log(session.getIdToken().decodePayload());
+    // });
+
+    // Auth.completeNewPassword(user, 'password123', {
+
+    // }, {
+    //   'custom:role': 'User',
+    // }).then(res => console.log('Complete new password', res));
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
 

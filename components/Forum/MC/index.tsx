@@ -24,7 +24,7 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
 
-  const isOwner = user?.id === forum.user.id || user?.isSuperAdmin;
+  const isOwner = user?.username === forum.user.username || user?.isSuperAdmin;
 
   const iconColor = Colors[colorScheme].tabIconDefault;
   const iconSize = 30;

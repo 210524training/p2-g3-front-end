@@ -44,3 +44,8 @@ To-do list:
 
 This project uses the following license: [<license_name>](<link>).
 
+{
+    "context": {
+      "role": "$context.authorizer.claims['custom:role']"
+    }
+}

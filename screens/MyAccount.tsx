@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
-import { Button, StyleSheet, TextInput } from 'react-native';
-import { Alert } from 'react-native';
+import React from 'react';
+import { Button, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
+import { logout, selectUser, UserState } from '../hooks/slices/user.slice';
 import { Text, View } from '../components/Themed';
-import { getAllUsers } from '../remote/api/fetch.users';
-import DDC from '../components/DropDown';
 import PN from '../utils/PN/App';
+import { Auth } from '@aws-amplify/auth/lib-esm/Auth';
+import LogoutButton from '../components/LogoutButton';
 export default function MyAccountScreen(): JSX.Element {
   const user = useAppSelector<UserState>(selectUser);
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
 
-  const [action, setAction] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const nav = useNavigation();
 
@@ -29,14 +23,7 @@ export default function MyAccountScreen(): JSX.Element {
               Hello, {user.username}!
             </Text>
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-            <Button
-              title="Logout"
-              color="red"
-              onPress={() => {
-                dispatch(logout());
-
-              }}
-            ></Button>
+            <LogoutButton />
           </> : undefined
       }
       <PN />
