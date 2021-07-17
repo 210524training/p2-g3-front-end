@@ -23,11 +23,16 @@ import CameraScreen from '../screens/CameraScreen';
 import FileViewScreen from '../screens/FileViewScreen';
 import t from '../Localization';
 import DDC from '../components/DropDown';
+import RegisterScreen from '../screens/RegisterScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
+import SelectInterestsScreen from '../screens/SelectInterestsScreen';
 import ForumScreen from '../screens/ForumScreen';
 import EditChatRoom from '../screens/EditChatRoom';
 import UserSearchPage from '../new_pages/UserSearch';
 import HelpPage from '../new_pages/HelpPage';
 import PressableIcon from '../components/Forum/PressebleIcon';
+import PickImage from '../components/ProfileImage/index';
+import LoginScreen from '../screens/LoginScreen';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -163,7 +168,27 @@ function RootNavigator() {
         name="Camera"
         component={CameraScreen}
       />
-      <Stack.Screen name="EditChatRoom" component={EditChatRoom}
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+      />
+      <Stack.Screen
+        name="SelectInterests"
+        component={SelectInterestsScreen}
+      />
+      <Stack.Screen
+        name="PickImage"
+        component={PickImage}
+      />
+      <Stack.Screen name="EditChatRoom" component={EditChatRoom} 
         options={({ route }) => ({
           title: route.params.chatRoom.title || 'No Name',
         })} />

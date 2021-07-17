@@ -22,11 +22,15 @@ export const loginAsync = createAsyncThunk<User, LoginCredentials>(
 
     try {
       const user: User = await Auth.signIn(username, password, {
-        role: '$context.authorizer.claims[\'custom:role\']' 
-      }).then(cu => ({
-        username: cu.username,
-        email: cu.email,
-      }));
+        role: '$context.authorizer.claims[\'custom:role\']'
+      }).then(cu => {
+        console.log(Object.keys(cu));
+        return {
+          username: cu.username,
+          email: cu.email,
+        };
+      }
+      );
       console.log(user);
       return user;
     } catch (error) {

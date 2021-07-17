@@ -24,6 +24,10 @@ export type RootStackParamList = {
     user: User,
   };
   Camera: undefined;
+  Register: undefined;
+  EditProfile: undefined;
+  SelectInterests: undefined;
+  PickImage: undefined;
   FileView: {
     type: MediaHeader,
     width: number,
@@ -57,6 +61,7 @@ export type BottomTabParamList = {
   Users: undefined;
   UserSearch: undefined;
   Help: undefined;
+  Login: undefined;
 };
 
 export type HomeParamList = {

@@ -26,10 +26,10 @@ export interface User {
   isSuperAdmin: boolean,
   chatRooms: ChatRoomId[],
   imageUri?: string,
-  status?: string,
   securityQuestionOne: SecurityQuestion,
   securityQuestionTwo: SecurityQuestion,
   securityQuestionThree: SecurityQuestion,
+  status?: string,
 };
 
 export interface Message {

@@ -7,6 +7,7 @@ import { logout, selectUser, UserState } from '../hooks/slices/user.slice';
 import { Text, View } from '../components/Themed';
 import PN from '../utils/PN/App';
 import { Auth } from '@aws-amplify/auth/lib-esm/Auth';
+import LogoutButton from '../components/LogoutButton';
 export default function MyAccountScreen(): JSX.Element {
   const user = useAppSelector<UserState>(selectUser);
 
@@ -22,16 +23,7 @@ export default function MyAccountScreen(): JSX.Element {
               Hello, {user.username}!
             </Text>
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-            <Button
-              title="Logout"
-              color="red"
-              onPress={() => {
-                (async () => {
-                  await Auth.signOut();
-                  dispatch(logout());
-                })();
-              }}
-            ></Button>
+            <LogoutButton />
           </> : undefined
       }
       <PN />
