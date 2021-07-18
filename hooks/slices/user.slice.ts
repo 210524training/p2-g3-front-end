@@ -22,9 +22,7 @@ export const loginAsync = createAsyncThunk<UserState, LoginCredentials>(
   'user/login/async',
   async ({ username, password }, thunkAPI) => {
     try {
-
       const res = sendLogin(username, password);
-      console.log('response', res);
       return res;
     } catch (error) {
       console.log('Login error');
