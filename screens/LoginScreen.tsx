@@ -1,23 +1,28 @@
+/* eslint-disable react-native/no-color-literals */
 import * as React from 'react';
 import { useState } from 'react';
 import { Button, StyleSheet, TextInput } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
+import { loginAsync, selectUser, UserState } from '../hooks/slices/user.slice';
 import { useNavigation } from '@react-navigation/native';
-import { Auth } from 'aws-amplify';
+import t from '../Localization';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
+import LogoutButton from '../components/LogoutButton';
 
 const LoginScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>('dustindiaz');
+  const [password, setPassword] = useState<string>('password12345');
 
+  const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();
   const nav = useNavigation();
 
   const handleLogin = async () => {
     await dispatch(loginAsync({ username, password }));
-    nav.navigate('Home');
+    nav.navigate('Chats');
   };
 
   return (
@@ -28,11 +33,7 @@ const LoginScreen: React.FC<unknown> = () => {
             Hello, {user.username}!
           </Text>
           <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-          <Button
-            title="Logout"
-            color="red"
-            onPress={() => dispatch(logout())}
-          ></Button>
+          <LogoutButton />
         </>
       ) : (
         <>
@@ -41,22 +42,24 @@ const LoginScreen: React.FC<unknown> = () => {
 
           <View style={{ width: '100%', padding: 25, }}>
             <TextInput
-              style={{ fontSize: 18, margin: 10 }}
-              placeholder="Username"
+              style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+              placeholder={t('username')}
               onChangeText={text => setUsername(text)}
               defaultValue={username}
+              // value={'dustindiaz'}
             />
             <TextInput
-              style={{ fontSize: 18, margin: 10 }}
-              placeholder="Password"
+              style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
+              placeholder={t('password')}
               onChangeText={text => setPassword(text)}
               defaultValue={password}
+              // value={'password12345'}
             />
 
             <Button
               onPress={handleLogin}
-              title="Sign in"
-              color="red"
+              title={t('login')}
+              color={Colors[colorScheme].tint}
             />
             <Text
               style={{
@@ -65,10 +68,10 @@ const LoginScreen: React.FC<unknown> = () => {
                 textAlign: 'right'
               }}
               onPress={() => {
-                nav.navigate('RegisterScreen');
+                nav.navigate('Register');
               }}
             >
-              Don&apos;t have an account?
+              {t('noAccountRegister')}
             </Text>
           </View>
         </>
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   title: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
   },
 });

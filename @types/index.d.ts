@@ -17,19 +17,18 @@ export type Interest = keyof InterestType;
 
 export type ChatRoomId = string;
 export interface User {
-  id: string,
   email: string,
   username: string,
   password: string,
-  contacts: User[],
+  contacts?: User[],
   interests: Interest[],
   isSuperAdmin: boolean,
-  chatRooms: ChatRoomId[],
+  chatRooms?: ChatRoomId[],
   imageUri?: string,
-  status?: string,
   securityQuestionOne: SecurityQuestion,
   securityQuestionTwo: SecurityQuestion,
   securityQuestionThree: SecurityQuestion,
+  status?: string,
 };
 
 export interface Message {

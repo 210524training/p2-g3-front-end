@@ -15,7 +15,8 @@ import { Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import CheckBox from '../components/CheckBox';
-
+import ProfileScreen from '../screens/ProfileScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 const ios: boolean = Platform.OS === 'ios';
 const BottomTab = ios ? createBottomTabNavigator<BottomTabParamList>() : createMaterialTopTabNavigator<BottomTabParamList>();
@@ -47,11 +48,11 @@ export default function BottomTabNavigator(): JSX.Element {
     >
       <BottomTab.Screen
         name="Profile"
-        component={MyAccount}
+        component={ProfileScreen}
         options={{
           title: t('profile'),
           tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            ? (({ color }) => (<TabBarIcon name="person-outline" color={color} />))
             : undefined,
 
         }}
@@ -63,7 +64,7 @@ export default function BottomTabNavigator(): JSX.Element {
         options={{
           title: t('chats'),
           tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            ? (({ color }) => (<TabBarIcon name="chatbubble-ellipses-outline" color={color} />))
             : undefined,
         }}
       />
@@ -74,42 +75,22 @@ export default function BottomTabNavigator(): JSX.Element {
         options={{
           title: t('discussions').substring(0, 8) + '.',
           tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            ? (({ color }) => (<TabBarIcon name="chatbox-ellipses-outline" color={color} />))
             : undefined,
         }}
       />
 
-      <BottomTab.Screen
-        name="Users"
-        component={CheckBox}
-        options={{
-          title: t('users'),
-          tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
-            : undefined,
-        }}
-      />
       <BottomTab.Screen
         name="UserSearch"
         component={UserSearchPage}
         options={{
           title: t('search'),
           tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
+            ? (({ color }) => (<TabBarIcon name="person-add-outline" color={color} />))
             : undefined,
         }}
       />
-      <BottomTab.Screen
-        name="Help"
-        component={HelpPage}
-        options={{
-          title: t('help'),
-          tabBarIcon: ios
-            ? (({ color }) => (<TabBarIcon name="home-outline" color={color} />))
-            : undefined,
-        }}
-      />
-
+      
     </BottomTab.Navigator>
   );
 }
