@@ -36,6 +36,9 @@ export type RootStackParamList = {
   },
   UserSearch: undefined;
   Help: undefined;
+  EditForum: {
+    forum: Forum,
+  }
 };
 
 export type ChatsParamList = {

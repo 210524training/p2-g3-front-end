@@ -83,7 +83,10 @@ const en: Bank = {
   calls: 'Calls',
   typeAMessage: 'Type a message',
   contacts: 'Contacts',
-  
+  deleteForum: 'Delete Forum',
+  tag: 'Tag',
+  title: 'Title',
+  content: 'Content',
 };
 
 export default en;

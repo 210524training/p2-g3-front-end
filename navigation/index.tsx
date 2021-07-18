@@ -27,6 +27,7 @@ import ForumScreen from '../screens/ForumScreen';
 import EditChatRoom from '../screens/EditChatRoom';
 import UserSearchPage from '../new_pages/UserSearch';
 import HelpPage from '../new_pages/HelpPage';
+import EditForum from '../screens/EditForum';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -138,6 +139,10 @@ function RootNavigator() {
       <Stack.Screen name="EditChatRoom" component={EditChatRoom} 
         options={({ route }) => ({
           title: route.params.chatRoom.title || 'No Name',
+        })} />
+      <Stack.Screen name="EditForum" component={EditForum}
+        options={({ route }) => ({
+          title: route.params.forum.title || 'No Name',
         })} />
       <Stack.Screen
         name="UserSearch"

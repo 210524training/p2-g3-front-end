@@ -82,6 +82,10 @@ const es: Bank = {
   calls: 'Llamadas',
   typeAMessage: 'Escribe un mensaje',
   contacts: 'Contactos',
+  deleteForum: 'Borrar Foro',
+  tag: 'Etiqueta',
+  title: 'Titulo',
+  content: 'Contenido',
 };
 
 export default es;
