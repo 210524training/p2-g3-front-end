@@ -1,16 +1,54 @@
 /* eslint-disable react-native/no-unused-styles */
 import React, { useState } from 'react';
 import { Button, ScrollView, StyleSheet, TextInput } from 'react-native';
-import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
+import { useAppSelector } from '../hooks';
+import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { Text, View } from '../components/Themed';
-import { getAllUsers } from '../remote/api/fetch.users';
-import defaultImageUri from '../constants/DefaultImageUri';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
-import PickImage from '../components/ProfileImage';
+import { t } from 'i18n-js';
+import { Auth } from 'aws-amplify';
+import { User } from '../@types/index.d';
+
+const updateAttributes = async (user: User): Promise<boolean> => {
+  try {
+    const cu = await Auth.currentAuthenticatedUser();
+    const res = await Auth.updateUserAttributes(cu, {
+      'custom:imageUri': user.imageUri || '',
+      'custom:isSuperAdmin': user.isSuperAdmin ? '1' : '',
+      'custom:interests': JSON.stringify(user.interests),
+      'custom:status': user.status,
+      'custom:questionOne': user.securityQuestionOne.question,
+      'custom:questionTwo': user.securityQuestionTwo.question,
+      'custom:questionThree': user.securityQuestionThree.question,
+      'custom:answerOne': user.securityQuestionOne.answer,
+      'custom:answerTwo': user.securityQuestionTwo.answer,
+      'custom:answerThree': user.securityQuestionThree.answer,
+      'custom:phoneNumber': user.phoneNumber || '',
+    });
+    console.debug(res);
+    return true;
+  } catch (err) {
+    console.error('update failed (cognito attributes): ', err);
+  }
+  return false;
+
+};
+
+const updateStatus = async (status: string): Promise<boolean> => {
+  try {
+    const cu = await Auth.currentAuthenticatedUser();
+    const res = await Auth.updateUserAttributes(cu, {
+      'custom:status': status,
+    });
+    return res === 'SUCCESS';
+  } catch (err) {
+    console.error('update failed (cognito attributes): ', err);
+  }
+  return false;
+
+};
 
 const EditProfileScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
@@ -18,70 +56,58 @@ const EditProfileScreen: React.FC<unknown> = () => {
   const styles = createStyle(colorScheme);
   const nav = useNavigation();
 
-  const [password, setPassword] = useState<string>('');
-  const [verifyPassword, setVerifyPassword] = useState<string>('');
-  const [aboutMe, setAboutMe] = useState<string>('');
-
-  const handleChangeImage = () => {
-    nav.navigate('PickImage');
-  };
-
+  const [aboutMe, setAboutMe] = useState<string>(user?.status || '');
+  const [error, setError] = useState<string>('');
   const handleSaveProfile = () => {
-    nav.navigate('Profile');
+    (async () => {
+      if (aboutMe && aboutMe.trim() && aboutMe.length <= 2048) {
+        await updateStatus(aboutMe);
+        nav.navigate('Profile');
+      } else {
+        setError('Either the status was not provided or is too long (max: 2048 characters)');
+      }
+    })();
   };
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View>
-          <Button
-            onPress={() => handleChangeImage}
-            title="Change Image"
-          />
-        </View>
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
         <Text style={styles.title}>
           Edit Profile
         </Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <Text style={{ fontSize: 18 }}>
-          {user?.id}
-        </Text>
+
         <Text style={{ fontSize: 18 }}>
           {user?.username}
         </Text>
         <Text style={{ fontSize: 18 }}>
           {user?.email}
         </Text>
+
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
         <Text style={{ fontSize: 20 }}>
-          New Password
-        </Text>
-        <TextInput
-          style={styles.text} 
-          placeholder="Enter Password"
-          onChangeText={text => setPassword(text)}
-        />
-        <Text style={{ fontSize: 20 }}>
-          Confirm New Password
+          {t('status')}
         </Text>
         <TextInput
           style={styles.text}
-          placeholder="Re-Enter Password"
-          onChangeText={text => setVerifyPassword(text)}
+          placeholder={user?.status}
+          value={aboutMe}
+          onChangeText={setAboutMe}
         />
-        <Text style={{ fontSize: 20 }}>
-          About Me
-        </Text>
-        <TextInput
-          style={styles.text}
-          placeholder="Type Here!"
-          onChangeText={text => setAboutMe(text)}
-        />
-        <View style={{ width: '100%', padding: 25 }}>  
-          <Button 
+        <View style={{ width: '100%', padding: 25 }}>
+          <Text
+            style={{
+              color: 'red',
+              textAlign: 'left'
+            }}
+          >
+            {error}
+          </Text>
+          <Button
             onPress={() => handleSaveProfile()}
-            title="Save"
-            color="green"
+            title={t('save')}
+            color={Colors[colorScheme].tint}
           />
         </View>
       </View>
@@ -100,12 +126,12 @@ const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
     marginVertical: 30,
     width: '80%',
   },
-  text: { 
+  text: {
     borderWidth: 1,
     color: Colors['dark'].background,
-    fontSize: 18, 
+    fontSize: 18,
     margin: 10,
-    padding: 10,  
+    padding: 10,
     width: '90%',
   },
   title: {

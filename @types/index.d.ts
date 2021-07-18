@@ -18,6 +18,7 @@ export type Interest = keyof InterestType;
 export type ChatRoomId = string;
 export interface User {
   email: string,
+  phoneNumber?: string,
   username: string,
   password: string,
   contacts?: User[],

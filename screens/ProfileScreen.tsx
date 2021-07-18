@@ -28,10 +28,22 @@ const ProfileScreen: React.FC<unknown> = () => {
           ? (
             <>
               <Image source={{
-                uri: user.imageUri || defaultImageUri
-              }} width={100} height={100}/>
+                uri: user.imageUri?.trim() || defaultImageUri
+              }} style={{width: 100, height: 100, margin: 10, borderRadius: 10}} />
               <Text style={styles.title}>
                 Hello, {user.username}!
+              </Text>
+              <Text
+                style={{
+                  color: 'blue',
+                  padding: 10,
+                  textAlign: 'right'
+                }}
+                onPress={() => {
+                  nav.navigate('Help');
+                }}
+              >
+                {t('help')}
               </Text>
               <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
               <Text style={{ fontSize: 20 }}>
@@ -80,7 +92,7 @@ const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
   },
   text: {
     borderWidth: 1,
-    color: Colors[colorScheme].background,
+    color: Colors[colorScheme].text,
     fontSize: 18,
     margin: 10,
     padding: 10,

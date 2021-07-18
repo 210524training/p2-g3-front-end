@@ -92,7 +92,6 @@ const RegisterScreen: React.FC<unknown> = (props) => {
           'custom:status': 'No status'
         }
       });
-      console.log(user);
       nav.navigate('ConfirmCode', {
         username
       });
