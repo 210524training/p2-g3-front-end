@@ -21,7 +21,18 @@ export type ForumEditProps = {
 };
 
 const EditForum: React.FC<ForumEditProps> = ({ route }): JSX.Element => {
-  const user = useAppSelector<UserState>(selectUser);
+  //const user = useAppSelector<UserState>(selectUser);
+  const user: User = {
+    email: 'a@b',
+    username: 'haha',
+    password: 'pass',
+    interests: [],
+    isSuperAdmin: true,
+    securityQuestionOne: {answer:'',question:''},
+    securityQuestionTwo: {answer:'',question:''},
+    securityQuestionThree: {answer:'',question:''},
+  };
+
   const { forum } = route.params;
 
   const [newForum, setNewForum] = useState<Forum>({...forum});
@@ -60,7 +71,7 @@ const EditForum: React.FC<ForumEditProps> = ({ route }): JSX.Element => {
   const removeTag = (tag: string) => {
       const nf = {...newForum};
       const idx = nf.tags?.indexOf(tag);
-      if (idx && idx >=0) {
+      if (idx != undefined && idx >=0) {
         nf.tags?.splice(idx, 1);
         setNewForum(nf);
       }
@@ -83,7 +94,7 @@ const EditForum: React.FC<ForumEditProps> = ({ route }): JSX.Element => {
 
   const canModifyForum = (u: User): boolean => {
     let elevated = false;
-      if (u.username === forum.user.username) {
+      if (u.username === forum.user.username || u.isSuperAdmin) {
         elevated = true;
       }
     return elevated;

@@ -63,7 +63,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
   const removeTag = (tag: string) => {
       const nf = {...newForum};
       const idx = nf.tags?.indexOf(tag);
-      if (idx && idx >=0) {
+      if (idx != undefined && idx >= 0) {
         nf.tags?.splice(idx, 1);
         setNewForum(nf);
       }
@@ -139,7 +139,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
       <View>
         {
           <Button 
-            title={t('edit')}
+            title={t('add')}
             onPress={onPressHandlerSendForum}
           />
         }

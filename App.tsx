@@ -5,13 +5,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { Auth } from 'aws-amplify';
 
-import awsmobile from './src/aws-exports';
+//import awsmobile from './src/aws-exports';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation/index';
 import store from './hooks/store';
 
-Auth.configure(awsmobile);
+//Auth.configure(awsmobile);
 
 const App: React.FC<unknown> = (): JSX.Element => {
   const isLoadingComplete = useCachedResources();

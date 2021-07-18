@@ -42,8 +42,12 @@ export type RootStackParamList = {
   Help: undefined;
   EditForum: {
     forum: Forum,
+  }
   ConfirmCode: {
     username: string,
+  }
+  AddForum: {
+    user: User,
   }
 };
 
