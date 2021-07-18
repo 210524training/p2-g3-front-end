@@ -11,6 +11,10 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation/index';
 import store from './hooks/store';
 
+import client from './remote/api/client';
+
+client.post('hello', {name: 'dustin'}).then(console.log);
+
 Auth.configure(awsmobile);
 
 const App: React.FC<unknown> = (): JSX.Element => {

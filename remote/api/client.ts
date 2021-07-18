@@ -1,14 +1,11 @@
 import axios from 'axios';
+import { AWS_API_URL } from 'react-native-dotenv';
 
-// const session = await Auth.currentSession();
-// const authHeader = {
-//   headers: {
-//     Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
-//   },
-// };
+console.log('VVVV');
+console.log(AWS_API_URL);
 
 const client = axios.create({
-  baseURL: undefined,
+  baseURL: AWS_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -16,3 +13,9 @@ const client = axios.create({
 });
 
 export default client;
+// const session = await Auth.currentSession();
+// const authHeader = {
+//   headers: {
+//     Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
+//   },
+// };

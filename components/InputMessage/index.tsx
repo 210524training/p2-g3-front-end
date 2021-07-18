@@ -3,6 +3,7 @@ import { View, TextInput, Pressable, Image, Platform } from 'react-native';
 import { Entypo, Fontisto, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 import useColorScheme from '../../hooks/useColorScheme';
 import createStyle from './style';
@@ -64,15 +65,17 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
     (async () => {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
+        allowsEditing: false,
+        // aspect: [4, 3],
         quality: 1,
+
       });
 
       console.log(result);
 
       if (!result.cancelled) {
-        const { uri } = result;
+
+        const { uri, } = result;
         const video = isVideo(uri);
         let w = 400, h = 400;
 
