@@ -19,6 +19,7 @@ export const getAllUsers = (): Promise<User[]> => {
   });
 };
 
+
 export const sendLogin = async (username: string, password: string): Promise<User> => {
   console.log(username, password);
   return Auth.signIn(username, password).then((cu: CognitoUser) => {
@@ -43,6 +44,7 @@ export const sendLogin = async (username: string, password: string): Promise<Use
         question: values['custom:questionThree'] as string,
         answer: values['custom:answerThree'] as string
       },
+      phoneNumber: values['custom:phoneNumber'] as string,
     };
   });
 };
