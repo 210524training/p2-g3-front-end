@@ -6,5 +6,36 @@
       "dependsOn": [],
       "customAuth": false
     }
+  },
+  "storage": {
+    "p2g3db": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation"
+    },
+    "p2g3storage": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "function": {
+    "p2g3generallambda": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "p2g3db",
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "attributeEnvMap": {
+            "Name": "TABLE_NAME",
+            "Arn": "TABLE_ARN"
+          }
+        }
+      ]
+    }
   }
 }

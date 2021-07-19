@@ -23,7 +23,10 @@ export type RootStackParamList = {
   Contacts: {
     user: User,
   };
-  Camera: undefined;
+  Camera: {
+    socket?: WebSocket,
+    uploadProgress?: (total: number) => void,
+  };
   Register: undefined;
   EditProfile: undefined;
   SelectInterests: undefined;

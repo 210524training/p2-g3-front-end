@@ -2,16 +2,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as MediaLibrary from 'expo-media-library';
 import { Camera } from 'expo-camera';
-import { Pressable, View, StyleSheet, StyleProp, ViewStyle, PressableStateCallbackType } from 'react-native';
+import { Pressable, View, StyleSheet, StyleProp, ViewStyle, PressableStateCallbackType, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { MediaHeader } from '../../@types/index.d';
+import { selectUser, UserState } from '../../hooks/slices/user.slice';
+import { useAppSelector } from '../../hooks';
+import t from '../../Localization';
+import { sendMedia } from '../InputMessage';
 
 export type CameraProps = {
-
+  socket?: WebSocket,
+  uploadProgress: (total: number) => void,
 };
 
-const CameraView: React.FC<CameraProps> = (): JSX.Element => {
+const CameraView: React.FC<CameraProps> = ({ socket, uploadProgress }): JSX.Element => {
+  const user = useAppSelector<UserState>(selectUser);
   const [hasPermission, setHasPermission] = useState<MediaLibrary.PermissionStatus>();
   const [hasMicPermission, setHasMicPermission] = useState<MediaLibrary.PermissionStatus>();
   const [grantedCameraAccess, setGrantedCameraAccess] = useState<boolean>(false);
@@ -46,7 +52,7 @@ const CameraView: React.FC<CameraProps> = (): JSX.Element => {
 
   const handleTakePicture = () => {
     (async () => {
-      if (cameraReady && camera && camera.current) {
+      if (cameraReady && camera && camera.current && user && socket) {
         console.log('Taking snap');
         const photo = await camera.current.takePictureAsync();
         console.debug(photo);
@@ -57,17 +63,36 @@ const CameraView: React.FC<CameraProps> = (): JSX.Element => {
           height: photo.height,
           type: MediaHeader.IMAGE
         });
-        // await saveFile(photo.uri);
+        Alert.alert(
+          t('send'),
+          t('doYouWantToSendThisPicture'),
+          [
+            {
+              text: t('send'),
+              onPress: () => {
+                nav.goBack();
+                sendMedia(photo.uri, user, socket, (total) => {
+                  if (uploadProgress) {
+                    uploadProgress(total);
+                  }
+                }).then(console.log).catch(console.error);
+              },
+            },
+            {
+              text: t('cancel'),
+            },
+          ]
+        );
 
       } else {
-        console.warn('Camera is not ready');
+        Alert.alert('Camera is not ready');
       }
     })();
   };
 
   const handleVideoRecording = () => {
     (async () => {
-      if (cameraReady && camera && camera.current) {
+      if (cameraReady && camera && camera.current && user && socket) {
         console.log('Recording video');
         setRecording(true);
         const video = await camera.current.recordAsync();
@@ -77,6 +102,27 @@ const CameraView: React.FC<CameraProps> = (): JSX.Element => {
           uri: video.uri,
           type: MediaHeader.VIDEO
         });
+
+        Alert.alert(
+          t('send'),
+          t('doYouWantToSendThisVideo'),
+          [
+            {
+              text: t('send'),
+              onPress: () => {
+                nav.goBack();
+                sendMedia(video.uri, user, socket, (total) => {
+                  if (uploadProgress) {
+                    uploadProgress(total);
+                  }
+                }).then(console.log).catch(console.error);
+              },
+            },
+            {
+              text: t('cancel'),
+            },
+          ]
+        );
       } else {
         console.warn('Camera is not ready');
       }

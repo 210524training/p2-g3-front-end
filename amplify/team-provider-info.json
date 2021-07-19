@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "p2g3frontend38ad6cd7": {}
+      },
+      "function": {
+        "p2g3generallambda": {
+          "deploymentBucketName": "amplify-p2g3frontend-dev-160620-deployment",
+          "s3Key": "amplify-builds/p2g3generallambda-396538757259706d4f6c-build.zip"
+        }
       }
     }
   }
