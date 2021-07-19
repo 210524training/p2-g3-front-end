@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { AWS_API_URL } from 'react-native-dotenv';
 
-console.log('VVVV');
 console.log(AWS_API_URL);
 
 const client = axios.create({

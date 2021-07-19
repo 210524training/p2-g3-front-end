@@ -1,21 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { AxiosError } from 'axios';
-import { ChatRoomId, Interest, SecurityQuestion, User } from '../../@types';
+import { User } from '../../@types/index.d';
 import { sendLogin } from '../../remote/api/fetch.users';
-import { Auth } from 'aws-amplify';
-import defaultImageUri from '../../constants/DefaultImageUri';
-import { CognitoUser } from 'amazon-cognito-identity-js';
 
 export type UserState = User | null;
 
 export type LoginCredentials = {
   username: string;
   password: string;
-}
-
-export function isAxiosError(error: any): error is AxiosError {
-  return 'isAxiosError' in error;
 }
 
 export const loginAsync = createAsyncThunk<UserState, LoginCredentials>(
