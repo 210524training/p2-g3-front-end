@@ -13,7 +13,7 @@ import { sendMedia } from '../InputMessage';
 
 export type CameraProps = {
   socket?: WebSocket,
-  uploadProgress: (total: number) => void,
+  uploadProgress?: (total: number) => void,
 };
 
 const CameraView: React.FC<CameraProps> = ({ socket, uploadProgress }): JSX.Element => {
