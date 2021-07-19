@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, Pressable, Image, Platform, Alert } from 'react-native';
+import { View, TextInput, Pressable, Image, Platform, Alert, KeyboardAvoidingView } from 'react-native';
 import { Entypo, Fontisto, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
@@ -103,7 +103,10 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
   };
 
   return (
-    <>
+<KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{width: '100%', height: '100%'}}
+    >
       {uploadProgress > 0 && uploadProgress < 1 ? <Progress.Bar progress={uploadProgress} width={null} /> : undefined}
       <View style={styles.container}>
         <View style={styles.main}>
@@ -183,7 +186,7 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
           </View>
         </Pressable>
       </View>
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

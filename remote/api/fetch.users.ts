@@ -13,7 +13,7 @@ export const getFriends = (username: string): Promise<User[]> => {
 };
 
 const extractAttribute = (data: any, find: string): string | undefined => {
-  const match = data?.Attributes?.filter((attr: any) => attr?.Name === find);
+  const match = data?.Attributes?.filter((attr: { Name: string, Value: string }) => attr?.Name === find);
   if (match && match.length > 0) {
     return match[0].Value;
   }

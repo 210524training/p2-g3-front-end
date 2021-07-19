@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, KeyboardAvoidingView, Platform } from 'react-native';
 import { generate as shortid } from 'shortid';
 
 import ChatMessage from '../components/ChatMessage';
