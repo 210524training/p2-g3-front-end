@@ -3,6 +3,8 @@ import InterestInterface from './interests';
 export enum MediaHeader {
   IMAGE,
   VIDEO,
+  /** not implemented yet */
+  S3,
 };
 
 export type SecurityQuestion = {

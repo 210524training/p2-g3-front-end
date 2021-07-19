@@ -27,6 +27,7 @@
     "@types/react-native-dotenv": "^0.2.0",
     "aws-amplify": "^4.2.0",
     "aws-amplify-react-native": "^5.0.3",
+    "aws-sdk": "^2.948.0",
     "axios": "^0.21.1",
     "expo": "~42.0.0",
     "expo-asset": "~8.3.2",

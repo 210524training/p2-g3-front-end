@@ -1,8 +1,9 @@
 import { Interest, User } from '../../@types';
 import client from './client';
 import users from '../data/Users';
-import { Auth } from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
+import { CognitoIdentityServiceProvider } from '../../amplify/backend/function/p2g3generallambda/src/node_modules/aws-sdk';
 //TODO: refactor code to use backend
 
 export const getFriends = (id: string): Promise<User[]> => {
