@@ -10,6 +10,7 @@ import { User } from '../@types';
 import ContactListItem from '../components/ContactListItem';
 import users from '../remote/data/Users';
 import t from '../Localization';
+import { getAllUsers } from '../remote/api/fetch.users';
 
 const styles = StyleSheet.create({
   searchBar: {
@@ -72,13 +73,17 @@ const UserSearchPage: React.FC<unknown> = () => {
   };
 
   useEffect(() => {
-    setExampleUsers(users);
-    setUserList(users);
+    (async () => {
+      const users = await getAllUsers();
+      setExampleUsers([...users]);
+      setUserList([...users]);
+    })();
   }, []);
 
   useEffect(() => {
+    const ls = search.toLowerCase();
     if (search) {
-      const filteredUsers = exampleUsers.filter(user => user.username.includes(search));
+      const filteredUsers = exampleUsers.filter(user => user.username.toLowerCase().includes(ls));
       setUserList(filteredUsers);
     }
     else {
