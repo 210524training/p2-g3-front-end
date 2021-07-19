@@ -18,7 +18,15 @@
       "function": {
         "p2g3generallambda": {
           "deploymentBucketName": "amplify-p2g3frontend-dev-160620-deployment",
-          "s3Key": "amplify-builds/p2g3generallambda-396538757259706d4f6c-build.zip"
+          "s3Key": "amplify-builds/p2g3generallambda-73335a50644235667065-build.zip"
+        },
+        "p2g3getallcognitousers": {
+          "deploymentBucketName": "amplify-p2g3frontend-dev-160620-deployment",
+          "s3Key": "amplify-builds/p2g3getallcognitousers-64754150742b61385444-build.zip"
+        },
+        "p2g3helloworld": {
+          "deploymentBucketName": "amplify-p2g3frontend-dev-160620-deployment",
+          "s3Key": "amplify-builds/p2g3helloworld-67726b37556c6e4a4358-build.zip"
         }
       }
     }

@@ -1,0 +1,54 @@
+{
+  "paths": [
+    {
+      "name": "/users",
+      "lambdaFunction": "p2g3getallcognitousers",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/users"
+    },
+    {
+      "name": "/chats",
+      "lambdaFunction": "p2g3generallambda",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/chats"
+    }
+  ],
+  "resourceName": "p2g3restapi",
+  "apiName": "p2g3restapi",
+  "functionArns": [
+    {
+      "lambdaFunction": "p2g3getallcognitousers"
+    },
+    {
+      "lambdaFunction": "p2g3generallambda"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-p2g3frontend-dev-160620-authRole",
+    "unAuthRoleName": "amplify-p2g3frontend-dev-160620-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "p2g3getallcognitousers",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    },
+    {
+      "category": "function",
+      "resourceName": "p2g3generallambda",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}

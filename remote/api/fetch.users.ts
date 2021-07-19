@@ -1,9 +1,8 @@
-import { Interest, User } from '../../@types';
+import { User } from '../../@types';
 import client from './client';
 import users from '../data/Users';
-import Amplify, { Auth } from 'aws-amplify';
+import { Auth, API } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
-import { CognitoIdentityServiceProvider } from '../../amplify/backend/function/p2g3generallambda/src/node_modules/aws-sdk';
 //TODO: refactor code to use backend
 
 export const getFriends = (id: string): Promise<User[]> => {
@@ -13,11 +12,10 @@ export const getFriends = (id: string): Promise<User[]> => {
   });
 };
 
-export const getAllUsers = (): Promise<User[]> => {
-  const friends: User[] = users;
-  return new Promise<User[]>((resolve, reject) => {
-    resolve(friends);
-  });
+export const getAllUsers = async (): Promise<User[]> => {
+  const res = await API.get('', '', {});
+  
+  return [];
 };
 
 
@@ -47,11 +45,5 @@ export const sendLogin = async (username: string, password: string): Promise<Use
       },
       phoneNumber: values['custom:phoneNumber'] as string,
     };
-  });
-};
-
-export const register = async (user: User) => {
-  return new Promise<User>((resolve, reject) => {
-    resolve(user);
   });
 };
