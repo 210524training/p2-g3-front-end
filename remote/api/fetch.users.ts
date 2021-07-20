@@ -1,5 +1,5 @@
 import { User } from '../../@types';
-import client from './client';
+import {cognito} from './client';
 import users from '../data/Users';
 import { Auth, API } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
@@ -21,7 +21,7 @@ const extractAttribute = (data: any, find: string): string | undefined => {
 
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const res = await (await client()).get('/users');
+    const res = await (await cognito()).get('/users');
     console.log('fetch all users', res);
     return res?.data?.Users?.map((cu) => ({
       username: cu?.Username,
@@ -48,14 +48,22 @@ export const getAllUsers = async (): Promise<User[]> => {
   } catch (err) {
     console.error('fetch users error', err);
   }
-  return  [];
+  return [];
 };
 
 
 export const sendLogin = async (username: string, password: string): Promise<User> => {
-  console.log(username, password);
+  // console.log(username, password);
+  const users = await getAllUsers();
   return Auth.signIn(username, password).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
+    const friends = JSON.parse(values['custom:contacts'] || '[]');
+    const contacts = users.filter(c => friends.includes(
+      c.username.startsWith('*') || c.username.startsWith('~')
+        ? c.username.substring(1, c.username.length)
+        : c.username
+    ));
+    const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
     return {
       username: values['cognito:username'] as string,
       email: values['email'] as string,
@@ -77,15 +85,25 @@ export const sendLogin = async (username: string, password: string): Promise<Use
         answer: values['custom:answerThree'] as string
       },
       phoneNumber: values['custom:phoneNumber'] as string,
+      contacts: contacts || [],
     };
   });
 };
 
 export const sendLoginCache = async (): Promise<User> => {
+  const users = await getAllUsers();
   return Auth.currentAuthenticatedUser({
     bypassCache: true,
   }).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
+    const friends = JSON.parse(values['custom:contacts'] || '[]');
+    const contacts = users.filter(c => friends.includes(
+      c.username.startsWith('*') || c.username.startsWith('~')
+        ? c.username.substring(1, c.username.length)
+        : c.username
+    ));
+    const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
+    
     return {
       username: values['cognito:username'] as string,
       email: values['email'] as string,
@@ -107,6 +125,46 @@ export const sendLoginCache = async (): Promise<User> => {
         answer: values['custom:answerThree'] as string
       },
       phoneNumber: values['custom:phoneNumber'] as string,
+      contacts: contacts || [],
     };
   });
+};
+
+export const updateAttributes = async (cognitoUser: any, user: User): Promise<boolean> => {
+  try {
+    const res = await Auth.updateUserAttributes(cognitoUser, {
+      'custom:imageUri': user.imageUri || '',
+      'custom:isSuperAdmin': user.isSuperAdmin ? '1' : '',
+      'custom:interests': JSON.stringify(user.interests),
+      'custom:status': user.status,
+      'custom:questionOne': user.securityQuestionOne.question,
+      'custom:questionTwo': user.securityQuestionTwo.question,
+      'custom:questionThree': user.securityQuestionThree.question,
+      'custom:answerOne': user.securityQuestionOne.answer,
+      'custom:answerTwo': user.securityQuestionTwo.answer,
+      'custom:answerThree': user.securityQuestionThree.answer,
+      'custom:phoneNumber': user.phoneNumber || '',
+      'custom:contacts': JSON.stringify(user.contacts?.map(_c => _c.username) || []),
+      'custom:chatRoomId': user.chatRooms || '[]',
+    });
+    console.debug(res);
+    return true;
+  } catch (err) {
+    console.error('update failed (cognito attributes): ', err);
+  }
+  return false;
+
+};
+
+export const updateStatus = async (cognitoUser: any, status: string): Promise<boolean> => {
+  try {
+    const res = await Auth.updateUserAttributes(cognitoUser, {
+      'custom:status': status,
+    });
+    return res === 'SUCCESS';
+  } catch (err) {
+    console.error('update failed (cognito attributes - status): ', err);
+  }
+  return false;
+
 };

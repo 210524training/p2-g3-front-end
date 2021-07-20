@@ -1,12 +1,11 @@
-import { AWS_API_URL_NEW, AWS_API_NAME } from 'react-native-dotenv';
-import { API, Auth } from 'aws-amplify';
+import { AWS_API_URL_NEW, AWS_DB_BACKEND } from 'react-native-dotenv';
+import { Auth } from 'aws-amplify';
 import axios, { AxiosInstance } from 'axios';
-import awsmobile from '../../src/aws-exports';
 
+console.log('Cognito Users:', AWS_API_URL_NEW);
+console.log('DB Endpoint', AWS_DB_BACKEND);
 
-console.log('enpoint', AWS_API_URL_NEW);
-console.log('api name', AWS_API_NAME);
-export const auth = async (headers?: any): Promise<AxiosInstance> => {
+export const cognito = async (url = AWS_API_URL_NEW, headers?: any): Promise<AxiosInstance> => {
   const session = await Auth.currentSession();
   console.log(session);
   if (!headers) {
@@ -27,22 +26,13 @@ export const auth = async (headers?: any): Promise<AxiosInstance> => {
 
   console.log(headers);
   return axios.create({
-    baseURL: AWS_API_URL_NEW,
+    baseURL: url,
     headers,
     withCredentials: true,
   });
-
-  // const path = '/users';
-  // const myInit = {
-  //   headers: {
-  //     Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}`,
-  //   },
-  // };
-
-  // return await API.post(AWS_API_NAME, path, myInit);
 };
 
-export const noAuth = (headers?: any): AxiosInstance => {
+export const db = (headers?: any): AxiosInstance => {
   if (!headers) {
     headers = {};
   }
@@ -52,11 +42,8 @@ export const noAuth = (headers?: any): AxiosInstance => {
   }
 
   return axios.create({
-    baseURL: AWS_API_URL,
+    baseURL: AWS_DB_BACKEND,
     headers,
     withCredentials: true,
   });
 };
-
-
-export default auth;

@@ -3,7 +3,7 @@ import { FlatList, StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { getForums } from '../remote/api/fetch.forums';
-import { Forum } from '../@types';
+import { Forum } from '../@types/index.d';
 import ForumListItem from '../components/ForumListItem';
 import NewForum from '../components/NewForum';
 

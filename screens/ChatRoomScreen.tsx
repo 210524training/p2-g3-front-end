@@ -31,7 +31,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
     };
 
     s.onmessage = (e) => {
-      console.log(e);
+      console.log(JSON.parse(e.data).connectionId);
       const msg: Message = JSON.parse(e.data);
       messages.push(msg);
       const ids = messages.map(o => o.id);
