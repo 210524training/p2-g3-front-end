@@ -6,5 +6,47 @@
       "dependsOn": [],
       "customAuth": false
     }
+  },
+  "storage": {
+    "p2g3db": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation"
+    },
+    "p2g3storage": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "function": {
+    "p2g3getallcognitousers": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "p2g3frontend38ad6cd7",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
+    }
+  },
+  "api": {
+    "p2g3chatapreduusers": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "p2g3getallcognitousers",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
+    }
   }
 }

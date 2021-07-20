@@ -2,6 +2,9 @@ import Bank from './type';
 
 const es: Bank = {
   welcome: '¡Saludos!',
+  send: 'Enviar',
+  doYouWantToSendThisPicture: '¿Deseas enviar esta imagen?',
+  doYouWantToSendThisVideo: '¿Deseas enviar este vídeo?',
   name: 'Nombre',
   confirm: 'Confirmar',
   resendConfirmationCode: 'Reenviar el código de confirmación',

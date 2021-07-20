@@ -2,6 +2,9 @@ type Bank = {
   /** Application Name (fallback will be en) */
   _name?: string,
   name: string,
+  send: string,
+  doYouWantToSendThisPicture: string,
+  doYouWantToSendThisVideo: string,
   confirm: string,
   resendConfirmationCode: string,
   deleteChatRoom: string,
