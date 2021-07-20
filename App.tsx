@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
-import { Auth, Storage } from 'aws-amplify';
+import { API, Auth, Storage } from 'aws-amplify';
 
 import awsmobile from './src/aws-exports';
 import useCachedResources from './hooks/useCachedResources';
@@ -19,6 +19,15 @@ Storage.configure({
   identityPoolId: awsmobile.aws_user_pools_id,
 });
 
+API.configure({
+  endpoints: [
+    {
+      name: awsmobile.aws_cloud_logic_custom[0].name,
+      endpoint: awsmobile.aws_cloud_logic_custom[0].endpoint,
+      region: awsmobile.aws_cloud_logic_custom[0].region,
+    },
+  ],
+});
 
 const App: React.FC<unknown> = (): JSX.Element => {
   const isLoadingComplete = useCachedResources();

@@ -18,7 +18,12 @@ export type InterestType = typeof InterestInterface;
 export type Interest = keyof InterestType;
 
 export type ChatRoomId = string;
-export interface User {
+
+export interface IEntity {
+  id: string;
+}
+export interface User implements IEntity {
+  id?: string,
   email: string,
   phoneNumber?: string,
   username: string,
@@ -34,20 +39,21 @@ export interface User {
   status?: string,
 };
 
-export interface Message {
+export interface Message implements IEntity {
   id: string,
   user: User,
   content: string,
   createdAt: string,
 };
 
-export type ChatRoomUser = {
+export interface ChatRoomUser implements IEntity  {
+  id: string,
   user: User,
   isModerator: boolean,
   isAdmin: boolean,
 }
 
-export interface ChatRoom {
+export interface ChatRoom implements IEntity  {
   id: string,
   title: string,
   users: ChatRoomUser[],
@@ -55,19 +61,19 @@ export interface ChatRoom {
   lastMessage: Message,
 };
 
-export interface Forum {
+export interface Forum implements IEntity  {
   id: string,
   title: string,
-  tags?: string[],
+  tags: string[],
   user: User,
   createdAt: string,
   content: string,
-  likes: number,
+  likes?: number,
   numberOfComments?: number,
   comments?: ForumComment[]
 };
 
-export interface ForumComment {
+export interface ForumComment implements IEntity  {
   id: string,
   user: User,
   createdAt: string,

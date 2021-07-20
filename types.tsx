@@ -45,7 +45,10 @@ export type RootStackParamList = {
   Help: undefined;
   ConfirmCode: {
     username: string,
-  }
+  };
+  Login: {
+    hideLeftHeader: boolean | undefined;
+  },
 };
 
 export type ChatsParamList = {

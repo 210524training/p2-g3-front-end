@@ -18,30 +18,6 @@
     }
   },
   "function": {
-    "p2g3generallambda": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "p2g3db",
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "attributeEnvMap": {
-            "Name": "TABLE_NAME",
-            "Arn": "TABLE_ARN"
-          }
-        }
-      ]
-    },
-    "p2g3helloworld": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "p2g3getallcognitousers": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -57,28 +33,5 @@
       ]
     }
   },
-  "api": {
-    "p2g3restapi": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "p2g3getallcognitousers",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "p2g3generallambda",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
-    }
-  }
+  "api": {}
 }

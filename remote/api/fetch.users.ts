@@ -20,35 +20,71 @@ const extractAttribute = (data: any, find: string): string | undefined => {
 };
 
 export const getAllUsers = async (): Promise<User[]> => {
-  const res = await (await client()).get('/users');
-  return res?.data?.Users?.map((cu) => ({
-    username: cu?.Username,
-    email: extractAttribute(cu, 'email'),
-    password: '<you thought!>',
-    isSuperAdmin: !!extractAttribute(cu, 'custom:isSuperAdmin'),
-    status: extractAttribute(cu, 'custom:status'),
-    interests: JSON.parse(extractAttribute(cu, 'custom:interests') || '[]'),
-    imageUri: extractAttribute(cu, 'custom:imageUri'),
-    securityQuestionOne: {
-      question: extractAttribute(cu, 'custom:questionOne'),
-      answer: extractAttribute(cu, 'custom:answerOne'),
-    },
-    securityQuestionTwo: {
-      question: extractAttribute(cu, 'custom:questionTwo'),
-      answer: extractAttribute(cu, 'custom:answerTwo'),
-    },
-    securityQuestionThree: {
-      question: extractAttribute(cu, 'custom:questionThree'),
-      answer: extractAttribute(cu, 'custom:answerThree'),
-    },
-    phoneNumber: extractAttribute(cu, 'custom:phoneNumber'),
-  })) || [];
+  try {
+    const res = await (await client()).get('/users');
+    console.log('fetch all users', res);
+    return res?.data?.Users?.map((cu) => ({
+      username: cu?.Username,
+      email: extractAttribute(cu, 'email'),
+      password: '<you thought!>',
+      isSuperAdmin: !!extractAttribute(cu, 'custom:isSuperAdmin'),
+      status: extractAttribute(cu, 'custom:status'),
+      interests: JSON.parse(extractAttribute(cu, 'custom:interests') || '[]'),
+      imageUri: extractAttribute(cu, 'custom:imageUri'),
+      securityQuestionOne: {
+        question: extractAttribute(cu, 'custom:questionOne'),
+        answer: extractAttribute(cu, 'custom:answerOne'),
+      },
+      securityQuestionTwo: {
+        question: extractAttribute(cu, 'custom:questionTwo'),
+        answer: extractAttribute(cu, 'custom:answerTwo'),
+      },
+      securityQuestionThree: {
+        question: extractAttribute(cu, 'custom:questionThree'),
+        answer: extractAttribute(cu, 'custom:answerThree'),
+      },
+      phoneNumber: extractAttribute(cu, 'custom:phoneNumber'),
+    })) || [];
+  } catch (err) {
+    console.error('fetch users error', err);
+  }
+  return  [];
 };
 
 
 export const sendLogin = async (username: string, password: string): Promise<User> => {
   console.log(username, password);
   return Auth.signIn(username, password).then((cu: CognitoUser) => {
+    const values = cu.signInUserSession.idToken.payload;
+    return {
+      username: values['cognito:username'] as string,
+      email: values['email'] as string,
+      password: '<you thought!>',
+      isSuperAdmin: values['custom:isSuperAdmin'] ? true : false,
+      status: values['custom:status'] as string,
+      interests: JSON.parse(values['custom:interests'] ? values['custom:interests'] : '[]'),
+      imageUri: values['custom:imageUri'] as string || '',
+      securityQuestionOne: {
+        question: values['custom:questionOne'] as string,
+        answer: values['custom:answerOne'] as string
+      },
+      securityQuestionTwo: {
+        question: values['custom:questionTwo'] as string,
+        answer: values['custom:answerTwo'] as string
+      },
+      securityQuestionThree: {
+        question: values['custom:questionThree'] as string,
+        answer: values['custom:answerThree'] as string
+      },
+      phoneNumber: values['custom:phoneNumber'] as string,
+    };
+  });
+};
+
+export const sendLoginCache = async (): Promise<User> => {
+  return Auth.currentAuthenticatedUser({
+    bypassCache: true,
+  }).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
     return {
       username: values['cognito:username'] as string,

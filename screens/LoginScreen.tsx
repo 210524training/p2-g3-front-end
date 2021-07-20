@@ -10,6 +10,7 @@ import t from '../Localization';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import LogoutButton from '../components/LogoutButton';
+import { Auth } from 'aws-amplify';
 
 const LoginScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
@@ -46,14 +47,14 @@ const LoginScreen: React.FC<unknown> = () => {
               placeholder={t('username')}
               onChangeText={text => setUsername(text)}
               defaultValue={username}
-              // value={'dustindiaz'}
+            // value={'dustindiaz'}
             />
             <TextInput
               style={{ fontSize: 18, margin: 10, borderWidth: 1, padding: 10 }}
               placeholder={t('password')}
               onChangeText={text => setPassword(text)}
               defaultValue={password}
-              // value={'password12345'}
+            // value={'password12345'}
             />
 
             <Button
