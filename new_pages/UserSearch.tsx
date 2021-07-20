@@ -81,11 +81,16 @@ const UserSearchPage: React.FC<unknown> = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      const users = (await getAllUsers()).filter(u => exclude(u));
-      setExampleUsers([...users]);
-      setUserList([...users]);
-    })();
+    try {
+      (async () => {
+        const users = (await getAllUsers()).filter(u => exclude(u));
+        setExampleUsers([...users]);
+        setUserList([...users]);
+      })();
+    } catch (err) {
+      setExampleUsers([]);
+      setUserList([]);
+    }
   }, [user]);
 
   useEffect(() => {
@@ -116,7 +121,7 @@ const UserSearchPage: React.FC<unknown> = () => {
             renderItem={({ item }) => (
               <>
                 <ContactListItem user={item} />
-                <Button title={t('add')} onPress={() => {}}/>
+                <Button title={t('add')} onPress={() => { }} />
               </>
             )}
             keyExtractor={(item) => item.username}
