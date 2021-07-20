@@ -22,7 +22,7 @@ export type ChatRoomId = string;
 export interface IEntity {
   id: string;
 }
-export interface User implements IEntity {
+export interface User {
   id?: string,
   email: string,
   phoneNumber?: string,
@@ -39,21 +39,21 @@ export interface User implements IEntity {
   status?: string,
 };
 
-export interface Message implements IEntity {
+export interface Message {
   id: string,
   user: User,
   content: string,
   createdAt: string,
 };
 
-export interface ChatRoomUser implements IEntity  {
+export interface ChatRoomUser {
   id: string,
   user: User,
   isModerator: boolean,
   isAdmin: boolean,
 }
 
-export interface ChatRoom implements IEntity  {
+export interface ChatRoom {
   id: string,
   title: string,
   users: ChatRoomUser[],
@@ -61,7 +61,7 @@ export interface ChatRoom implements IEntity  {
   lastMessage: Message,
 };
 
-export interface Forum implements IEntity  {
+export interface Forum {
   id: string,
   title: string,
   tags: string[],
@@ -73,7 +73,7 @@ export interface Forum implements IEntity  {
   comments?: ForumComment[]
 };
 
-export interface ForumComment implements IEntity  {
+export interface ForumComment {
   id: string,
   user: User,
   createdAt: string,

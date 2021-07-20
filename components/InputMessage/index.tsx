@@ -103,70 +103,72 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
   };
 
   return (
-<KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{width: '100%', height: '100%'}}
-    >
-      {uploadProgress > 0 && uploadProgress < 1 ? <Progress.Bar progress={uploadProgress} width={null} /> : undefined}
-      <View style={styles.container}>
-        <View style={styles.main}>
-          <TextInput
-            style={styles.inputField}
-            multiline
-            placeholder={t('typeAMessage')}
-            value={message}
-            onChangeText={onMessageChangeHandler}
-          />
-          <Pressable
-            onPress={handleAttachementPress}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.5 : 1
-              }
-            ]}
-          >
-            <Entypo
-              name="attachment"
-              size={24}
-              color='grey'
-              style={styles.icon}
+    <>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={100}
+        style={{ width: '100%' }}
+      >
+        {uploadProgress > 0 && uploadProgress < 1 ? <Progress.Bar progress={uploadProgress} width={null} /> : undefined}
+        <View style={styles.container}>
+          <View style={styles.main}>
+            <TextInput
+              style={styles.inputField}
+              multiline
+              placeholder={t('typeAMessage')}
+              value={message}
+              onChangeText={onMessageChangeHandler}
             />
-          </Pressable>
-
-          {
-            !message &&
             <Pressable
-              onPress={handleCameraPress}
+              onPress={handleAttachementPress}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.5 : 1
                 }
               ]}
             >
-              <Fontisto
-                name="camera"
+              <Entypo
+                name="attachment"
                 size={24}
                 color='grey'
                 style={styles.icon}
               />
             </Pressable>
-          }
-        </View>
-        <Pressable
-          onPress={onSendPressed}
-          style={({ pressed }) => [
-            {
-              opacity: pressed ? 0.5 : 1
-            }
-          ]}>
 
-          <View style={styles.buttonContainer}>
-            <Ionicons
-              name="send"
-              size={24}
-              color={Colors[colorScheme].background}
-            />
-            {/* {
+            {
+              !message &&
+              <Pressable
+                onPress={handleCameraPress}
+                style={({ pressed }) => [
+                  {
+                    opacity: pressed ? 0.5 : 1
+                  }
+                ]}
+              >
+                <Fontisto
+                  name="camera"
+                  size={24}
+                  color='grey'
+                  style={styles.icon}
+                />
+              </Pressable>
+            }
+          </View>
+          <Pressable
+            onPress={onSendPressed}
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.5 : 1
+              }
+            ]}>
+
+            <View style={styles.buttonContainer}>
+              <Ionicons
+                name="send"
+                size={24}
+                color={Colors[colorScheme].background}
+              />
+              {/* {
               message
                 ? (
                   <Ionicons
@@ -183,17 +185,23 @@ const InputMessage: React.FC<InputMessageProps> = ({ socket, beforeMessageSent, 
                   />
                 )
             } */}
-          </View>
-        </Pressable>
-      </View>
-    </KeyboardAvoidingView>
+            </View>
+          </Pressable>
+        </View>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 
 export const sendMessage = (message: string, socket: WebSocket, user: User): void => {
   socket.send(JSON.stringify({
     action: 'sendmessage',
-    data: message, // send user dets {}
+    data: JSON.stringify({
+      id: uuid(),
+      user: user,
+      content: message,
+      createdAt: new Date().toISOString(),
+    }),
   }));
 };
 

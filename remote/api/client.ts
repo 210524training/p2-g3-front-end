@@ -1,10 +1,10 @@
-import { AWS_API_URL, AWS_API_NAME } from 'react-native-dotenv';
+import { AWS_API_URL_NEW, AWS_API_NAME } from 'react-native-dotenv';
 import { API, Auth } from 'aws-amplify';
 import axios, { AxiosInstance } from 'axios';
 import awsmobile from '../../src/aws-exports';
 
 
-console.log('enpoint', AWS_API_URL);
+console.log('enpoint', AWS_API_URL_NEW);
 console.log('api name', AWS_API_NAME);
 export const auth = async (headers?: any): Promise<AxiosInstance> => {
   const session = await Auth.currentSession();
@@ -27,7 +27,7 @@ export const auth = async (headers?: any): Promise<AxiosInstance> => {
 
   console.log(headers);
   return axios.create({
-    baseURL: AWS_API_URL,
+    baseURL: AWS_API_URL_NEW,
     headers,
     withCredentials: true,
   });

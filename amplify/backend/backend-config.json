@@ -33,5 +33,20 @@
       ]
     }
   },
-  "api": {}
+  "api": {
+    "p2g3chatapreduusers": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "p2g3getallcognitousers",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
+    }
+  }
 }

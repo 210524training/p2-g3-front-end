@@ -1,3 +1,4 @@
+import { WEB_SOCKET_URL } from 'react-native-dotenv';
 import { RouteProp } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Platform } from 'react-native';
@@ -7,7 +8,7 @@ import ChatMessage from '../components/ChatMessage';
 import InputMessage from '../components/InputMessage';
 import { RootStackParamList } from '../types';
 import { Message } from '../@types';
-
+console.log(WEB_SOCKET_URL);
 type ChatRoomScreenRouteProp = RouteProp<RootStackParamList, 'ChatRoom'>;
 
 export type ChatRoomScreenProps = {
@@ -21,24 +22,22 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
 
   const [socket, setSocket] = useState<WebSocket>();
   useEffect(() => {
-    const s = new WebSocket('wss://5q4qntpmg9.execute-api.us-east-1.amazonaws.com/Prod/');
+    const s = new WebSocket(WEB_SOCKET_URL);
+    console.log(s);
+  
 
     s.onerror = (e) => {
       console.error('error:', e);
     };
 
     s.onmessage = (e) => {
-      console.log('res', e);
-      const msg: Message = {
-        id: shortid(),
-        createdAt: new Date().toISOString(),
-        user: room.users[1].user,
-        content: e.data as string,
-      };
+      console.log(e);
+      const msg: Message = JSON.parse(e.data);
       messages.push(msg);
+      const ids = messages.map(o => o.id);
       setMessages([
         ...messages,
-      ]);
+      ].filter(({id}, index) => !ids.includes(id, index + 1)));
     };
 
     s.onopen = (e) => {
@@ -54,8 +53,6 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
   }, []);
 
   useEffect(() => {
-    console.log(messages.length);
-    // TODO: Scroll down only on message sent
     if (flatList && flatList.current && messages.length > 0) {
       flatList.current.scrollToEnd({
         animated: true
