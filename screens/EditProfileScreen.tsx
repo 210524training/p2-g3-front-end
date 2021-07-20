@@ -2,53 +2,15 @@
 import React, { useState } from 'react';
 import { Button, ScrollView, StyleSheet, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
 import { useAppSelector } from '../hooks';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { Text, View } from '../components/Themed';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
-import { t } from 'i18n-js';
+import t from '../Localization';
+import { updateStatus } from '../remote/api/fetch.users';
 import { Auth } from 'aws-amplify';
-import { User } from '../@types/index.d';
-
-const updateAttributes = async (user: User): Promise<boolean> => {
-  try {
-    const cu = await Auth.currentAuthenticatedUser();
-    const res = await Auth.updateUserAttributes(cu, {
-      'custom:imageUri': user.imageUri || '',
-      'custom:isSuperAdmin': user.isSuperAdmin ? '1' : '',
-      'custom:interests': JSON.stringify(user.interests),
-      'custom:status': user.status,
-      'custom:questionOne': user.securityQuestionOne.question,
-      'custom:questionTwo': user.securityQuestionTwo.question,
-      'custom:questionThree': user.securityQuestionThree.question,
-      'custom:answerOne': user.securityQuestionOne.answer,
-      'custom:answerTwo': user.securityQuestionTwo.answer,
-      'custom:answerThree': user.securityQuestionThree.answer,
-      'custom:phoneNumber': user.phoneNumber || '',
-    });
-    console.debug(res);
-    return true;
-  } catch (err) {
-    console.error('update failed (cognito attributes): ', err);
-  }
-  return false;
-
-};
-
-const updateStatus = async (status: string): Promise<boolean> => {
-  try {
-    const cu = await Auth.currentAuthenticatedUser();
-    const res = await Auth.updateUserAttributes(cu, {
-      'custom:status': status,
-    });
-    return res === 'SUCCESS';
-  } catch (err) {
-    console.error('update failed (cognito attributes): ', err);
-  }
-  return false;
-
-};
 
 const EditProfileScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
@@ -61,7 +23,8 @@ const EditProfileScreen: React.FC<unknown> = () => {
   const handleSaveProfile = () => {
     (async () => {
       if (aboutMe && aboutMe.trim() && aboutMe.length <= 2048) {
-        await updateStatus(aboutMe);
+        const cu = await Auth.currentAuthenticatedUser();
+        await updateStatus(cu, aboutMe);
         nav.navigate('Profile');
       } else {
         setError('Either the status was not provided or is too long (max: 2048 characters)');

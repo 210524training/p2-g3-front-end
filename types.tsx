@@ -23,7 +23,10 @@ export type RootStackParamList = {
   Contacts: {
     user: User,
   };
-  Camera: undefined;
+  Camera: {
+    socket?: WebSocket,
+    uploadProgress?: (total: number) => void,
+  };
   Register: undefined;
   EditProfile: undefined;
   SelectInterests: undefined;
@@ -49,6 +52,9 @@ export type RootStackParamList = {
   AddForum: {
     user: User,
   }
+  Login: {
+    hideLeftHeader: boolean | undefined;
+  },
 };
 
 export type ChatsParamList = {

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "auth": {
+      "p2g3frontend38ad6cd7": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

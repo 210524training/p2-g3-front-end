@@ -4,7 +4,7 @@ import { Searchbar } from 'react-native-paper';
 
 import { Text, View } from '../components/Themed';
 import { getForums } from '../remote/api/fetch.forums';
-import { Forum, User, Interest } from '../@types';
+import { Forum, User, Interest } from '../@types/index.d';
 import ForumListItem from '../components/ForumListItem';
 import NewForum from '../components/NewForum';
 import t from '../Localization';

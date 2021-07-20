@@ -3,6 +3,8 @@ import InterestInterface from './interests';
 export enum MediaHeader {
   IMAGE,
   VIDEO,
+  /** not implemented yet */
+  S3,
 };
 
 export type SecurityQuestion = {
@@ -16,7 +18,12 @@ export type InterestType = typeof InterestInterface;
 export type Interest = keyof InterestType;
 
 export type ChatRoomId = string;
+
+export interface IEntity {
+  id: string;
+}
 export interface User {
+  id?: string,
   email: string,
   phoneNumber?: string,
   username: string,
@@ -39,7 +46,8 @@ export interface Message {
   createdAt: string,
 };
 
-export type ChatRoomUser = {
+export interface ChatRoomUser {
+  id: string,
   user: User,
   isModerator: boolean,
   isAdmin: boolean,
@@ -56,11 +64,11 @@ export interface ChatRoom {
 export interface Forum {
   id: string,
   title: string,
-  tags?: string[],
+  tags: string[],
   user: User,
   createdAt: string,
   content: string,
-  likes: number,
+  likes?: number,
   numberOfComments?: number,
   comments?: ForumComment[]
 };

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Image, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { selectUser, UserState } from '../hooks/slices/user.slice';
+import { loginCache, selectUser, UserState } from '../hooks/slices/user.slice';
 import { Text, View } from '../components/Themed';
 import defaultImageUri from '../constants/DefaultImageUri';
 import useColorScheme from '../hooks/useColorScheme';
@@ -11,16 +11,38 @@ import Colors from '../constants/Colors';
 import EditIcon from '../components/EditProfileIcon/EditIcon';
 import LogoutButton from '../components/LogoutButton';
 import t from '../Localization';
+import { Auth } from 'aws-amplify';
 
 const ProfileScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
-
-  const [action, setAction] = useState<boolean>(true);
+  
   const dispatch = useAppDispatch();
   const nav = useNavigation();
-  console.log(user);
+  React.useEffect(() => {
+    console.log('use EFFECT');
+    (async () => {
+      try {
+        // const session = await Auth.currentSession();
+        const user = await Auth.currentAuthenticatedUser({
+          bypassCache: false,
+        });
+
+        if (user?.username) {
+          await dispatch(loginCache({ username: user.username, password: '' }));
+        }
+
+        // console.log('current user', user);
+      } catch (err) {
+        // console.error('Profile page: Current user error', err);
+        nav.navigate('Login', {
+          hideLeftHeader: true,
+        });
+      }
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       {
@@ -29,7 +51,7 @@ const ProfileScreen: React.FC<unknown> = () => {
             <>
               <Image source={{
                 uri: user.imageUri?.trim() || defaultImageUri
-              }} style={{width: 100, height: 100, margin: 10, borderRadius: 10}} />
+              }} style={{ width: 100, height: 100, margin: 10, borderRadius: 10 }} />
               <Text style={styles.title}>
                 Hello, {user.username}!
               </Text>
