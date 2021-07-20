@@ -86,7 +86,7 @@ const UserSearchPage: React.FC<unknown> = () => {
       setExampleUsers([...users]);
       setUserList([...users]);
     })();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const ls = search.toLowerCase();
