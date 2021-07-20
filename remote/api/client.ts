@@ -1,18 +1,49 @@
-import axios from 'axios';
+import { AWS_API_URL_NEW, AWS_DB_BACKEND } from 'react-native-dotenv';
+import { Auth } from 'aws-amplify';
+import axios, { AxiosInstance } from 'axios';
 
-// const session = await Auth.currentSession();
-// const authHeader = {
-//   headers: {
-//     Authorization: `Bearer ${session.getIdToken().getJwtToken()}`,
-//   },
-// };
+console.log('Cognito Users:', AWS_API_URL_NEW);
+console.log('DB Endpoint', AWS_DB_BACKEND);
 
-const client = axios.create({
-  baseURL: undefined,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-});
+export const cognito = async (url = AWS_API_URL_NEW, headers?: any): Promise<AxiosInstance> => {
+  const session = await Auth.currentSession();
+  console.log(session);
+  if (!headers) {
+    headers = {};
+  }
 
-export default client;
+  if (!('Content-Type' in headers)) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  if (!('Authorization' in headers)) {
+    headers['Authorization'] = `Bearer ${session.getIdToken().getJwtToken()}`;
+  }
+
+  if (!('Date' in headers)) {
+    headers['Date'] = new Date().toISOString();
+  }
+
+  console.log(headers);
+  return axios.create({
+    baseURL: url,
+    headers,
+    withCredentials: true,
+  });
+};
+
+export const db = (headers?: any): AxiosInstance => {
+  if (!headers) {
+    headers = {};
+  }
+
+  if (!('Content-Type' in headers)) {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  return axios.create({
+    baseURL: AWS_DB_BACKEND,
+    headers,
+    withCredentials: true,
+  });
+};

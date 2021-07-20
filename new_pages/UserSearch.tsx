@@ -4,12 +4,15 @@
 import * as React from 'react';
 import { Searchbar } from 'react-native-paper';
 import { useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
 import { useEffect } from 'react';
 import { User } from '../@types';
 import ContactListItem from '../components/ContactListItem';
 import users from '../remote/data/Users';
 import t from '../Localization';
+import { getAllUsers } from '../remote/api/fetch.users';
+import { selectUser, UserState } from '../hooks/slices/user.slice';
+import { useAppSelector } from '../hooks';
 
 const styles = StyleSheet.create({
   searchBar: {
@@ -58,6 +61,7 @@ const styles = StyleSheet.create({
 });
 
 const UserSearchPage: React.FC<unknown> = () => {
+  const user = useAppSelector<UserState>(selectUser);
   const [search, setSearch] = useState<string>('');
   const [exampleUsers, setExampleUsers] = useState<User[]>([]);
   const [userList, setUserList] = useState<User[]>([]);
@@ -71,19 +75,28 @@ const UserSearchPage: React.FC<unknown> = () => {
     }
   };
 
-  useEffect(() => {
-    setExampleUsers(users);
-    setUserList(users);
-  }, []);
+  const exclude = (u: User): boolean => {
+    if (user?.username !== u.username) return false;
+    return !(user?.contacts?.map(contact => contact.username)?.includes(u.username));
+  };
 
   useEffect(() => {
+    (async () => {
+      const users = (await getAllUsers()).filter(u => exclude(u));
+      setExampleUsers([...users]);
+      setUserList([...users]);
+    })();
+  }, [user]);
+
+  useEffect(() => {
+    const ls = search.toLowerCase();
     if (search) {
-      const filteredUsers = exampleUsers.filter(user => user.username.includes(search));
-      setUserList(filteredUsers);
+      const filteredUsers = exampleUsers.filter(user => user.username.toLowerCase().includes(ls));
+      setUserList(filteredUsers.filter(u => exclude(u)));
     }
     else {
       const filteredUsers = exampleUsers;
-      setUserList(filteredUsers);
+      setUserList(filteredUsers.filter(u => exclude(u)));
     }
   }, [search]);
 
@@ -101,7 +114,10 @@ const UserSearchPage: React.FC<unknown> = () => {
             style={{ width: '100%' }}
             data={userList}
             renderItem={({ item }) => (
-              <ContactListItem user={item} />
+              <>
+                <ContactListItem user={item} />
+                <Button title={t('add')} onPress={() => {}}/>
+              </>
             )}
             keyExtractor={(item) => item.username}
           />

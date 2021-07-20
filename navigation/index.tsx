@@ -171,6 +171,9 @@ function RootNavigator() {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
+        options={({ route }) => ({
+          headerLeft: route?.params?.hideLeftHeader ? () => null : undefined,
+        })}
       />
       <Stack.Screen
         name="Register"

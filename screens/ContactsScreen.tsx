@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { Button, FlatList, StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import ContactListItem from '../components/ContactListItem';
-import { getFriends } from '../remote/api/fetch.users';
 import { User } from '../@types';
+import { selectUser, UserState } from '../hooks/slices/user.slice';
+import { useAppSelector } from '../hooks';
+import t from '../Localization';
 
 export type ContactsScreenProps = {
 
 };
 
 const ContactsScreen: React.FC<ContactsScreenProps> = (): JSX.Element => {
-
+  const user = useAppSelector<UserState>(selectUser);
   const [users, setUsers] = useState<User[]>([]);
-  const user: {id: string} = {id: 'u1'};
+
   useEffect(() => {
-    getFriends(user.id).then(setUsers).catch(console.error);
+    setUsers(user?.contacts || []);
   }, [users]);
 
   return (
@@ -27,15 +29,45 @@ const ContactsScreen: React.FC<ContactsScreenProps> = (): JSX.Element => {
               style={{ width: '100%' }}
               data={users}
               renderItem={({ item }) => (
-                <ContactListItem user={item} />
+                <View style={{ flexDirection: 'row' }}>
+                  {
+                    item.username !== user?.username
+                      ? (
+                        <>
+                          <ContactListItem user={item} />
+                          {
+                            user?.username.startsWith('*')
+                              ? (
+                                <>
+                                  <Button title={t('accept')} onPress={() => {
+
+                                  }} />
+                                  <Button title={t('reject')} onPress={() => {
+
+                                  }} />
+                                </>
+                              ) : (
+                                user?.username.startsWith('~')
+                                  ? (
+                                    <>
+                                      <Button title={t('cancel')} onPress={() => {
+
+                                      }} />
+                                    </>
+                                  ) : undefined
+                              )
+                          }
+                        </>
+                      ) : undefined
+                  }
+                </View>
               )}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.username}
             />
           ) : (
-            <Text>No Friends :(</Text>
+            <Text>No Contacts</Text>
           )
       }
-      {/* <NewMessage /> */}
     </View>
   );
 };
