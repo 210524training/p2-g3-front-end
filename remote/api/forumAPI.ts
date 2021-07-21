@@ -49,22 +49,22 @@ export const updateForum = async (forum: Forum): Promise<boolean> => {
     numberOfComments: forum.numberOfComments,
     comments: forum.comments,
   });
-  console.log('updated forum', data)
+  console.log('updated forum', data);
   return data;
 };
 
 export const addForum = async (forum: Forum): Promise<boolean> => {
-  const { data } = await client.post<boolean>('forums', {
+  const { data } = await client.post<boolean>('forums', JSON.stringify({
     id: forum.id,
     title: forum.title,
     tags: forum.tags,
     username: forum.user.username,
-    createdAt: forum.createdAt,
+    createdAt: new Date().toISOString(),
     content: forum.content,
     likes: forum.likes,
     numberOfComments: forum.numberOfComments,
     comments: forum.comments,
-  });
+  }));
   console.log('added forum', data);
   return data;
 };

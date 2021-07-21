@@ -1,21 +1,26 @@
 /* eslint-disable react-native/no-unused-styles */
-import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import { RouteProp, useNavigation } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Image, ScrollView, TextInput, Button, FlatList, StyleSheet, Pressable } from 'react-native';
-import DDC from '../components/DropDown';
-import Colors from '../constants/Colors';
-import { useAppSelector } from '../hooks';
-import { selectUser, UserState } from '../hooks/slices/user.slice';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import useColorScheme from '../hooks/useColorScheme';
-import { RootStackParamList } from '../types';
-import {Forum, ChatRoomUser, InterestValues, User} from '../@types/index.d';
+import { Forum } from '../@types/index.d';
 import t from '../Localization';
-import {generate as shorty} from 'shortid';
-import Users from '../remote/data/Users';
+import { generate as shorty } from 'shortid';
+import { selectUser, UserState } from '../hooks/slices/user.slice';
+import { useAppSelector } from '../hooks';
+import { addForum } from '../remote/api/forumAPI';
 
 const AddForum: React.FC<unknown> = (): JSX.Element => {
   const user = useAppSelector<UserState>(selectUser);
+  const nav = useNavigation();
+
+  const colorScheme = useColorScheme();
+  const styles = createStyle(colorScheme);
+
+  const [titleText, setTitleText] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const [newTag, setNewTag] = useState<string>('');
+
   const forumTemplate: Forum = {
     id: shorty(),
     title: '',
@@ -26,59 +31,50 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
     likes: 0,
     numberOfComments: 0,
     comments: [],
-  }
+  };
   const [newForum, setNewForum] = useState<Forum>(forumTemplate);
 
-  const colorScheme = useColorScheme();
-  const styles = createStyle(colorScheme);
-  const nav = useNavigation();
-  
-  const [titleText, setTitleText] = useState<string>('');
-  const [content, setContent] = useState<string>('');
-  const [newTag, setNewTag] = useState<string>('');
-
-  // if (!user) {
-  //   nav.navigate('LoginScreen');
-  //   return <></>;
-  // }
-
   const onTitleChange = (text: string) => {
-    const nf = {...newForum};
+    const nf = { ...newForum };
     nf.title = text;
     setTitleText(text);
     setNewForum(nf);
   };
 
   const onContentChange = (text: string) => {
-      const nf = {...newForum};
-      nf.content = text;
-      setContent(text);
-      setNewForum(nf);
+    const nf = { ...newForum };
+    nf.content = text;
+    setContent(text);
+    setNewForum(nf);
   };
 
   const onChangeNewTag = (text: string) => {
-      setNewTag(text);
-  }
+    setNewTag(text);
+  };
 
   const removeTag = (tag: string) => {
-      const nf = {...newForum};
-      const idx = nf.tags?.indexOf(tag);
-      if (idx != undefined && idx >= 0) {
-        nf.tags?.splice(idx, 1);
-        setNewForum(nf);
-      }
-  }
+    const nf = { ...newForum };
+    const idx = nf.tags?.indexOf(tag);
+    if (idx != undefined && idx >= 0) {
+      nf.tags?.splice(idx, 1);
+      setNewForum(nf);
+    }
+  };
 
   const handleAddtag = () => {
-      const nf = {...newForum};
-      nf.tags?.push(newTag);
-      setNewTag('');
-      setNewForum(nf);
-  }
+    const nf = { ...newForum };
+    nf.tags?.push(newTag);
+    setNewTag('');
+    setNewForum(nf);
+  };
 
   const onPressHandlerSendForum = () => {
     // TODO: send put to backend
     console.log(newForum);
+    (async () => {
+      const res = await addForum(newForum);
+      console.log(res);
+    })();
   };
 
   return (
@@ -86,7 +82,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
       style={styles.container}
     >
       <View style={styles.inputContainer}>
-        <TextInput                   
+        <TextInput
           style={styles.input}
           value={titleText}
           placeholder={t('title')}
@@ -94,7 +90,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
         />
       </View>
       <View style={styles.inputContainer}>
-        <TextInput                   
+        <TextInput
           style={styles.input}
           value={content}
           placeholder={t('content')}
@@ -102,24 +98,24 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
         />
       </View>
       <View style={styles.inputContainer}>
-        <TextInput                   
+        <TextInput
           style={styles.input}
           value={newTag}
           placeholder={t('tag')}
           onChangeText={onChangeNewTag}
         />
         <Button
-        title={t('add')}
-        onPress={handleAddtag}/>
+          title={t('add')}
+          onPress={handleAddtag} />
       </View>
-      
+
       {/* tags */}
       {/* have input << add user */}
       {/* change user permissions or remove*/}
 
       <View style={styles.inputContainer}>
         <FlatList
-          data={ newForum.tags }
+          data={newForum.tags}
           renderItem={({ item, index }) => (
             <View style={styles.tagContainer}>
               <Text>{item}</Text>
@@ -127,7 +123,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
                 <Button
                   title={t('remove')}
                   onPress={() => removeTag(item)}
-                /> 
+                />
               }
             </View>
           )}
@@ -138,7 +134,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
 
       <View>
         {
-          <Button 
+          <Button
             title={t('add')}
             onPress={onPressHandlerSendForum}
           />
