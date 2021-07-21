@@ -26,7 +26,7 @@ const LeftContainer: React.FC<LCProps> = ({ user }): JSX.Element => {
       >
         <Image
           source={{
-            uri: user.imageUri || defaultImageUri
+            uri: user?.imageUri || defaultImageUri
           }}
           style={styles.image}
         />

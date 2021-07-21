@@ -24,7 +24,6 @@ const ProfileScreen: React.FC<unknown> = () => {
     console.log('use EFFECT');
     (async () => {
       try {
-        // const session = await Auth.currentSession();
         const currentUser = await Auth.currentAuthenticatedUser({
           bypassCache: false,
         });
@@ -33,9 +32,7 @@ const ProfileScreen: React.FC<unknown> = () => {
           await dispatch(loginCache({ username: currentUser.username, password: '' }));
         }
 
-        // console.log('current user', user);
       } catch (err) {
-        // console.error('Profile page: Current user error', err);
         nav.navigate('Login', {
           hideLeftHeader: true,
         });

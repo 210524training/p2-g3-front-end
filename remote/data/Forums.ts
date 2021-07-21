@@ -2,7 +2,7 @@ export default [
   {
     id: 'f1',
     title: 'No knowing!',
-    tags: ['this', 'that', 'tag'],
+    tags: ['this', 'that', 'tag', 'Science'],
     user: {
       id: 'u1',
       username: 'Dustin',
@@ -11,7 +11,7 @@ export default [
       status: 'This is my status',
       password: 'password',
       contacts: [],
-      interests: [],
+      interests: ['Science'],
       isSuperAdmin: false,
       chatRooms: [],
       securityQuestionOne: {
@@ -43,7 +43,7 @@ export default [
           status: 'This is my status',
           password: 'password',
           contacts: [],
-          interests: [],
+          interests: ['Science'],
           isSuperAdmin: false,
           chatRooms: [],
           securityQuestionOne: {
@@ -75,7 +75,7 @@ export default [
           status: 'This is my status',
           password: 'password',
           contacts: [],
-          interests: [],
+          interests: ['Science'],
           isSuperAdmin: false,
           chatRooms: [],
           securityQuestionOne: {
