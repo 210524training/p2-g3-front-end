@@ -10,7 +10,7 @@ console.log('DB Endpoint', AWS_DB_BACKEND);
 
 export const cognito = async (url = AWS_API_URL_NEW, headers?: any): Promise<AxiosInstance> => {
   const session = await Auth.currentSession();
-  console.log(session);
+  // console.log(session);
   if (!headers) {
     headers = {};
   }
@@ -27,7 +27,7 @@ export const cognito = async (url = AWS_API_URL_NEW, headers?: any): Promise<Axi
     headers['Date'] = new Date().toISOString();
   }
 
-  console.log(headers);
+  // console.log(headers);
   return axios.create({
     baseURL: url,
     headers,
@@ -35,19 +35,13 @@ export const cognito = async (url = AWS_API_URL_NEW, headers?: any): Promise<Axi
   });
 };
 
-export const db = async (headers?: any): AxiosInstance => {
-  const session = await Auth.currentSession();
-  console.log(session);
+export const db = (headers?: any): AxiosInstance => {
   if (!headers) {
     headers = {};
   }
 
   if (!('Content-Type' in headers)) {
     headers['Content-Type'] = 'application/json';
-  }
-
-  if (!('Authorization' in headers)) {
-    headers['Authorization'] = `Bearer ${session.getIdToken().getJwtToken()}`;
   }
 
   if (!('Date' in headers)) {

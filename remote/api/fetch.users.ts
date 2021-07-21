@@ -22,7 +22,7 @@ const extractAttribute = (data: any, find: string): string | undefined => {
 export const getAllUsers = async (): Promise<User[]> => {
   try {
     const res = await (await cognito()).get('/users');
-    console.log('fetch all users', res);
+    // console.log('fetch all users', res);
     return res?.data?.Users?.map((cu) => ({
       username: cu?.Username,
       email: extractAttribute(cu, 'email'),

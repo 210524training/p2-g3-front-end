@@ -11,7 +11,7 @@ import t from '../Localization';
 import { getAllForums } from '../remote/api/forumAPI';
 
 type Props = {
-  currentUser? : User,
+  currentUser?: User,
 }
 
 export default function TabOneScreen(props: Props): JSX.Element {
@@ -51,16 +51,16 @@ export default function TabOneScreen(props: Props): JSX.Element {
     const interestForums = forumPool.filter(forum => forum.tags?.some(tag => props.currentUser?.interests.includes(tag as Interest)));
     //const interestForums = forumPool.filter(forum => forum.tags?.some(tag => testInterests.includes(tag as Interest)));
     setFeaturedForums(interestForums);
-  }, [forumPool])
+  }, [forumPool]);
 
   return (
     <>
       <Searchbar
-      placeholder = {t('search')}
-      onChangeText={handleSearch}
-      value={search} />
+        placeholder={t('search')}
+        onChangeText={handleSearch}
+        value={search} />
       <View style={styles.container}>
-      <Text>Selected for you based on your interests:</Text>
+        <Text>Selected for you based on your interests:</Text>
         {
           featuredForums.length > 0
             ? (
