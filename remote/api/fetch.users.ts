@@ -1,11 +1,14 @@
 import { User } from '../../@types';
 import { cognito } from './client';
-import users from '../data/Users';
 import { Auth, API } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 
+/**
+ * 
+ * @deprecated 
+ */
 export const getFriends = (username: string): Promise<User[]> => {
-  const friends: User[] = users;
+  const friends: User[] = [];
   return new Promise<User[]>((resolve, reject) => {
     resolve(friends);
   });
