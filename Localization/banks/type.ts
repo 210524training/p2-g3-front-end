@@ -93,6 +93,10 @@ type Bank = {
   calls: string,
   typeAMessage: string,
   contacts: string,
+  deleteForum: string,
+  tag: string,
+  title: string,
+  content: string,
 };
 
 export default Bank;

@@ -29,10 +29,12 @@ import ForumScreen from '../screens/ForumScreen';
 import EditChatRoom from '../screens/EditChatRoom';
 import UserSearchPage from '../new_pages/UserSearch';
 import HelpPage from '../new_pages/HelpPage';
+import EditForum from '../screens/EditForum';
 import PressableIcon from '../components/Forum/PressebleIcon';
 import PickImage from '../components/ProfileImage/index';
 import LoginScreen from '../screens/LoginScreen';
 import ConfirmCode from '../screens/ConfirmCode';
+import AddForum from '../screens/AddForum';
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }): JSX.Element => {
   return (
@@ -195,6 +197,13 @@ function RootNavigator() {
         options={({ route }) => ({
           title: route.params.chatRoom.title || 'No Name',
         })} />
+      <Stack.Screen name="EditForum" component={EditForum}
+        options={({ route }) => ({
+          title: route.params.forum.title || 'No Name',
+        })} />
+      <Stack.Screen name="AddForum" 
+      component={AddForum}
+      />
       <Stack.Screen
         name="UserSearch"
         component={UserSearchPage}

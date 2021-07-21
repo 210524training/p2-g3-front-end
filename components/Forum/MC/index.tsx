@@ -3,6 +3,7 @@ import moment from 'moment';
 import React from 'react';
 import { View, Text, Image, FlatList } from 'react-native';
 import { generate as shortid } from 'shortid';
+import { useNavigation } from '@react-navigation/native';
 
 import { Forum } from '../../../@types';
 import Colors from '../../../constants/Colors';
@@ -23,6 +24,7 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
   const user = useAppSelector<UserState>(selectUser);
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
+  const nav = useNavigation();
 
   const isOwner = user?.username === forum.user.username || user?.isSuperAdmin;
 
@@ -30,7 +32,7 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
   const iconSize = 30;
 
   const handleOnForumEdit = () => {
-    console.log('navigate to edit');
+    nav.navigate('EditForum', { forum: forum });
   };
 
   const handleOnForumDelete = () => {

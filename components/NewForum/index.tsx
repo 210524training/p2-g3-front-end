@@ -17,7 +17,7 @@ const NewForum: React.FC<NewForumProps> = (): JSX.Element => {
   const nav = useNavigation();
 
   const handleNewForum = () => {
-    nav.navigate('Contacts');
+    nav.navigate('AddForum');
   };
 
   return (
