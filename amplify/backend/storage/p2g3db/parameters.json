@@ -1,7 +1,0 @@
-{
-    "tableName": "p2g3db",
-    "partitionKeyName": "entity",
-    "partitionKeyType": "S",
-    "sortKeyName": "id",
-    "sortKeyType": "S"
-}

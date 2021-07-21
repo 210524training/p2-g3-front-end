@@ -4,7 +4,7 @@ import { Forum } from '../../@types/index';
 const client = db();
 
 export const getAllForums = async (): Promise<Forum[]> => {
-    const {data} =  await client.get<Forum[]>('forums');
+    const {data} =  await (await db()).get<Forum[]>('forums');
     return data;
 }
 
@@ -19,7 +19,7 @@ export const deleteForum = async (id: string): Promise<boolean> => {
 }
 
 export const updateForum = async (forum: Forum): Promise<boolean> => {
-    const {data} = await client.put<boolean>('forum', {
+    const {data} = await client.put<boolean>('forums', {
         id: forum.id,
         title: forum.title,
         tags: forum.tags,
@@ -34,7 +34,7 @@ export const updateForum = async (forum: Forum): Promise<boolean> => {
 }
 
 export const addForum = async (forum: Forum): Promise<boolean> => {
-    const {data} = await client.post<boolean>('forum', {
+    const {data} = await client.post<boolean>('forums', {
         id: forum.id,
         title: forum.title,
         tags: forum.tags,

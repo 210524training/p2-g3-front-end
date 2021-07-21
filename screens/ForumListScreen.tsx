@@ -8,6 +8,7 @@ import { Forum, User, Interest } from '../@types/index.d';
 import ForumListItem from '../components/ForumListItem';
 import NewForum from '../components/NewForum';
 import t from '../Localization';
+import { getAllForums } from '../remote/api/forumAPI';
 
 type Props = {
   currentUser? : User,
@@ -31,8 +32,8 @@ export default function TabOneScreen(props: Props): JSX.Element {
   };
 
   useEffect(() => {
-    getForums().then(setForums).catch(console.error);
-    getForums().then(setForumPool).catch(console.error);
+    getAllForums().then(setForums).catch(console.error);
+    getAllForums().then(setForumPool).catch(console.error);
   }, []);
 
   useEffect(() => {

@@ -24,10 +24,12 @@ const ProfileScreen: React.FC<unknown> = () => {
     console.log('use EFFECT');
     (async () => {
       try {
-        // const session = await Auth.currentSession();
+        const session = await Auth.currentSession();
         const user = await Auth.currentAuthenticatedUser({
           bypassCache: false,
         });
+
+console.log(session);
 
         if (user?.username) {
           await dispatch(loginCache({ username: user.username, password: '' }));
