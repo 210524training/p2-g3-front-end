@@ -4,15 +4,16 @@
 import * as React from 'react';
 import { Searchbar } from 'react-native-paper';
 import { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, Alert } from 'react-native';
 import { useEffect } from 'react';
 import { User } from '../@types';
 import ContactListItem from '../components/ContactListItem';
-import users from '../remote/data/Users';
 import t from '../Localization';
 import { getAllUsers } from '../remote/api/fetch.users';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { useAppSelector } from '../hooks';
+import { Auth } from 'aws-amplify';
+import { cognito } from '../remote/api/client';
 
 const styles = StyleSheet.create({
   searchBar: {
@@ -60,12 +61,15 @@ const styles = StyleSheet.create({
   }
 });
 
+const tooLong = (arg: any): boolean => {
+  return JSON.stringify(arg).length > 2048;
+};
+
 const UserSearchPage: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
   const [search, setSearch] = useState<string>('');
   const [exampleUsers, setExampleUsers] = useState<User[]>([]);
   const [userList, setUserList] = useState<User[]>([]);
-
   const handleSearch = (text?: string) => {
     if (text) {
       setSearch(text);
@@ -76,16 +80,22 @@ const UserSearchPage: React.FC<unknown> = () => {
   };
 
   const exclude = (u: User): boolean => {
-    if (user?.username !== u.username) return false;
-    return !(user?.contacts?.map(contact => contact.username)?.includes(u.username));
+    if (user?.username !== u.username) return true;
+    return !!(user?.contacts?.map(contact => contact.username)?.includes(u.username));
   };
 
   useEffect(() => {
-    (async () => {
-      const users = (await getAllUsers()).filter(u => exclude(u));
-      setExampleUsers([...users]);
-      setUserList([...users]);
-    })();
+    try {
+      (async () => {
+        const users = (await getAllUsers()).filter(u => exclude(u));
+        setExampleUsers([...users]);
+        setUserList([...users]);
+      })();
+    } catch (err) {
+      console.log('user search 2', err);
+      setExampleUsers([]);
+      setUserList([]);
+    }
   }, [user]);
 
   useEffect(() => {
@@ -99,6 +109,50 @@ const UserSearchPage: React.FC<unknown> = () => {
       setUserList(filteredUsers.filter(u => exclude(u)));
     }
   }, [search]);
+
+  const addUserToContacts = (username: string) => {
+    // console.log('Add user', username);
+    try {
+      (async () => {
+        if (user && userList) {
+
+          const idx = userList.findIndex(cu => cu.username === username);
+          if (idx >= 0) {
+            const add = userList[idx];
+            if (add.username !== user.username) {
+              console.log(user.username, 'wants to add', add.username);
+              if (!user.contacts) {
+                user.contacts = [];
+              }
+
+              if (!add.contacts) {
+                add.contacts = [];
+              }
+
+              if (tooLong([add.username, ...user.contacts.map(c => c.username)])) {
+                Alert.alert('You have too many friends.');
+                return;
+              }
+
+              if (tooLong([user.username, ...add.contacts.map(c => c.username)])) {
+                Alert.alert(`${add.username} doesn't have space for more friends.`);
+                return;
+              }
+
+              
+
+
+            } else {
+              Alert.alert('You cannot add yourself');
+            }
+          }
+
+        }
+      })();
+    } catch (err) {
+      console.error('user search', err);
+    }
+  };
 
   return (
     <>
@@ -116,7 +170,9 @@ const UserSearchPage: React.FC<unknown> = () => {
             renderItem={({ item }) => (
               <>
                 <ContactListItem user={item} />
-                <Button title={t('add')} onPress={() => {}}/>
+                <Button title={t('add')} onPress={() => {
+                  addUserToContacts(item.username);
+                }} />
               </>
             )}
             keyExtractor={(item) => item.username}

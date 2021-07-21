@@ -1,0 +1,25 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "storage": {
+      "p2g3db": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "chatapredudbfinal": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "tableName",
+      "environmentVariableName": "TABLE_NAME"
+    }
+  ]
+}
