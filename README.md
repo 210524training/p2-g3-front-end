@@ -5,18 +5,9 @@
 Here goes your awesome project description!
 
 ## Technologies Used
-
-* React Native
-* Node.js
 * JavaScript/TypeScript
-* AWS Lambda
-* AWS API Gateway
-* Serverless Framework
-* DynamoDB
-* Cognito
-* AWS Amplify
-* AWS S3
-
+* React Native with Redux
+* React Router
 
 ## Features
 
