@@ -1,0 +1,390 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Lambda Function resource stack creation using Amplify CLI",
+  "Parameters": {
+    "CloudWatchRule": {
+      "Type": "String",
+      "Default": "NONE",
+      "Description": " Schedule Expression"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "env": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
+    },
+    "authp2g3frontend38ad6cd7UserPoolId": {
+      "Type": "String",
+      "Default": "authp2g3frontend38ad6cd7UserPoolId"
+    },
+    "storagep2g3dbName": {
+      "Type": "String",
+      "Default": "storagep2g3dbName"
+    },
+    "storagep2g3dbArn": {
+      "Type": "String",
+      "Default": "storagep2g3dbArn"
+    },
+    "storagep2g3dbStreamArn": {
+      "Type": "String",
+      "Default": "storagep2g3dbStreamArn"
+    },
+    "storagep2g3storageBucketName": {
+      "Type": "String",
+      "Default": "storagep2g3storageBucketName"
+    },
+    "storagechatapredudbfinalName": {
+      "Type": "String",
+      "Default": "storagechatapredudbfinalName"
+    },
+    "storagechatapredudbfinalArn": {
+      "Type": "String",
+      "Default": "storagechatapredudbfinalArn"
+    },
+    "storagechatapredudbfinalStreamArn": {
+      "Type": "String",
+      "Default": "storagechatapredudbfinalStreamArn"
+    },
+    "functionp2g3getallcognitousersName": {
+      "Type": "String",
+      "Default": "functionp2g3getallcognitousersName"
+    },
+    "functionp2g3readallforumsName": {
+      "Type": "String",
+      "Default": "functionp2g3readallforumsName"
+    },
+    "functionp2g3readforumbyidName": {
+      "Type": "String",
+      "Default": "functionp2g3readforumbyidName"
+    },
+    "functionp2g3updateforumName": {
+      "Type": "String",
+      "Default": "functionp2g3updateforumName"
+    },
+    "functionp2g3deleteforumName": {
+      "Type": "String",
+      "Default": "functionp2g3deleteforumName"
+    },
+    "apip2g3chatapreduusersApiName": {
+      "Type": "String",
+      "Default": "apip2g3chatapreduusersApiName"
+    },
+    "apip2g3chatapreduusersApiId": {
+      "Type": "String",
+      "Default": "apip2g3chatapreduusersApiId"
+    },
+    "tableName": {
+      "Type": "String"
+    }
+  },
+  "Conditions": {
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    }
+  },
+  "Resources": {
+    "LambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Metadata": {
+        "aws:asset:path": "./src",
+        "aws:asset:property": "Code"
+      },
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
+        },
+        "Handler": "index.handler",
+        "FunctionName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "p2g3createforum",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "p2g3createforum",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "ENV": {
+              "Ref": "env"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
+            },
+            "AUTH_P2G3FRONTEND38AD6CD7_USERPOOLID": {
+              "Ref": "authp2g3frontend38ad6cd7UserPoolId"
+            },
+            "STORAGE_P2G3DB_NAME": {
+              "Ref": "storagep2g3dbName"
+            },
+            "STORAGE_P2G3DB_ARN": {
+              "Ref": "storagep2g3dbArn"
+            },
+            "STORAGE_P2G3DB_STREAMARN": {
+              "Ref": "storagep2g3dbStreamArn"
+            },
+            "STORAGE_P2G3STORAGE_BUCKETNAME": {
+              "Ref": "storagep2g3storageBucketName"
+            },
+            "STORAGE_CHATAPREDUDBFINAL_NAME": {
+              "Ref": "storagechatapredudbfinalName"
+            },
+            "STORAGE_CHATAPREDUDBFINAL_ARN": {
+              "Ref": "storagechatapredudbfinalArn"
+            },
+            "STORAGE_CHATAPREDUDBFINAL_STREAMARN": {
+              "Ref": "storagechatapredudbfinalStreamArn"
+            },
+            "FUNCTION_P2G3GETALLCOGNITOUSERS_NAME": {
+              "Ref": "functionp2g3getallcognitousersName"
+            },
+            "FUNCTION_P2G3READALLFORUMS_NAME": {
+              "Ref": "functionp2g3readallforumsName"
+            },
+            "FUNCTION_P2G3READFORUMBYID_NAME": {
+              "Ref": "functionp2g3readforumbyidName"
+            },
+            "FUNCTION_P2G3UPDATEFORUM_NAME": {
+              "Ref": "functionp2g3updateforumName"
+            },
+            "FUNCTION_P2G3DELETEFORUM_NAME": {
+              "Ref": "functionp2g3deleteforumName"
+            },
+            "API_P2G3CHATAPREDUUSERS_APINAME": {
+              "Ref": "apip2g3chatapreduusersApiName"
+            },
+            "API_P2G3CHATAPREDUUSERS_APIID": {
+              "Ref": "apip2g3chatapreduusersApiId"
+            },
+            "TABLE_NAME": {
+              "Ref": "tableName"
+            }
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs14.x",
+        "Layers": [],
+        "Timeout": "25"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "p2g3frontendLambdaRole27752160",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "p2g3frontendLambdaRole27752160",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "lambdaexecutionpolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Ref": "storagep2g3dbArn"
+                },
+                {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      {
+                        "Ref": "storagep2g3dbArn"
+                      },
+                      "index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Ref": "storagechatapredudbfinalArn"
+                },
+                {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      {
+                        "Ref": "storagechatapredudbfinalArn"
+                      },
+                      "index/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "Name": {
+      "Value": {
+        "Ref": "LambdaFunction"
+      }
+    },
+    "Arn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "LambdaFunction",
+          "Arn"
+        ]
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
+      }
+    }
+  }
+}

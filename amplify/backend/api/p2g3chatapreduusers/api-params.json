@@ -1,0 +1,131 @@
+{
+    "paths": [
+        {
+            "name": "/users",
+            "lambdaFunction": "p2g3getallcognitousers",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/users"
+        },
+        {
+            "name": "/get/all/forums",
+            "lambdaFunction": "p2g3readallforums",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/get/all/forums"
+        },
+        {
+            "name": "/get/forums/{id}",
+            "lambdaFunction": "p2g3readforumbyid",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/get/forums/*"
+        },
+        {
+            "name": "/create/forums",
+            "lambdaFunction": "p2g3createforum",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/create/forums"
+        },
+        {
+            "name": "/update/forums",
+            "lambdaFunction": "p2g3updateforum",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/update/forums"
+        },
+        {
+            "name": "/delete/forums",
+            "lambdaFunction": "p2g3deleteforum",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/delete/forums"
+        }
+    ],
+    "resourceName": "p2g3chatapreduusers",
+    "apiName": "p2g3chatapreduusers",
+    "functionArns": [
+        {
+            "lambdaFunction": "p2g3getallcognitousers"
+        },
+        {
+            "lambdaFunction": "p2g3readallforums"
+        },
+        {
+            "lambdaFunction": "p2g3readforumbyid"
+        },
+        {
+            "lambdaFunction": "p2g3createforum"
+        },
+        {
+            "lambdaFunction": "p2g3updateforum"
+        },
+        {
+            "lambdaFunction": "p2g3deleteforum"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-p2g3frontend-dev-160620-authRole",
+        "unAuthRoleName": "amplify-p2g3frontend-dev-160620-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "p2g3getallcognitousers",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "p2g3readallforums",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "p2g3readforumbyid",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "p2g3createforum",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "p2g3updateforum",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "p2g3deleteforum",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "7517006c"
+}

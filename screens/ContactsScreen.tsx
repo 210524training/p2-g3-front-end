@@ -20,6 +20,18 @@ const ContactsScreen: React.FC<ContactsScreenProps> = (): JSX.Element => {
     setUsers(user?.contacts || []);
   }, [users]);
 
+  const acceptInvitation = (username: string) => {
+    console.log('send invitation to', username);
+  };
+
+  const rejectInvitation = (username: string) => {
+    console.log('reject', username);
+  };
+
+  const cancelRequest = (username: string) => {
+    console.log('cancel req to', username);
+  };
+
   return (
     <View style={styles.container}>
       {
@@ -40,10 +52,10 @@ const ContactsScreen: React.FC<ContactsScreenProps> = (): JSX.Element => {
                               ? (
                                 <>
                                   <Button title={t('accept')} onPress={() => {
-
+                                    acceptInvitation(item.username);
                                   }} />
                                   <Button title={t('reject')} onPress={() => {
-
+                                    rejectInvitation(item.username);
                                   }} />
                                 </>
                               ) : (
@@ -51,7 +63,7 @@ const ContactsScreen: React.FC<ContactsScreenProps> = (): JSX.Element => {
                                   ? (
                                     <>
                                       <Button title={t('cancel')} onPress={() => {
-
+                                        cancelRequest(item.username);
                                       }} />
                                     </>
                                   ) : undefined
