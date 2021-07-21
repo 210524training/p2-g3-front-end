@@ -97,6 +97,8 @@ const en: Bank = {
   tag: 'Tag',
   title: 'Title',
   content: 'Content',
+  comment: 'Comment',
+  enterYourComment: 'Enter Your Comment:'
 };
 
 export default en;

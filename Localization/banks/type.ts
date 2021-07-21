@@ -97,6 +97,8 @@ type Bank = {
   tag: string,
   title: string,
   content: string,
+  comment: string,
+  enterYourComment: string,
 };
 
 export default Bank;

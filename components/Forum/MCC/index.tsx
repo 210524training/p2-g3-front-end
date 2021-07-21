@@ -4,11 +4,12 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { generate as shortid } from 'shortid';
 
-import { ForumComment } from '../../../@types';
+import { Forum, ForumComment } from '../../../@types';
 import Colors from '../../../constants/Colors';
 import { useAppSelector } from '../../../hooks';
 import { selectUser, UserState } from '../../../hooks/slices/user.slice';
 import useColorScheme from '../../../hooks/useColorScheme';
+import { updateForum } from '../../../remote/api/forumAPI';
 import DDLText from '../../DDLText';
 import ForumTag from '../ForumTag';
 import PressableIcon from '../PressebleIcon';
@@ -16,9 +17,10 @@ import createStyle from './styles';
 
 export type MCCProps = {
   comment: ForumComment,
+  forum: Forum,
 };
 
-const MainCommentContainer: React.FC<MCCProps> = ({ comment }): JSX.Element => {
+const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Element => {
   const user = useAppSelector<UserState>(selectUser);
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
@@ -28,12 +30,21 @@ const MainCommentContainer: React.FC<MCCProps> = ({ comment }): JSX.Element => {
   const iconColor = Colors[colorScheme].tabIconDefault;
   const iconSize = 30;
 
-  const handleOnForumDelete = () => {
-    console.log('Delete comment');
+  const handleOnCommentDelete = () => {
+    const idx = forum.comments?.indexOf(comment);
+    if (idx != undefined) {
+    forum.comments?.splice(idx, 1);
+      updateForum(forum);
+    }
   };
 
   const handleOnLikePressed = () => {
-    console.log('like comment');
+    const idx = forum.comments?.indexOf(comment);
+    comment.likes = comment.likes + 1;
+    if(idx != undefined && forum.comments) {
+    forum.comments[idx] = comment;
+    updateForum(forum);
+    }
   };
 
   // const handleOnCommentPressed = () => {
@@ -55,7 +66,7 @@ const MainCommentContainer: React.FC<MCCProps> = ({ comment }): JSX.Element => {
                   size: iconSize,
                   color: iconColor,
                 }}
-                onPress={handleOnForumDelete}
+                onPress={handleOnCommentDelete}
               />
             </>
           )}

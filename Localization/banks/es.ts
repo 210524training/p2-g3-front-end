@@ -96,6 +96,8 @@ const es: Bank = {
   tag: 'Etiqueta',
   title: 'Titulo',
   content: 'Contenido',
+  comment: 'Comentario',
+  enterYourComment: 'Ingrese Su Comentario:',
 };
 
 export default es;

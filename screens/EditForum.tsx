@@ -14,6 +14,7 @@ import t from '../Localization';
 import {generate as shorty} from 'shortid';
 import Users from '../remote/data/Users';
 import { strikeContent } from 'aws-amplify';
+import { deleteForum, updateForum } from '../remote/api/forumAPI';
 type ForumEditRouteProp = RouteProp<RootStackParamList, 'EditForum'>;
 
 export type ForumEditProps = {
@@ -21,17 +22,17 @@ export type ForumEditProps = {
 };
 
 const EditForum: React.FC<ForumEditProps> = ({ route }): JSX.Element => {
-  //const user = useAppSelector<UserState>(selectUser);
-  const user: User = {
-    email: 'a@b',
-    username: 'haha',
-    password: 'pass',
-    interests: [],
-    isSuperAdmin: true,
-    securityQuestionOne: {answer:'',question:''},
-    securityQuestionTwo: {answer:'',question:''},
-    securityQuestionThree: {answer:'',question:''},
-  };
+  const user = useAppSelector<UserState>(selectUser);
+  // const user: User = {
+  //   email: 'a@b',
+  //   username: 'haha',
+  //   password: 'pass',
+  //   interests: [],
+  //   isSuperAdmin: true,
+  //   securityQuestionOne: {answer:'',question:''},
+  //   securityQuestionTwo: {answer:'',question:''},
+  //   securityQuestionThree: {answer:'',question:''},
+  // };
 
   const { forum } = route.params;
 
@@ -84,17 +85,17 @@ const EditForum: React.FC<ForumEditProps> = ({ route }): JSX.Element => {
       setNewForum(nf);
   }
 
-  const canDeleteForum = (u: User): boolean => {
+  const canDeleteForum = (u: User | null): boolean => {
     let elevated = false;
-      if (u.username === forum.user.username || u.isSuperAdmin) {
+      if (u?.username === forum.user.username || u?.isSuperAdmin) {
         elevated = true;
       }
     return elevated;
   };
 
-  const canModifyForum = (u: User): boolean => {
+  const canModifyForum = (u: User | null): boolean => {
     let elevated = false;
-      if (u.username === forum.user.username || u.isSuperAdmin) {
+      if (u?.username === forum.user.username || u?.isSuperAdmin) {
         elevated = true;
       }
     return elevated;
@@ -102,11 +103,13 @@ const EditForum: React.FC<ForumEditProps> = ({ route }): JSX.Element => {
 
   const onPressHandlerSendForum = () => {
     // TODO: send put to backend
-    console.log(newForum);
+    updateForum(newForum);
+    nav.navigate('GeneralDiscussions')
   };
 
   const onPressHandlerDeleteForum = () => {
-    console.log('delete forum');
+    deleteForum(newForum.id);
+    nav.navigate('GeneralDiscussions')
   };
 
   return (
