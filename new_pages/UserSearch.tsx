@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { User } from '../@types';
 import ContactListItem from '../components/ContactListItem';
 import t from '../Localization';
-import { getAllUsers } from '../remote/api/fetch.users';
+import { getAllUsers, updateContacts } from '../remote/api/fetch.users';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { useAppSelector } from '../hooks';
 import { Auth } from 'aws-amplify';
@@ -129,18 +129,43 @@ const UserSearchPage: React.FC<unknown> = () => {
                 add.contacts = [];
               }
 
-              if (tooLong([add.username, ...user.contacts.map(c => c.username)])) {
+              const oldUserContacts = user.contacts.filter(u => u);
+              const oldAddUserContacs = add.contacts.filter(u => u);
+
+              console.log(user.contacts, add.contacts);
+              if (tooLong([add.username, ...oldUserContacts])) {
                 Alert.alert('You have too many friends.');
                 return;
               }
 
-              if (tooLong([user.username, ...add.contacts.map(c => c.username)])) {
+              if (tooLong([user.username, ...oldAddUserContacs])) {
                 Alert.alert(`${add.username} doesn't have space for more friends.`);
                 return;
               }
 
-              
+              (async () => {
+                const cu = await Auth.currentAuthenticatedUser();
+                const a = await updateContacts(cu, [add.username, ...oldUserContacts]);
+                
+                if (a) {
+                  const cogusers = (await (await cognito()).get('/users')).data.Users;
+                  const idxB = cogusers.findIndex(cu => cu.Username === add.username);
+                  const b = await updateContacts(add.username, [user.username, ...oldAddUserContacs]);
 
+                  if (!b) {
+                    await updateContacts(user.username, oldUserContacts);
+                    await updateContacts(add.username, oldAddUserContacs);
+                    Alert.alert('Falied to update contacts');
+                  } else {
+                    Alert.alert('Your friend request has been sent!');
+                    return;
+                  }
+                } else {
+                  await updateContacts(user.username, oldUserContacts);
+                  Alert.alert('Failed to send the friend request.');
+                }
+
+              })();
 
             } else {
               Alert.alert('You cannot add yourself');

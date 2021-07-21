@@ -70,32 +70,29 @@ const RegisterScreen: React.FC<unknown> = (props) => {
     }
 
     try {
-      console.log('>>', questionOne);
       const { user } = await Auth.signUp({
         username,
         password,
         attributes: {
           email,
-          'custom:role': 'User',
           'custom:phoneNumber': phoneNumber,
           'custom:questionOne': questionOne,
           'custom:questionTwo': questionTwo,
           'custom:questionThree': questionThree,
-
           'custom:answerOne': answerOne,
           'custom:answerTwo': answerTwo,
           'custom:answerThree': answerThree,
-
           'custom:isSuperAdmin': '',
           'custom:imageUri': '',
           'custom:interests': JSON.stringify(interests),
-          'custom:status': 'No status'
+          'custom:status': 'No status',
+          'custom:contacts': '[]',
+          'custom:chatRoomIds': '[]',
         }
       });
       nav.navigate('ConfirmCode', {
         username
       });
-      // handleLogin();
     } catch (error) {
       console.log('error signing up:', error);
       setError(error.message);

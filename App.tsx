@@ -10,6 +10,11 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation/index';
 import store from './hooks/store';
+import AWS from 'aws-sdk';
+
+AWS.config.update({
+  region: 'us-east-1',
+}); 
 
 Auth.configure(awsmobile);
 
