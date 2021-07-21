@@ -1,6 +1,8 @@
 type Bank = {
   /** Application Name (fallback will be en) */
   _name?: string,
+  reject: string,
+  accept: string,
   name: string,
   send: string,
   doYouWantToSendThisPicture: string,

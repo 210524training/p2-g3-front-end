@@ -23,7 +23,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenProps> = ({ route }): JSX.Element =
   const [socket, setSocket] = useState<WebSocket>();
   useEffect(() => {
     const s = new WebSocket(WEB_SOCKET_URL);
-    console.log(s);
+    // console.log(s);
   
 
     s.onerror = (e) => {

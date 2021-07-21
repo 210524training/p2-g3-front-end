@@ -1,5 +1,5 @@
 import { User } from '../../@types';
-import {cognito} from './client';
+import { cognito } from './client';
 import users from '../data/Users';
 import { Auth, API } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
@@ -22,8 +22,9 @@ const extractAttribute = (data: any, find: string): string | undefined => {
 export const getAllUsers = async (): Promise<User[]> => {
   try {
     const res = await (await cognito()).get('/users');
-    console.log('fetch all users', res);
-    return res?.data?.Users?.map((cu) => ({
+    // console.log('fetch all users', res);
+    const users: User[] = res?.data?.Users?.map((cu) => ({
+      id: cu?.Username,
       username: cu?.Username,
       email: extractAttribute(cu, 'email'),
       password: '<you thought!>',
@@ -44,7 +45,23 @@ export const getAllUsers = async (): Promise<User[]> => {
         answer: extractAttribute(cu, 'custom:answerThree'),
       },
       phoneNumber: extractAttribute(cu, 'custom:phoneNumber'),
+      contacts: extractAttribute(cu, 'custom:contacts') || [],
+      chatRoomIds: extractAttribute(cu, 'custom:chatRoomIds') || [],
     })) || [];
+
+    for (let i = 0; i < users.length; i++) { // O(n)
+      const contacts = users[i].contacts;
+      const newContacts: User[] = [];
+      if (contacts) {
+        for (let j = 0; j < contacts.length; j++) { // O(n)
+          const idx = users.findIndex(u => u.username === contacts[j].username); // O(n) = O(n^3) - oof
+          const contact = users[idx];
+          newContacts.push(contact);
+        }
+      }
+      users[i].contacts = newContacts;
+    }
+    return users;
   } catch (err) {
     console.error('fetch users error', err);
   }
@@ -65,6 +82,7 @@ export const sendLogin = async (username: string, password: string): Promise<Use
     ));
     const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
     return {
+      id: values['cognito:username'] as string,
       username: values['cognito:username'] as string,
       email: values['email'] as string,
       password: '<you thought!>',
@@ -103,8 +121,9 @@ export const sendLoginCache = async (): Promise<User> => {
         : c.username
     ));
     const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
-    
+
     return {
+      id: values['cognito:username'] as string,
       username: values['cognito:username'] as string,
       email: values['email'] as string,
       password: '<you thought!>',

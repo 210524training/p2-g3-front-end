@@ -17,7 +17,7 @@ const ProfileScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
-  
+
   const dispatch = useAppDispatch();
   const nav = useNavigation();
   React.useEffect(() => {
@@ -25,12 +25,12 @@ const ProfileScreen: React.FC<unknown> = () => {
     (async () => {
       try {
         // const session = await Auth.currentSession();
-        const user = await Auth.currentAuthenticatedUser({
+        const currentUser = await Auth.currentAuthenticatedUser({
           bypassCache: false,
         });
 
-        if (user?.username) {
-          await dispatch(loginCache({ username: user.username, password: '' }));
+        if (currentUser?.username) {
+          await dispatch(loginCache({ username: currentUser.username, password: '' }));
         }
 
         // console.log('current user', user);

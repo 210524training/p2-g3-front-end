@@ -3,6 +3,8 @@ import Bank from './type';
 const en: Bank = {
   _name: 'Chatapredu',
   send: 'Send',
+  reject: 'Reject',
+  accept: 'Accept',
   doYouWantToSendThisPicture: 'Do you want to send this picture?',
   doYouWantToSendThisVideo: 'Do you want to send this video?',
   name: 'Name',
