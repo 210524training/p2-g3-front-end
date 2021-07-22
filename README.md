@@ -36,8 +36,21 @@
 * Setting rooms to public or private
 * Changing interests when editing profile
 
+## Get Started
+
+> First navigate to the location where you would like to store a clone of this repository on your local device using Git Bash. Use the following command:
+   - `git clone https://github.com/210524training/p2-g3-front-end.git`
+> Once you have cloned the repository, open the folder in the terminal and install all required dependancies by typing in the following commands: 
+   - `cd p2-g3-front-end`
+   - `npm install`
+   - `amplify pull`
+
 ## Usage
 
+> To launch the application on a device or virtual machine, use the this command: 
+   - `npm start`
+> Once the application is loaded, your web browser will launch a page prompting you to select a virtual device.
+   - If you are using a physical device, make sure to install the Expo mobile app from Google Play store(Android) or the App store(IOS) and select the Tunnel option next to connection before scanning the QR code on the screen.
 > Once the application has loaded onto an device or virtual machine, you will be greeted by the login screen.
    <img src="https://user-images.githubusercontent.com/84411139/126687107-0befa03c-c373-4a67-a169-014501b7d4a9.png" width="200" height="400" />
    
