@@ -99,6 +99,21 @@ const en: Bank = {
   tag: 'Tag',
   title: 'Title',
   content: 'Content',
+  science: 'Science',
+  technology: 'Technology',
+  engineering: 'Engineering',
+  medicine: 'Medicine',
+  math: 'Math',
+  art: 'Art',
+  history: 'History',
+  gaming: 'Gaming',
+  animation: 'Animation',
+  music: 'Music',
+  sports: 'Sports',
+  design: 'Design',
+  literature: 'Literature',
+  foods: 'Foods',
+  automotive: 'Automotive',
 };
 
 export default en;
