@@ -1,6 +1,8 @@
 type Bank = {
   /** Application Name (fallback will be en) */
   _name?: string,
+  reject: string,
+  accept: string,
   name: string,
   send: string,
   doYouWantToSendThisPicture: string,
@@ -93,6 +95,25 @@ type Bank = {
   calls: string,
   typeAMessage: string,
   contacts: string,
+  deleteForum: string,
+  tag: string,
+  title: string,
+  content: string,
+  science: string,
+  technology: string,
+  engineering: string,
+  medicine: string,
+  math: string,
+  art: string,
+  history: string,
+  gaming: string,
+  animation: string,
+  music: string,
+  sports: string,
+  design: string,
+  literature: string,
+  foods: string,
+  automotive: string,
 };
 
 export default Bank;

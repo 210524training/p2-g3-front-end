@@ -1,0 +1,7 @@
+{
+    "tableName": "chatapredudbfinal",
+    "partitionKeyName": "entity",
+    "partitionKeyType": "S",
+    "sortKeyName": "id",
+    "sortKeyType": "S"
+}

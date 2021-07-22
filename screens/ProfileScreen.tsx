@@ -17,25 +17,22 @@ const ProfileScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
-  
+
   const dispatch = useAppDispatch();
   const nav = useNavigation();
   React.useEffect(() => {
     console.log('use EFFECT');
     (async () => {
       try {
-        // const session = await Auth.currentSession();
-        const user = await Auth.currentAuthenticatedUser({
+        const currentUser = await Auth.currentAuthenticatedUser({
           bypassCache: false,
         });
 
-        if (user?.username) {
-          await dispatch(loginCache({ username: user.username, password: '' }));
+        if (currentUser?.username) {
+          await dispatch(loginCache({ username: currentUser.username, password: '' }));
         }
 
-        // console.log('current user', user);
       } catch (err) {
-        // console.error('Profile page: Current user error', err);
         nav.navigate('Login', {
           hideLeftHeader: true,
         });

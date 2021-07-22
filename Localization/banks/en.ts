@@ -3,6 +3,8 @@ import Bank from './type';
 const en: Bank = {
   _name: 'Chatapredu',
   send: 'Send',
+  reject: 'Reject',
+  accept: 'Accept',
   doYouWantToSendThisPicture: 'Do you want to send this picture?',
   doYouWantToSendThisVideo: 'Do you want to send this video?',
   name: 'Name',
@@ -93,7 +95,25 @@ const en: Bank = {
   calls: 'Calls',
   typeAMessage: 'Type a message',
   contacts: 'Contacts',
-  
+  deleteForum: 'Delete Forum',
+  tag: 'Tag',
+  title: 'Title',
+  content: 'Content',
+  science: 'Science',
+  technology: 'Technology',
+  engineering: 'Engineering',
+  medicine: 'Medicine',
+  math: 'Math',
+  art: 'Art',
+  history: 'History',
+  gaming: 'Gaming',
+  animation: 'Animation',
+  music: 'Music',
+  sports: 'Sports',
+  design: 'Design',
+  literature: 'Literature',
+  foods: 'Foods',
+  automotive: 'Automotive',
 };
 
 export default en;

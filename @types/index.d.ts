@@ -12,7 +12,7 @@ export type SecurityQuestion = {
   answer: string,
 };
 
-export const InterestValues = Object.keys(InterestInterface);
+export const InterestValues = Object.keys(t(InterestInterface));
 
 export type InterestType = typeof InterestInterface;
 export type Interest = keyof InterestType;

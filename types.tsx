@@ -43,9 +43,15 @@ export type RootStackParamList = {
   },
   UserSearch: undefined;
   Help: undefined;
+  EditForum: {
+    forum: Forum,
+  }
   ConfirmCode: {
     username: string,
-  };
+  }
+  AddForum: {
+    user: User,
+  }
   Login: {
     hideLeftHeader: boolean | undefined;
   },

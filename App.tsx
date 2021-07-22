@@ -22,6 +22,7 @@ Storage.configure({
 const App: React.FC<unknown> = (): JSX.Element => {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+  Auth.currentAuthenticatedUser().then(console.log).catch(console.error);
 
   if (!isLoadingComplete) {
     return <></>;
