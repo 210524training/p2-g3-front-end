@@ -61,8 +61,7 @@
 > Once login is complete you will be directed to the chats page where you will see all of your recent chats.
 > To continue chatting you can select a chat from the list and once redirected to that room, you may proceed with your messages. 
 
-   <img src="https://user-images.githubusercontent.com/84411139/126687737-e5512666-d003-4f75-afd7-c0049b6b24a0.png" width="200" height="400" /> <img src="https://user-images.githubusercontent.com/84411139/126704129-0b83ed69-d5f0-4102-816b-f7aea611ca05.PNG" width="200" height="400" />
-
+   <img src="https://user-images.githubusercontent.com/84411139/126687737-e5512666-d003-4f75-afd7-c0049b6b24a0.png" width="200" height="400" /> <img src="https://user-images.githubusercontent.com/84411139/126709349-1898a311-5c21-4e66-b4a6-bb6446f77297.jpeg" width="200" height="400" />
    
    - To create a new chat you can press the message icon at the bottom right corner of the screen, select the contact you would like to send a message to, then begin      your messaging.
 > You can navigate through different pages by selecting the tabs on the nav bar (Top for androind, bottom for ios)
@@ -74,8 +73,7 @@
    - To edit your profile, press on the pencil icon on the bottom right corner of the screen. As of now you are only able to edit your profile status. Press the save      button to save changes.
 > By navigating to the discussions tab you can view recommended discussion posts, search for posts, and create your own posts by pressing the message icon on the bottom right.
 
-   <img src="https://user-images.githubusercontent.com/84411139/126687971-dff138a0-c9ef-4182-b934-85d019b4e695.png" width="200" height="400" /> <img src="https://user-images.githubusercontent.com/84411139/126705313-fae48ef3-9b2f-4d1e-b7de-412e877035f9.PNG" width="200" height="400" />
-
+   <img src="https://user-images.githubusercontent.com/84411139/126687971-dff138a0-c9ef-4182-b934-85d019b4e695.png" width="200" height="400" /> <img src="https://user-images.githubusercontent.com/84411139/126709468-eb9f6d6a-a547-4d5a-a1fa-43b648d60a30.jpeg" width="200" height="400" />
    
    - Select a post from the list to view it. On this page you can view, add a comment/reply, and like the post you have selected.
 > The next tab is the Search tab that allows you to search for users by their usernames.
