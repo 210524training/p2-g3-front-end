@@ -36,34 +36,32 @@
 * Setting rooms to public or private
 * Changing interests when editing profile
 
-## Getting Started
-   
-> To get a local clone of this repository, in Git Bash navigate to the folder you want this repository to be stored in then copy this command:
-   - `git clone https://github.com/210524training/p2-g3-front-end.git`
-> Make sure to have `node.js` set up on your device. Once finished, use this command to install all dempendancies for the application:
-   - `npm install`
-> Once complete, make sure to also go to the backend repository of this application and clone it as well.
-
 ## Usage
 
 > Once the application has loaded onto an device or virtual machine, you will be greeted by the login screen.
-   - (Screenshot of Login screen)
+   <img src="https://user-images.githubusercontent.com/84411139/126687107-0befa03c-c373-4a67-a169-014501b7d4a9.png" width="200" height="400" />
+   
 > If you have an account, simply type in the credentials then press the login button.
    - If you have not created an account, you may do so by pressing the No Account text displayed below the login button.
    - You will then be taken to the register screen where you can enter your credentials, select your interests, then press the register button to create your account
 > Once login is complete you will be directed to the chats page where you will see all of your recent chats.
 > To continue chatting you can select a chat from the list and once redirected to that room, you may proceed with your messages.
-   - (Screenshot of Chats page)
+   <img src="https://user-images.githubusercontent.com/84411139/126687737-e5512666-d003-4f75-afd7-c0049b6b24a0.png" width="200" height="400" />
+   
    - To create a new chat you can press the message icon at the bottom right corner of the screen, select the contact you would like to send a message to, then begin      your messaging.
 > You can navigate through different pages by selecting the tabs on the nav bar (Top for androind, bottom for ios)
-> The profile screen provides you information about the current account you're logged in as, an option to logout of the current account and a help link for any         assistance with your account.
-   - (Screenshot of Profile page)
+
+> The profile screen provides information about the current account you're logged in as, an option to logout of the current account and a help link for any         assistance with your account.
+   <img src="https://user-images.githubusercontent.com/84411139/126687891-b44db8e6-376b-4e0c-9eb2-e2b4e69aaf3e.png" width="200" height="400" />
+   
    - To edit your profile, press on the pencil icon on the bottom right corner of the screen. As of now you are only able to edit your profile status. Press the save      button to save changes.
-> By navigating to the discussions tab you can view recommended discussion postsand create your own posts by pressing the message icon on the bottome right.
-   - (Screenshot of Discussions page)
+> By navigating to the discussions tab you can view recommended discussion posts, search for posts, and create your own posts by pressing the message icon on the bottom right.
+   <img src="https://user-images.githubusercontent.com/84411139/126687971-dff138a0-c9ef-4182-b934-85d019b4e695.png" width="200" height="400" />
+   
    - Select a post from the list to view it. On this page you can view, add a comment/reply, and like the post you have selected.
 > The next tab is the Search tab that allows you to search for users by their usernames.
-   - (Screenshot of Search page with example search)
+   <img src="https://user-images.githubusercontent.com/84411139/126688044-325b11d0-84e5-4740-b289-9ad1f361ac5f.png" width="200" height="400" />
+
 
 ## Contributors
 
