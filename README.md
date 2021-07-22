@@ -9,8 +9,8 @@
 ### Frontend
 
 * TypeScript
-* React Native with Redux
-* React Navigation
+* [React Native with Redux](https://reactnative.dev/)
+* [React Navigation](https://reactnavigation.org/)
 
 ### Backend
 
