@@ -76,9 +76,12 @@
    - To edit your profile, press on the pencil icon on the bottom right corner of the screen. As of now you are only able to edit your profile status. Press the save      button to save changes.
 > By navigating to the discussions tab you can view recommended discussion posts, search for posts, and create your own posts by pressing the message icon on the bottom right.
 
-   <img src="https://user-images.githubusercontent.com/84411139/126687971-dff138a0-c9ef-4182-b934-85d019b4e695.png" width="200" height="400" /> <img src="https://user-images.githubusercontent.com/84411139/126709468-eb9f6d6a-a547-4d5a-a1fa-43b648d60a30.jpeg" width="200" height="400" /> <img src="https://user-images.githubusercontent.com/84411139/126713938-5583c7c8-3e4d-4b29-9d29-d5b9446ad1be.png" width="200" height="400" />
+   <img src="https://user-images.githubusercontent.com/84411139/126687971-dff138a0-c9ef-4182-b934-85d019b4e695.png" width="200" height="400" /> <img src="https://user-images.githubusercontent.com/84411139/126709468-eb9f6d6a-a547-4d5a-a1fa-43b648d60a30.jpeg" width="200" height="400" />
    
    - Select a post from the list to view it. On this page you can view, add a comment/reply, and like the post you have selected.
+   
+   <img src="https://user-images.githubusercontent.com/84411139/126713938-5583c7c8-3e4d-4b29-9d29-d5b9446ad1be.png" width="200" height="400" />
+   
 > The next tab is the Search tab that allows you to search for users by their usernames.
 
    <img src="https://user-images.githubusercontent.com/84411139/126688044-325b11d0-84e5-4740-b289-9ad1f361ac5f.png" width="200" height="400" />
