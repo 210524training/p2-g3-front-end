@@ -193,7 +193,7 @@ function RootNavigator() {
         name="PickImage"
         component={PickImage}
       />
-      <Stack.Screen name="EditChatRoom" component={EditChatRoom} 
+      <Stack.Screen name="EditChatRoom" component={EditChatRoom}
         options={({ route }) => ({
           title: route.params.chatRoom.title || 'No Name',
         })} />
@@ -201,8 +201,8 @@ function RootNavigator() {
         options={({ route }) => ({
           title: route.params.forum.title || 'No Name',
         })} />
-      <Stack.Screen name="AddForum" 
-      component={AddForum}
+      <Stack.Screen name="AddForum"
+        component={AddForum}
       />
       <Stack.Screen
         name="UserSearch"

@@ -68,6 +68,7 @@ const en: Bank = {
   search: 'Search',
   back: 'Back',
   returnHome: 'Return Home',
+  comments: 'Comments',
   home: 'Home',
   rotate: 'Rotate',
   myAccount: 'My Account',

@@ -97,6 +97,7 @@ const es: Bank = {
   title: 'Titulo',
   content: 'Contenido',
   comment: 'Comentario',
+  comments: 'Comentarios',
   enterYourComment: 'Ingrese Su Comentario:',
   reject: 'Rechazar',
   accept: 'Acceptar',

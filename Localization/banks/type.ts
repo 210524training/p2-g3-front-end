@@ -52,7 +52,7 @@ type Bank = {
   size: string,
   fileSize: string,
   duration: string,
-  
+  comments: string, 
   update: string,
   more: string,
   touchToUpdate: string,
