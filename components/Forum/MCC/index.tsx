@@ -16,6 +16,7 @@ import ForumTag from '../ForumTag';
 import PressableIcon from '../PressebleIcon';
 import createStyle from './styles';
 import { useNavigation } from '@react-navigation/native';
+import NewForum from '../../NewForum';
 
 export type MCCProps = {
   comment: ForumComment,
@@ -27,8 +28,8 @@ const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Eleme
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
 
-  const[currentForum, setCurrentForum] = useState({...forum});
-  const[currentComment, setCurrentComment] = useState({...comment});
+  const [currentForum, setCurrentForum] = useState({ ...forum });
+  const [currentComment, setCurrentComment] = useState({ ...comment });
 
   const nav = useNavigation();
 
@@ -40,24 +41,32 @@ const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Eleme
   const handleOnCommentDelete = () => {
     const idx = currentForum.comments?.indexOf(currentComment);
     if (idx != undefined) {
-    currentForum.comments?.splice(idx, 1);
-    if(currentForum.numberOfComments) {
-    currentForum.numberOfComments = currentForum.numberOfComments - 1;}
-    setCurrentForum(currentForum);
-    updateForum(currentForum);
+      currentForum.comments?.splice(idx, 1);
+      currentForum.numberOfComments = currentForum.comments?.length;
+      setCurrentForum(currentForum);
+      updateForum(currentForum);
     }
     nav.navigate('GeneralDiscussions')
   };
 
   const handleOnLikePressed = () => {
-    const idx = currentForum.comments?.indexOf(currentComment);
-    currentComment.likes = currentComment.likes + 1;
-    if(idx != undefined && currentForum.comments) {
-    currentForum.comments[idx] = currentComment;
+    const nf = { ...currentForum };
+    const nc = { ...currentComment }
+    const idxObj = nf.comments?.find(obj => {
+      return obj.id === nc.id;
+    })
+    let idx = undefined;
+    if (idxObj != undefined) {
+      idx = nf.comments?.indexOf(idxObj);
     }
-    setCurrentComment(currentComment);
-    setCurrentForum(currentForum);
-    updateForum(currentForum);
+    console.log(idx)
+    nc.likes = nc.likes + 1;
+    if (idx != undefined && nf.comments) {
+      nf.comments[idx] = nc;
+    }
+    setCurrentComment(nc);
+    setCurrentForum(nf);
+    updateForum(nf);
   };
 
   // const handleOnCommentPressed = () => {
@@ -65,7 +74,7 @@ const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Eleme
   // };
 
   return (
-    <View style={styles.container} key={currentComment.id+currentComment.user.id}>
+    <View style={styles.container} key={currentComment.id + currentComment.user.id}>
       <View style={styles.header}>
         <Text style={styles.username}>{currentComment.user.username}&nbsp;
           <Text style={styles.timestamp}>({moment(currentComment.createdAt).fromNow()})</Text>
@@ -86,12 +95,12 @@ const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Eleme
         </View>
       </View>
 
-      <View style={styles.content}>        
+      <View style={styles.content}>
         <Text style={styles.text}>
           <DDLText text={currentComment.content} color={Colors[colorScheme].text} />
         </Text>
       </View>
-      
+
       <View style={styles.footer}>
         <Text>{currentComment.likes} <PressableIcon
           IconProvider={Foundation}
