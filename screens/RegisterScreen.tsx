@@ -35,13 +35,7 @@ const RegisterScreen: React.FC<unknown> = (props) => {
   const [interests, setInterests] = useState<string[]>([]);
   const [error, setError] = useState<string>('');
 
-  const dispatch = useAppDispatch();
   const nav = useNavigation();
-
-  const handleLogin = async () => {
-    // await dispatch(loginAsync({ username, password }));
-    nav.navigate('ConfirmCode');
-  };
 
   const tooLong = (...args: any[]): boolean => {
     return JSON.stringify(args).length > 2048;

@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import useColorScheme from '../hooks/useColorScheme';
-import { Forum } from '../@types/index.d';
+import { Forum, User } from '../@types/index.d';
 import t from '../Localization';
 import { generate as shorty } from 'shortid';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { useAppSelector } from '../hooks';
 import { addForum } from '../remote/api/forumAPI';
+import { useNavigation } from '@react-navigation/native';
 
 const AddForum: React.FC<unknown> = (): JSX.Element => {
   const user = useAppSelector<UserState>(selectUser);
@@ -19,11 +20,13 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
   const [content, setContent] = useState<string>('');
   const [newTag, setNewTag] = useState<string>('');
 
+  const nav = useNavigation();
+
   const forumTemplate: Forum = {
     id: shorty(),
     title: '',
     tags: [],
-    user: user,
+    user: user as User,
     createdAt: new Date().toISOString(),
     content: '',
     likes: 0,
@@ -72,6 +75,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
     (async () => {
       const res = await addForum(newForum);
       console.log(res);
+      nav.navigate('GeneralDiscussions');
     })();
   };
 
