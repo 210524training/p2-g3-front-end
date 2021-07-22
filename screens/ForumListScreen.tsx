@@ -8,20 +8,20 @@ import ForumListItem from '../components/ForumListItem';
 import NewForum from '../components/NewForum';
 import t from '../Localization';
 import { getAllForums } from '../remote/api/forumAPI';
+import { useAppSelector } from '../hooks';
+import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 
-type Props = {
-  currentUser?: User,
-}
-
-export default function TabOneScreen(props: Props): JSX.Element {
+export default function TabOneScreen(): JSX.Element {
   const [forums, setForums] = useState<Forum[]>([]);
   const [forumPool, setForumPool] = useState<Forum[]>([]);
   const [search, setSearch] = useState<string>('');
   const [featuredForums, setFeaturedForums] = useState<Forum[]>([]);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
+  const user = useAppSelector<UserState>(selectUser);
   //const testInterests = ["Science"];
 
   const handleSearch = (text?: string) => {
@@ -39,6 +39,11 @@ export default function TabOneScreen(props: Props): JSX.Element {
   }, []);
 
   useEffect(() => {
+    getAllForums().then(setForums).catch(console.error);
+    getAllForums().then(setForumPool).catch(console.error);
+  }, [refresh]);
+
+  useEffect(() => {
     if (search) {
       const filteredForums = forumPool.filter(forum => forum.title.includes(search));
       setForums(filteredForums);
@@ -50,13 +55,13 @@ export default function TabOneScreen(props: Props): JSX.Element {
   }, [search]);
 
   useEffect(() => {
-    const interestForums = forumPool.filter(forum => forum.tags?.some(tag => props.currentUser?.interests.includes(tag as Interest)));
+    const interestForums = forumPool.filter(forum => forum.tags?.some(tag => user?.interests.includes(tag as Interest)));
     //const interestForums = forumPool.filter(forum => forum.tags?.some(tag => testInterests.includes(tag as Interest)));
     setFeaturedForums(interestForums);
   }, [forumPool]);
 
   const colorScheme = useColorScheme();
-  
+
   return (
     <>
       <View style={{
@@ -65,7 +70,10 @@ export default function TabOneScreen(props: Props): JSX.Element {
         padding: 10,
       }}>
         <Pressable
-          onPress={() => {}}
+          onPress={() => {
+            getAllForums().then(setForums).catch(console.error);
+            getAllForums().then(setForumPool).catch(console.error);
+          }}
           style={({ pressed }) => [
             { opacity: pressed ? 0.5 : 1 }
           ]}
@@ -75,7 +83,6 @@ export default function TabOneScreen(props: Props): JSX.Element {
             name='refresh'
             size={28}
             color={Colors[colorScheme].tint}
-            style={styles.icon}
           />
         </Pressable>
       </View>

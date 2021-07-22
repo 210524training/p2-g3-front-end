@@ -99,6 +99,8 @@ type Bank = {
   tag: string,
   title: string,
   content: string,
+  comment: string,
+  enterYourComment: string,
   science: string,
   technology: string,
   engineering: string,

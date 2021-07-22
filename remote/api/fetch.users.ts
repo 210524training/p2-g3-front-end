@@ -2,12 +2,11 @@ import { FriendRequest, User } from '../../@types/index.d';
 import { cognito } from './client';
 import { Auth, API } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
-import { CognitoIdentityServiceProvider } from 'aws-sdk';
-import { getUserDataByID, updateUserData } from './userDataApi';
-/**
- * 
- * @deprecated returns nothing
- */
+import {db} from './client';
+
+const client = db();
+
+
 export const getFriends = (username: string): Promise<User[]> => {
   const friends: User[] = [];
   return new Promise<User[]>((resolve, reject) => {
@@ -22,6 +21,55 @@ const extractAttribute = (data: any, find: string): string | undefined => {
   }
   return undefined;
 };
+
+// export const getAllUsers = async (): Promise<User[]> => {
+//   try {
+//     const res = await (await cognito()).get('/users');
+//     // console.log('fetch all users', res);
+//     const users: User[] = res?.data?.Users?.map((cu) => ({
+//       id: cu?.Username,
+//       username: cu?.Username,
+//       email: extractAttribute(cu, 'email'),
+//       password: '<you thought!>',
+//       isSuperAdmin: !!extractAttribute(cu, 'custom:isSuperAdmin'),
+//       status: extractAttribute(cu, 'custom:status'),
+//       interests: JSON.parse(extractAttribute(cu, 'custom:interests') || '[]'),
+//       imageUri: extractAttribute(cu, 'custom:imageUri'),
+//       securityQuestionOne: {
+//         question: extractAttribute(cu, 'custom:questionOne'),
+//         answer: extractAttribute(cu, 'custom:answerOne'),
+//       },
+//       securityQuestionTwo: {
+//         question: extractAttribute(cu, 'custom:questionTwo'),
+//         answer: extractAttribute(cu, 'custom:answerTwo'),
+//       },
+//       securityQuestionThree: {
+//         question: extractAttribute(cu, 'custom:questionThree'),
+//         answer: extractAttribute(cu, 'custom:answerThree'),
+//       },
+//       phoneNumber: extractAttribute(cu, 'custom:phoneNumber'),
+//       contacts: extractAttribute(cu, 'custom:contacts') || [],
+//       chatRoomIds: extractAttribute(cu, 'custom:chatRoomIds') || [],
+//     })) || [];
+
+//     for (let i = 0; i < users.length; i++) { // O(n)
+//       const contacts = users[i].contacts;
+//       const newContacts: User[] = [];
+//       if (contacts) {
+//         for (let j = 0; j < contacts.length; j++) { // O(n)
+//           const idx = users.findIndex(u => u.username === contacts[j].username); // O(n) = O(n^3) - oof
+//           const contact = users[idx];
+//           newContacts.push(contact);
+//         }
+//       }
+//       users[i].contacts = newContacts;
+//     }
+//     return users;
+//   } catch (err) {
+//     console.error('fetch users error', err);
+//   }
+//   return [];
+// };
 
 export const getAllUsers = async (): Promise<User[]> => {
   try {
@@ -95,6 +143,16 @@ export const getAllUsers = async (): Promise<User[]> => {
     console.error('fetch users error', err);
   }
   return [];
+};
+
+export const getUserDataByID = async (id: string): Promise<{
+  id: string,
+  contacts: string[],
+  chatRoomIds: string[],
+}> => {
+  const { data } = await client.get<any>(`users/${id}`);
+  const user = JSON.parse(data.body).user;
+  return user;
 };
 
 

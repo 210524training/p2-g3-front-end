@@ -1,17 +1,13 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useAppSelector } from '../hooks';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { Text, View } from '../components/Themed';
 import PN from '../utils/PN/App';
 import LogoutButton from '../components/LogoutButton';
 export default function MyAccountScreen(): JSX.Element {
   const user = useAppSelector<UserState>(selectUser);
-
-  const dispatch = useAppDispatch();
-  const nav = useNavigation();
 
   return (
     <View style={styles.container}>

@@ -99,6 +99,8 @@ const en: Bank = {
   tag: 'Tag',
   title: 'Title',
   content: 'Content',
+  comment: 'Comment',
+  enterYourComment: 'Enter Your Comment:',
   science: 'Science',
   technology: 'Technology',
   engineering: 'Engineering',
