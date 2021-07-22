@@ -28,24 +28,35 @@ export const deleteUserData = async (id: string): Promise<boolean> => {
   return data;
 };
 
-export const updateUserData = async (username: string, contacts: string[], chatRoomIds: string[]): Promise<boolean> => {
-  const { data } = await client.put<boolean>('users', JSON.stringify({
-    id: username,
-    username: username,
-    contacts: contacts || [],
-    chatRoomIds: chatRoomIds || [],
-  }));
-  console.log('added forum', data);
-  return data;
+export const updateUserData = async (username: string, contacts: string[], chatRoomIds?: string[]): Promise<boolean> => {
+  try {
+    const { data } = await client.put<boolean>('users', JSON.stringify({
+      id: username,
+      username: username,
+      contacts: contacts || [],
+      chatRoomIds: chatRoomIds || [],
+    }));
+    console.log('updated forum', data);
+    return true;
+  } catch (err) {
+    console.error('update user data error', err);
+  }
+  return false;
 };
 
 export const addUserData = async (username: string): Promise<boolean> => {
-  const { data } = await client.post<boolean>('users', JSON.stringify({
-    id: username,
-    username: username,
-    contacts: [],
-    chatRoomIds: [],
-  }));
-  console.log('added forum', data);
-  return data;
+
+  try {
+    const { data } = await client.post<boolean>('users', JSON.stringify({
+      id: username,
+      username: username,
+      contacts: [],
+      chatRoomIds: [],
+    }));
+    console.log('added forum', data);
+    return true;
+  } catch (err) {
+    console.error('add user data error', err);
+  }
+  return false;
 };

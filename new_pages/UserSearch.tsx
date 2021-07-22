@@ -6,12 +6,12 @@ import { Searchbar } from 'react-native-paper';
 import { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Button, Alert } from 'react-native';
 import { useEffect } from 'react';
-import { User } from '../@types';
+import { FriendRequest, User } from '../@types/index.d';
 import ContactListItem from '../components/ContactListItem';
 import t from '../Localization';
 import { getAllUsers } from '../remote/api/fetch.users';
-import { selectUser, UserState } from '../hooks/slices/user.slice';
-import { useAppSelector } from '../hooks';
+import { loginCache, selectUser, UserState } from '../hooks/slices/user.slice';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { Auth } from 'aws-amplify';
 import { updateUserData } from '../remote/api/userDataApi';
 
@@ -66,6 +66,7 @@ const tooLong = (arg: any): boolean => {
 };
 
 const UserSearchPage: React.FC<unknown> = () => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector<UserState>(selectUser);
   const [search, setSearch] = useState<string>('');
   const [exampleUsers, setExampleUsers] = useState<User[]>([]);
@@ -130,33 +131,48 @@ const UserSearchPage: React.FC<unknown> = () => {
                 add.contacts = [];
               }
 
-              const oldUserContacts = user.contacts.filter(u => u);
-              const oldAddUserContacs = add.contacts.filter(u => u);
-              console.log(oldUserContacts, oldAddUserContacs);
+              const oldUserContacts = user.contacts.map(u => u.username);
+              const oldAddUserContacs = add.contacts.map(u => u.username);
+              console.log('before', oldUserContacts, oldAddUserContacs);
+              let alreadyFriends = false;
+              for (const c of oldUserContacts) {
+                if (c === add.username){
+                  alreadyFriends = true;
+                  break;
+                }
+              }
 
-              console.log(user.contacts, add.contacts);
-              if (tooLong([add.username, ...oldUserContacts])) {
-                Alert.alert('You have too many friends.');
+              for (const c of oldAddUserContacs) {
+                if (alreadyFriends || c === user.username){
+                  alreadyFriends = true;
+                  break;
+                }
+              }
+
+              if (alreadyFriends) {
+                Alert.alert('You are already friends with this user.');
                 return;
               }
 
-              if (tooLong([user.username, ...oldAddUserContacs])) {
-                Alert.alert(`${add.username} doesn't have space for more friends.`);
-                return;
-              }
+              const newUserContacts = [FriendRequest.PENDING + add.username, ...oldUserContacts];
+              const newAddUserContacs = [FriendRequest.AWAITING + user.username, ...oldAddUserContacs];
+
+              console.log('after', [FriendRequest.PENDING + add.username, ...oldUserContacts], [FriendRequest.AWAITING + user.username, ...oldAddUserContacs]);
 
               (async () => {
-                const a = await updateUserData(user.username, [add.username, ...oldUserContacts], user.chatRooms);
-                
+                const a = await updateUserData(user.username, newUserContacts, user.chatRooms);
+
                 if (a) {
-                  const b = await updateUserData(add.username, [user.username, ...oldAddUserContacs], add.chatRooms);
+                  const b = await updateUserData(add.username, newAddUserContacs, add.chatRooms);
 
                   if (!b) {
                     await updateUserData(user.username, oldUserContacts, user.chatRooms);
                     await updateUserData(add.username, oldAddUserContacs, add.chatRooms);
+
                     Alert.alert('Falied to update contacts');
                   } else {
                     Alert.alert('Your friend request has been sent!');
+                    await dispatch(loginCache({ username: user.username, password: '' }));
                     return;
                   }
                 } else {

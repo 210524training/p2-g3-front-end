@@ -3,8 +3,11 @@ import InterestInterface from './interests';
 export enum MediaHeader {
   IMAGE,
   VIDEO,
-  /** not implemented yet */
-  S3,
+}
+
+export enum FriendRequest {
+  PENDING = '*',
+  AWAITING = '~',
 }
 
 export type SecurityQuestion = {

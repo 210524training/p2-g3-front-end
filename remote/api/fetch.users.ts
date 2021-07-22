@@ -27,38 +27,40 @@ export const getAllUsers = async (): Promise<User[]> => {
   try {
     const res = await (await cognito()).get('/users');
 
-    const users: User[] = res?.data?.Users?.map((cu) => {
-      let contacts, chatRoomIds;
-      getUserDataByID(cu.Username).then((e) => {
-        contacts = e.contacts;
-        chatRoomIds = e.chatRoomIds;
-      }).catch(() => console.log('-'));
-      return {
+    const loop = res?.data?.Users;
+    const users: User[] = [];
+
+    for (const cu of loop) {
+      const res = await getUserDataByID(cu.Username);
+      const contacts = res.contacts;
+      const chatRoomIds = res.chatRoomIds;
+      console.log('con', contacts);
+      users.push({
         id: cu?.Username,
         username: cu?.Username,
-        email: extractAttribute(cu, 'email'),
+        email: extractAttribute(cu, 'email') as string,
         password: '<you thought!>',
         isSuperAdmin: !!extractAttribute(cu, 'custom:isSuperAdmin'),
         status: extractAttribute(cu, 'custom:status'),
         interests: JSON.parse(extractAttribute(cu, 'custom:interests') || '[]'),
         imageUri: extractAttribute(cu, 'custom:imageUri'),
         securityQuestionOne: {
-          question: extractAttribute(cu, 'custom:questionOne'),
-          answer: extractAttribute(cu, 'custom:answerOne'),
+          question: extractAttribute(cu, 'custom:questionOne') || '',
+          answer: extractAttribute(cu, 'custom:answerOne') || '',
         },
         securityQuestionTwo: {
-          question: extractAttribute(cu, 'custom:questionTwo'),
-          answer: extractAttribute(cu, 'custom:answerTwo'),
+          question: extractAttribute(cu, 'custom:questionTwo') || '',
+          answer: extractAttribute(cu, 'custom:answerTwo') || '',
         },
         securityQuestionThree: {
-          question: extractAttribute(cu, 'custom:questionThree'),
-          answer: extractAttribute(cu, 'custom:answerThree'),
+          question: extractAttribute(cu, 'custom:questionThree') || '',
+          answer: extractAttribute(cu, 'custom:answerThree') || '',
         },
         phoneNumber: extractAttribute(cu, 'custom:phoneNumber'),
-        contacts: contacts,
+        contacts: contacts as User[],
         chatRoomIds: chatRoomIds,
-      };
-    }) || [];
+      });
+    }
 
     for (let i = 0; i < users.length; i++) { // O(n)
       const contacts = users[i].contacts;
@@ -72,6 +74,7 @@ export const getAllUsers = async (): Promise<User[]> => {
       }
       users[i].contacts = newContacts;
     }
+
     return users;
   } catch (err) {
     console.error('fetch users error', err);
