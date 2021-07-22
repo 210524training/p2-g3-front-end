@@ -100,7 +100,22 @@ const en: Bank = {
   title: 'Title',
   content: 'Content',
   comment: 'Comment',
-  enterYourComment: 'Enter Your Comment:'
+  enterYourComment: 'Enter Your Comment:',
+  science: 'Science',
+  technology: 'Technology',
+  engineering: 'Engineering',
+  medicine: 'Medicine',
+  math: 'Math',
+  art: 'Art',
+  history: 'History',
+  gaming: 'Gaming',
+  animation: 'Animation',
+  music: 'Music',
+  sports: 'Sports',
+  design: 'Design',
+  literature: 'Literature',
+  foods: 'Foods',
+  automotive: 'Automotive',
 };
 
 export default en;

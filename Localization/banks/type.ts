@@ -101,6 +101,21 @@ type Bank = {
   content: string,
   comment: string,
   enterYourComment: string,
+  science: string,
+  technology: string,
+  engineering: string,
+  medicine: string,
+  math: string,
+  art: string,
+  history: string,
+  gaming: string,
+  animation: string,
+  music: string,
+  sports: string,
+  design: string,
+  literature: string,
+  foods: string,
+  automotive: string,
 };
 
 export default Bank;
