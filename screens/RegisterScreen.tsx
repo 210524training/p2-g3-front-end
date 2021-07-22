@@ -6,14 +6,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
 
 import { Text, View } from '../components/Themed';
-import { loginAsync, logout, selectUser, UserState } from '../hooks/slices/user.slice';
+import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 import t from '../Localization';
 import LogoutButton from '../components/LogoutButton';
 import CheckBox, { CheckBoxItem } from '../components/CheckBox';
-import { InterestValues, User } from '../@types/index.d';
+import { InterestValues } from '../@types/index.d';
 import { addUserData } from '../remote/api/userDataApi';
 
 const RegisterScreen: React.FC<unknown> = (props) => {
@@ -21,17 +21,17 @@ const RegisterScreen: React.FC<unknown> = (props) => {
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
 
-  const [username, setUsername] = useState<string>('dustindiaz');
-  const [password, setPassword] = useState<string>('password12345');
-  const [email, setEmail] = useState<string>('hi.dustin.diaz@gmail.com');
-  const [phoneNumber, setPhoneNumber] = useState<string>('7874782095');
-  const [confirmPassword, setConfirmPassword] = useState<string>('password12345');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [questionOne, setQuestionOne] = useState<string>('What was your childhood nickname?');
   const [questionTwo, setQuestionTwo] = useState<string>('What was your childhood nickname?');
   const [questionThree, setQuestionThree] = useState<string>('What was your childhood nickname?');
-  const [answerOne, setAnswerOne] = useState<string>('yes');
-  const [answerTwo, setAnswerTwo] = useState<string>('yes');
-  const [answerThree, setAnswerThree] = useState<string>('yes');
+  const [answerOne, setAnswerOne] = useState<string>('');
+  const [answerTwo, setAnswerTwo] = useState<string>('');
+  const [answerThree, setAnswerThree] = useState<string>('');
   const [interests, setInterests] = useState<string[]>([]);
   const [error, setError] = useState<string>('');
 

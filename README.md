@@ -2,25 +2,36 @@
 
 ## Project Description
 
-Chatapredu is a chat oriented application that incorporates some social media like functionalities. In this application you have the main chat functionality that lets a user directly message another user, or create a group chat to message multiple users at once. This application also contains a forum descussion system that allows users to create a discussion and post it with certain tags to identify the topic(s) discussed or shown in the post. This forum system allows other users to comment/reply to the post and like the post.
+**Chatapredu** is a chat-oriented application that incorporates some social media-like functionalities. In this application, you have the main chat functionality that lets a user directly message another user, or create a group chat to message multiple users at once. This application also contains a forum discussion system that allows users to create a discussion and post it with certain tags to identify the topic(s) discussed or shown in the post. This forum system allows other users to comment/reply to the post and like the post.
 
 ## Technologies Used
-* JavaScript/TypeScript
+
+### Frontend
+
+* TypeScript
 * React Native with Redux
 * React Navigation
 
+### Backend
+
+* [Cognito](https://aws.amazon.com/cognito/)
+* [AWS Lambda](https://aws.amazon.com/lambda/)
+* [AWS S3](https://aws.amazon.com/s3/)
+* [DynamoDB](https://aws.amazon.com/dynamodb/)
+
 ## Features
 
-List of features ready and TODOs for future development
+* Global Chat
 * Create a new account/login with previous account
-* Direct messaging
-* Group messaging
 * Create forum discussions
 * Comment on posts
 * Search for users
 * Adding/changing profile status
 
-To-do list:
+### To-do:
+
+* Group messaging
+* Direct messaging
 * Setting and resetting profile image
 * Setting rooms to public or private
 * Changing interests when editing profile
@@ -61,10 +72,4 @@ To-do list:
 
 ## License
 
-This project uses the following license: [<license_name>](<link>).
-
-{
-    "context": {
-      "role": "$context.authorizer.claims['custom:role']"
-    }
-}
+This project uses the following license: [MIT](./LICENSE).

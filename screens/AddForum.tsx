@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-unused-styles */
-import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import useColorScheme from '../hooks/useColorScheme';
@@ -12,7 +11,6 @@ import { addForum } from '../remote/api/forumAPI';
 
 const AddForum: React.FC<unknown> = (): JSX.Element => {
   const user = useAppSelector<UserState>(selectUser);
-  const nav = useNavigation();
 
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);

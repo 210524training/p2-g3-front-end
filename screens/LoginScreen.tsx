@@ -10,12 +10,11 @@ import t from '../Localization';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import LogoutButton from '../components/LogoutButton';
-import { Auth } from 'aws-amplify';
 
 const LoginScreen: React.FC<unknown> = () => {
   const user = useAppSelector<UserState>(selectUser);
-  const [username, setUsername] = useState<string>('dustindiaz');
-  const [password, setPassword] = useState<string>('password12345');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const colorScheme = useColorScheme();
   const dispatch = useAppDispatch();

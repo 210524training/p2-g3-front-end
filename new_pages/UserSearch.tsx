@@ -4,20 +4,21 @@
 import * as React from 'react';
 import { Searchbar } from 'react-native-paper';
 import { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, Alert, Pressable } from 'react-native';
 import { useEffect } from 'react';
 import { FriendRequest, User } from '../@types/index.d';
 import ContactListItem from '../components/ContactListItem';
 import t from '../Localization';
 import { getAllUsers } from '../remote/api/fetch.users';
-import { loginCache, selectUser, UserState } from '../hooks/slices/user.slice';
+import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { Auth } from 'aws-amplify';
-import { updateUserData } from '../remote/api/userDataApi';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   searchBar: {
-    marginTop: 50,
+    marginTop: 10,
     marginBottom: 10,
   },
 
@@ -145,29 +146,31 @@ const UserSearchPage: React.FC<unknown> = () => {
 
               const newUserContacts = [FriendRequest.PENDING + add.username, ...oldUserContacts];
               const newAddUserContacs = [FriendRequest.AWAITING + user.username, ...oldAddUserContacs];
-              
-              (async () => {
-                const a = await updateUserData(user.username, newUserContacts, user.chatRooms);
 
-                if (a) {
-                  const b = await updateUserData(add.username, newAddUserContacs, add.chatRooms);
+              Alert.alert('Not implemneted, sorry! :(');
 
-                  if (!b) {
-                    await updateUserData(user.username, oldUserContacts, user.chatRooms);
-                    await updateUserData(add.username, oldAddUserContacs, add.chatRooms);
+              // (async () => {
+              //   const a = await updateUserData(user.username, newUserContacts, user.chatRooms);
 
-                    Alert.alert('Falied to update contacts');
-                  } else {
-                    Alert.alert('Your friend request has been sent!');
-                    await dispatch(loginCache({ username: user.username, password: '' }));
-                    return;
-                  }
-                } else {
-                  await updateUserData(user.username, oldUserContacts);
-                  Alert.alert('Failed to send the friend request.');
-                }
+              //   if (a) {
+              //     const b = await updateUserData(add.username, newAddUserContacs, add.chatRooms);
 
-              })();
+              //     if (!b) {
+              //       await updateUserData(user.username, oldUserContacts, user.chatRooms);
+              //       await updateUserData(add.username, oldAddUserContacs, add.chatRooms);
+
+              //       Alert.alert('Falied to update contacts');
+              //     } else {
+              //       Alert.alert('Your friend request has been sent!');
+              //       await dispatch(loginCache({ username: user.username, password: '' }));
+              //       return;
+              //     }
+              //   } else {
+              //     await updateUserData(user.username, oldUserContacts);
+              //     Alert.alert('Failed to send the friend request.');
+              //   }
+
+              // })();
 
             } else {
               Alert.alert('You cannot add yourself');
@@ -181,8 +184,42 @@ const UserSearchPage: React.FC<unknown> = () => {
     }
   };
 
+  const colorScheme = useColorScheme();
+
   return (
     <>
+      <View style={{
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+        padding: 10,
+      }}>
+        <Pressable
+          onPress={() => {
+            try {
+              (async () => {
+                const users = (await getAllUsers()).filter(u => exclude(u));
+                setExampleUsers([...users]);
+                setUserList([...users]);
+                console.log(users);
+              })();
+            } catch (err) {
+              console.log('user search 2', err);
+              setExampleUsers([]);
+              setUserList([]);
+            }
+          }}
+          style={({ pressed }) => [
+            { opacity: pressed ? 0.5 : 1 }
+          ]}
+          hitSlop={10}
+        >
+          <MaterialCommunityIcons
+            name='refresh'
+            size={28}
+            color={Colors[colorScheme].tint}
+          />
+        </Pressable>
+      </View>
       <Searchbar
         style={styles.searchBar}
         placeholder={t('searchForUser')}
