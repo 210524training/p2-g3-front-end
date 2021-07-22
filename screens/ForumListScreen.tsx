@@ -57,7 +57,6 @@ export default function TabOneScreen(props: Props): JSX.Element {
 
   const colorScheme = useColorScheme();
   
-
   return (
     <>
       <View style={{
