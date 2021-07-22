@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, Pressable, StyleSheet } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
 import { Text, View } from '../components/Themed';
-import { getForums } from '../remote/api/fetch.forums';
 import { Forum, User, Interest } from '../@types/index.d';
 import ForumListItem from '../components/ForumListItem';
 import NewForum from '../components/NewForum';
 import t from '../Localization';
 import { getAllForums } from '../remote/api/forumAPI';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
 type Props = {
   currentUser?: User,
@@ -53,8 +55,30 @@ export default function TabOneScreen(props: Props): JSX.Element {
     setFeaturedForums(interestForums);
   }, [forumPool]);
 
+  const colorScheme = useColorScheme();
+  
   return (
     <>
+      <View style={{
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+        padding: 10,
+      }}>
+        <Pressable
+          onPress={() => {}}
+          style={({ pressed }) => [
+            { opacity: pressed ? 0.5 : 1 }
+          ]}
+          hitSlop={10}
+        >
+          <MaterialCommunityIcons
+            name='refresh'
+            size={28}
+            color={Colors[colorScheme].tint}
+            style={styles.icon}
+          />
+        </Pressable>
+      </View>
       <Searchbar
         placeholder={t('search')}
         onChangeText={handleSearch}

@@ -1,19 +1,11 @@
 /* eslint-disable react-native/no-unused-styles */
-import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Image, ScrollView, TextInput, Button, FlatList, StyleSheet, Pressable } from 'react-native';
-import DDC from '../components/DropDown';
-import Colors from '../constants/Colors';
-import { useAppSelector } from '../hooks';
-import { selectUser, UserState } from '../hooks/slices/user.slice';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import useColorScheme from '../hooks/useColorScheme';
 import { RootStackParamList } from '../types';
-import {Forum, ChatRoomUser, InterestValues, User} from '../@types/index.d';
+import {Forum, User} from '../@types/index.d';
 import t from '../Localization';
-import {generate as shorty} from 'shortid';
-import Users from '../remote/data/Users';
-import { strikeContent } from 'aws-amplify';
 type ForumEditRouteProp = RouteProp<RootStackParamList, 'EditForum'>;
 
 export type ForumEditProps = {

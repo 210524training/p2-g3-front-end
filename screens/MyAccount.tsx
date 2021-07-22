@@ -1,12 +1,11 @@
 import React from 'react';
-import { Button, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { logout, selectUser, UserState } from '../hooks/slices/user.slice';
+import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { Text, View } from '../components/Themed';
 import PN from '../utils/PN/App';
-import { Auth } from '@aws-amplify/auth/lib-esm/Auth';
 import LogoutButton from '../components/LogoutButton';
 export default function MyAccountScreen(): JSX.Element {
   const user = useAppSelector<UserState>(selectUser);

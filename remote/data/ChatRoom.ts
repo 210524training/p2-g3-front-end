@@ -1,6 +1,6 @@
 export default [{
   id: '1',
-  title: 'Where the streets have not name',
+  title: 'Global Chat',
   tags: [],
   users: [{
     user: {
@@ -32,7 +32,7 @@ export default [{
   }, {
     user: {
       id: 'u2',
-      username: 'Chanel',
+      username: 'Global Chat',
       email: 'hi.dustin.diaz@gmail.com',
       imageUri: '',
       status: 'This is my status',

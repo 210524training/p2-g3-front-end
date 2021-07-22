@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-unused-styles */
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Image, ScrollView, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../hooks';
@@ -20,6 +20,7 @@ const ProfileScreen: React.FC<unknown> = () => {
 
   const dispatch = useAppDispatch();
   const nav = useNavigation();
+  
   React.useEffect(() => {
     console.log('use EFFECT');
     (async () => {
@@ -52,6 +53,10 @@ const ProfileScreen: React.FC<unknown> = () => {
                 }} style={{ width: 100, height: 100, margin: 10, borderRadius: 10 }} />
                 <Text style={styles.title}>
                   Hello, {user.username}!
+                </Text>
+
+                <Text style={styles.status}>
+                  {user.status}
                 </Text>
                 <Text
                   style={{
@@ -116,6 +121,12 @@ const createStyle = (colorScheme: 'light' | 'dark') => StyleSheet.create({
     color: Colors[colorScheme].text,
     fontSize: 18,
     margin: 10,
+    padding: 10,
+  },
+  status: {
+    color: 'grey',
+    fontSize: 18,
+    marginBottom: 10,
     padding: 10,
   },
   title: {
