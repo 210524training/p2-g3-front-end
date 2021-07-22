@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-unused-styles */
 import React, { useState } from 'react';
-import { StyleSheet, Image, } from 'react-native';
+import { StyleSheet, Image, ScrollView, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { loginCache, selectUser, UserState } from '../hooks/slices/user.slice';
@@ -41,60 +41,62 @@ const ProfileScreen: React.FC<unknown> = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {
-        user
-          ? (
-            <>
-              <Image source={{
-                uri: user.imageUri?.trim() || defaultImageUri
-              }} style={{ width: 100, height: 100, margin: 10, borderRadius: 10 }} />
-              <Text style={styles.title}>
-                Hello, {user.username}!
-              </Text>
+    <ScrollView>
+      <View style={styles.container}>
+        {
+          user
+            ? (
+              <>
+                <Image source={{
+                  uri: user.imageUri?.trim() || defaultImageUri
+                }} style={{ width: 100, height: 100, margin: 10, borderRadius: 10 }} />
+                <Text style={styles.title}>
+                  Hello, {user.username}!
+                </Text>
+                <Text
+                  style={{
+                    color: 'blue',
+                    padding: 10,
+                    textAlign: 'right'
+                  }}
+                  onPress={() => {
+                    nav.navigate('Help');
+                  }}
+                >
+                  {t('help')}
+                </Text>
+                <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+                <Text style={{ fontSize: 20 }}>
+                  Email
+                </Text>
+                <Text style={styles.text}>
+                  {user.email}
+                </Text>
+                <Text style={{ fontSize: 20 }}>
+                  Interests
+                </Text>
+                <Text style={styles.text}>
+                  {user.interests?.join(', ')}
+                </Text>
+                <LogoutButton />
+                <EditIcon />
+              </>
+            )
+            : (
               <Text
                 style={{
                   color: 'blue',
                   padding: 10,
                   textAlign: 'right'
                 }}
-                onPress={() => {
-                  nav.navigate('Help');
-                }}
+                onPress={() => nav.navigate('Login')}
               >
-                {t('help')}
+                {t('login')}
               </Text>
-              <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-              <Text style={{ fontSize: 20 }}>
-                Email
-              </Text>
-              <Text style={styles.text}>
-                {user.email}
-              </Text>
-              <Text style={{ fontSize: 20 }}>
-                Interests
-              </Text>
-              <Text style={styles.text}>
-                {user.interests?.join(', ')}
-              </Text>
-              <LogoutButton />
-              <EditIcon />
-            </>
-          )
-          : (
-            <Text
-              style={{
-                color: 'blue',
-                padding: 10,
-                textAlign: 'right'
-              }}
-              onPress={() => nav.navigate('Login')}
-            >
-              {t('login')}
-            </Text>
-          )
-      }
-    </View >
+            )
+        }
+      </View >
+    </ScrollView>
   );
 };
 
