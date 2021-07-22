@@ -1,19 +1,17 @@
 /* eslint-disable react-native/no-unused-styles */
-import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Image, ScrollView, TextInput, Button, FlatList, StyleSheet, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, FlatList, StyleSheet, Pressable } from 'react-native';
 import DDC from '../components/DropDown';
 import Colors from '../constants/Colors';
 import { useAppSelector } from '../hooks';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 import useColorScheme from '../hooks/useColorScheme';
 import { RootStackParamList } from '../types';
-import {ChatRoom, ChatRoomUser, InterestValues, User} from '../@types/index.d';
+import {ChatRoom, ChatRoomUser, User} from '../@types/index.d';
 import t from '../Localization';
-import DropDownPicker, { ItemType, ValueType } from 'react-native-dropdown-picker';
 import {generate as shorty} from 'shortid';
-import Users from '../remote/data/Users';
 type ChatRoomEditRouteProp = RouteProp<RootStackParamList, 'EditChatRoom'>;
 
 export type ChatRoomEditProps = {

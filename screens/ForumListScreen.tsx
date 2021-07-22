@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, Pressable, StyleSheet } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
 import { Text, View } from '../components/Themed';
-import { getForums } from '../remote/api/fetch.forums';
 import { Forum, User, Interest } from '../@types/index.d';
 import ForumListItem from '../components/ForumListItem';
 import NewForum from '../components/NewForum';
@@ -11,6 +10,9 @@ import t from '../Localization';
 import { getAllForums } from '../remote/api/forumAPI';
 import { useAppSelector } from '../hooks';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
 export default function TabOneScreen(): JSX.Element {
   const [forums, setForums] = useState<Forum[]>([]);
@@ -58,8 +60,32 @@ export default function TabOneScreen(): JSX.Element {
     setFeaturedForums(interestForums);
   }, [forumPool]);
 
+  const colorScheme = useColorScheme();
+
   return (
     <>
+      <View style={{
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+        padding: 10,
+      }}>
+        <Pressable
+          onPress={() => {
+            getAllForums().then(setForums).catch(console.error);
+            getAllForums().then(setForumPool).catch(console.error);
+          }}
+          style={({ pressed }) => [
+            { opacity: pressed ? 0.5 : 1 }
+          ]}
+          hitSlop={10}
+        >
+          <MaterialCommunityIcons
+            name='refresh'
+            size={28}
+            color={Colors[colorScheme].tint}
+          />
+        </Pressable>
+      </View>
       <Searchbar
         placeholder={t('search')}
         onChangeText={handleSearch}

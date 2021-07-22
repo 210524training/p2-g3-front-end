@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-unused-styles */
-import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import useColorScheme from '../hooks/useColorScheme';
@@ -9,10 +8,10 @@ import { generate as shorty } from 'shortid';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { useAppSelector } from '../hooks';
 import { addForum } from '../remote/api/forumAPI';
+import { useNavigation } from '@react-navigation/native';
 
 const AddForum: React.FC<unknown> = (): JSX.Element => {
   const user = useAppSelector<UserState>(selectUser);
-  const nav = useNavigation();
 
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
@@ -20,6 +19,8 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
   const [titleText, setTitleText] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [newTag, setNewTag] = useState<string>('');
+
+  const nav = useNavigation();
 
   const forumTemplate: Forum = {
     id: shorty(),
@@ -74,7 +75,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
     (async () => {
       const res = await addForum(newForum);
       console.log(res);
-      nav.navigate('GeneralDiscussions')
+      nav.navigate('GeneralDiscussions');
     })();
   };
 

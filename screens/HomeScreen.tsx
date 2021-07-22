@@ -7,8 +7,6 @@ import { useAppSelector } from '../hooks';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 
 import { storefront, scooter, iphone } from '../assets';
-import { Auth } from 'aws-amplify';
-import {CognitoUserSession} from 'amazon-cognito-identity-js';
 
 const HomeScreen: React.FC<unknown> = () => {
   const [address, setAddress] = useState('');
