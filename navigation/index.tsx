@@ -83,7 +83,7 @@ function RootNavigator() {
                 marginTop: 10,
               }}
               >
-                <PressableIcon
+                {/* <PressableIcon
                   IconProvider={Feather}
                   props={{
                     name: 'info',
@@ -93,7 +93,7 @@ function RootNavigator() {
                   style={{
                     paddingRight: 15,
                   }}
-                />
+                /> */}
                 {/* <PressableIcon
                   IconProvider={AntDesign}
                   props={{
