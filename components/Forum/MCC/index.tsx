@@ -3,6 +3,7 @@ import moment from 'moment';
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { generate as shortid } from 'shortid';
+import { useState } from 'react';
 
 import { Forum, ForumComment } from '../../../@types';
 import Colors from '../../../constants/Colors';
@@ -14,6 +15,7 @@ import DDLText from '../../DDLText';
 import ForumTag from '../ForumTag';
 import PressableIcon from '../PressebleIcon';
 import createStyle from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export type MCCProps = {
   comment: ForumComment,
@@ -25,26 +27,37 @@ const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Eleme
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
 
+  const[currentForum, setCurrentForum] = useState({...forum});
+  const[currentComment, setCurrentComment] = useState({...comment});
+
+  const nav = useNavigation();
+
   const isOwner = user?.username === comment.user.username || user?.isSuperAdmin;
 
   const iconColor = Colors[colorScheme].tabIconDefault;
   const iconSize = 30;
 
   const handleOnCommentDelete = () => {
-    const idx = forum.comments?.indexOf(comment);
+    const idx = currentForum.comments?.indexOf(currentComment);
     if (idx != undefined) {
-    forum.comments?.splice(idx, 1);
-      updateForum(forum);
+    currentForum.comments?.splice(idx, 1);
+    if(currentForum.numberOfComments) {
+    currentForum.numberOfComments = currentForum.numberOfComments - 1;}
+    setCurrentForum(currentForum);
+    updateForum(currentForum);
     }
+    nav.navigate('GeneralDiscussions')
   };
 
   const handleOnLikePressed = () => {
-    const idx = forum.comments?.indexOf(comment);
-    comment.likes = comment.likes + 1;
-    if(idx != undefined && forum.comments) {
-    forum.comments[idx] = comment;
-    updateForum(forum);
+    const idx = currentForum.comments?.indexOf(currentComment);
+    currentComment.likes = currentComment.likes + 1;
+    if(idx != undefined && currentForum.comments) {
+    currentForum.comments[idx] = currentComment;
     }
+    setCurrentComment(currentComment);
+    setCurrentForum(currentForum);
+    updateForum(currentForum);
   };
 
   // const handleOnCommentPressed = () => {
@@ -52,13 +65,13 @@ const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Eleme
   // };
 
   return (
-    <View style={styles.container} key={comment.id+comment.user.id}>
+    <View style={styles.container} key={currentComment.id+currentComment.user.id}>
       <View style={styles.header}>
-        <Text style={styles.username}>{comment.user.username}&nbsp;
-          <Text style={styles.timestamp}>({moment(comment.createdAt).fromNow()})</Text>
+        <Text style={styles.username}>{currentComment.user.username}&nbsp;
+          <Text style={styles.timestamp}>({moment(currentComment.createdAt).fromNow()})</Text>
         </Text>
         <View style={styles.headerIcons}>
-          {!isOwner && (
+          {isOwner && (
             <>
               <PressableIcon
                 props={{
@@ -75,12 +88,12 @@ const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Eleme
 
       <View style={styles.content}>        
         <Text style={styles.text}>
-          <DDLText text={comment.content} color={Colors[colorScheme].text} />
+          <DDLText text={currentComment.content} color={Colors[colorScheme].text} />
         </Text>
       </View>
       
       <View style={styles.footer}>
-        <Text>{comment.likes} <PressableIcon
+        <Text>{currentComment.likes} <PressableIcon
           IconProvider={Foundation}
           props={{
             name: 'like',

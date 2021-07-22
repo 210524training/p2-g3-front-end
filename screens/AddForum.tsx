@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 import useColorScheme from '../hooks/useColorScheme';
-import { Forum } from '../@types/index.d';
+import { Forum, User } from '../@types/index.d';
 import t from '../Localization';
 import { generate as shorty } from 'shortid';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
@@ -25,7 +25,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
     id: shorty(),
     title: '',
     tags: [],
-    user: user,
+    user: user as User,
     createdAt: new Date().toISOString(),
     content: '',
     likes: 0,
@@ -74,6 +74,7 @@ const AddForum: React.FC<unknown> = (): JSX.Element => {
     (async () => {
       const res = await addForum(newForum);
       console.log(res);
+      nav.navigate('GeneralDiscussions')
     })();
   };
 

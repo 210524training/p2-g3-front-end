@@ -5,14 +5,16 @@ import { getAllUsers } from './fetch.users';
 const client = db();
 
 export const getAllForums = async (): Promise<Forum[]> => {
-  const { data } = await client.get<Forum[]>('forums');
+  const  { data }  = await client.get<Forum[]>('forums');
   const forums: Forum[] = JSON.parse(data.body).forums;
   const users = await getAllUsers();
   for (let i = 0; i < forums.length; i++) {
     forums[i].user = users[users.findIndex(u => u.username === forums[i].username)];
     delete forums[i]['username'];
-    for (let j = 0; j < forums[i].comments.length; j++) {
-      forums[i].comments[j].user = users[users.findIndex(u => u.username === forums[i].comments[j].username)];
+    if (forums && forums[i] && forums[i].comments) {
+      for (let j = 0; j < forums[i].comments.length; j++) {
+        forums[i].comments[j].user = users[users.findIndex(u => u.username === forums[i].comments[j].user.username)];
+      }
     }
   }
   console.log(forums[0]);

@@ -8,7 +8,7 @@ import Modal from 'react-native-modal';
 import { useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 
-import { Forum, User } from '../../../@types';
+import { Forum, ForumComment as Comment, User } from '../../../@types';
 import Colors from '../../../constants/Colors';
 import { useAppSelector } from '../../../hooks';
 import { selectUser, UserState } from '../../../hooks/slices/user.slice';
@@ -34,6 +34,8 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
   
   const [modalViewComment, setModalViewComment] = useState(false);
   const [commentText, setCommentText] = useState('');
+  const [likeCount, setLikeCount] = useState(forum.likes);
+  const [currentForum, setCurrentForum] = useState<Forum>({...forum});
 
   const isOwner = user?.username === forum.user.username || user?.isSuperAdmin;
 
@@ -50,13 +52,16 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
   };
 
   const handleOnLikePressed = () => {
-    if (forum.likes) {
-      forum.likes = forum.likes + 1;
+    const nf = {...currentForum};
+    if (nf.likes) {
+      nf.likes = nf.likes + 1;
     }
     else {
-      forum.likes = 1;
+      nf.likes = 1;
     }
-    updateForum(forum);
+    setLikeCount(nf.likes);
+    setCurrentForum(nf);
+    updateForum(nf);
   };
 
   const handleOnCommentPressed = () => {
@@ -64,7 +69,7 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
   };
 
   const submitComment = () => {
-    const newComment = {
+    const newComment:Comment = {
       id: shortid(),
       user: user as User,
       createdAt: new Date().toISOString(),
@@ -73,21 +78,30 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
       numberOfComments: 0,
       comments: [],
     }
-
-    forum.comments?.push(newComment);
-    updateForum(forum);
+    const nf = {...currentForum};
+    if(nf.comments && nf.comments.length) {
+    nf.comments[nf.comments.length] = newComment;}
+    else{nf.comments = [newComment];}
+    if(nf.numberOfComments){
+    nf.numberOfComments = nf.numberOfComments + 1;}
+    else{
+      nf.numberOfComments = 1;
+    }
+    setCurrentForum(nf);
+    updateForum(nf);
+    setModalViewComment(false);
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.username}>{forum.user.username}&nbsp;
-          <Text style={styles.timestamp}>({moment(forum.createdAt).fromNow()})</Text>
+        <Text style={styles.username}>{currentForum.user.username}&nbsp;
+          <Text style={styles.timestamp}>({moment(currentForum.createdAt).fromNow()})</Text>
         </Text>
         <View style={styles.headerIcons}>
-          {!isOwner && (
+          {isOwner && (
             <>
-              {(user?.username===forum.user.username || user?.isSuperAdmin==true)?<> <PressableIcon
+              <PressableIcon
                 props={{
                   name: 'edit',
                   size: iconSize,
@@ -102,23 +116,23 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
                   color: iconColor,
                 }}
                 onPress={handleOnForumDelete}
-              /></>:<></>}
+              />
             </>
           )}
         </View>
       </View>
 
       <View style={styles.content}>
-        <Text style={styles.title}>{forum.title}
+        <Text style={styles.title}>{currentForum.title}
         </Text>
 
-        <Text style={styles.text}><DDLText text={forum.content} color={Colors[colorScheme].text} /></Text>
+        <Text style={styles.text}><DDLText text={currentForum.content} color={Colors[colorScheme].text} /></Text>
       </View>
       <View style={styles.tags}>
-        {forum.tags?.map((tag) => (<ForumTag key={tag} tag={tag} />))}
+        {currentForum.tags?.map((tag) => (<ForumTag key={tag} tag={tag} />))}
       </View>
       <View style={styles.footer}>
-        <Text>{forum.likes} <PressableIcon
+        <Text>{likeCount} <PressableIcon
           IconProvider={Foundation}
           props={{
             name: 'like',
@@ -127,7 +141,7 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
           }}
           onPress={handleOnLikePressed}
         />     </Text>
-        <Text>{forum.numberOfComments} <PressableIcon
+        <Text>{currentForum.numberOfComments} <PressableIcon
           IconProvider={Foundation}
           props={{
             name: 'comments',
@@ -140,7 +154,7 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
 
       <View>
         <FlatList
-          data={forum.comments}
+          data={currentForum.comments}
           renderItem={({ item }) => (
             <ForumComment forum={forum} comment={item} />
           )}
