@@ -112,7 +112,7 @@ const es: Bank = {
   design: 'Diseño',
   literature: 'Literatura',
   foods: 'Comida',
-  automotive: 'Carros',
+  automotive: 'Automoviles',
 };
 
 export default es;

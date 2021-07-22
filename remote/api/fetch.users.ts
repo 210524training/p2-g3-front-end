@@ -3,10 +3,10 @@ import { cognito } from './client';
 import { Auth, API } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
-import { getUserDataByID } from './userDataApi';
+import { getUserDataByID, updateUserData } from './userDataApi';
 /**
  * 
- * @deprecated 
+ * @deprecated returns nothing
  */
 export const getFriends = (username: string): Promise<User[]> => {
   const friends: User[] = [];
@@ -81,8 +81,6 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 
 export const sendLogin = async (username: string, password: string): Promise<User> => {
-  // console.log(username, password);
-  const users = await getAllUsers();
   return Auth.signIn(username, password).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
     let contacts, chatRoomIds;
@@ -120,7 +118,6 @@ export const sendLogin = async (username: string, password: string): Promise<Use
 };
 
 export const sendLoginCache = async (): Promise<User> => {
-  const users = await getAllUsers();
   return Auth.currentAuthenticatedUser({
     bypassCache: true,
   }).then((cu: CognitoUser) => {
@@ -197,34 +194,4 @@ export const updateStatus = async (cognitoUser: any, status: string): Promise<bo
 
 };
 
-export const updateContacts = async (username: string, contacts: string[]): Promise<boolean> => {
-  try {
-    const cognitoidentityserviceprovider = new CognitoIdentityServiceProvider({
-      apiVersion: '2016-04-18'
-    });
-    console.log('username', username);
-    const params: CognitoIdentityServiceProvider.AdminUpdateUserAttributesRequest = {
-      UserAttributes: [
-        {
-          Name: 'custom:contacts',
-          Value: JSON.stringify(contacts)
-        },
-      ],
-      UserPoolId: 'us-east-1_GO87hMx1b',
-      Username: username
-    };
-    console.log('Executing call');
-    const cognitoD = cognitoidentityserviceprovider.adminUpdateUserAttributes(params, function (err, data) {
-      console.log(err ? err : data);
-    });
-    // const res = await Auth.adminUpdateUser(cognitoUser, {
-    //   'custom:contacts': contacts,
-    // });
-    // return res === 'SUCCESS';
-    return true;
-  } catch (err) {
-    console.error('update failed (cognito attributes - contacts): ', err);
-  }
-  return false;
 
-};

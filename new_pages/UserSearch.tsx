@@ -9,11 +9,11 @@ import { useEffect } from 'react';
 import { User } from '../@types';
 import ContactListItem from '../components/ContactListItem';
 import t from '../Localization';
-import { getAllUsers, updateContacts } from '../remote/api/fetch.users';
+import { getAllUsers } from '../remote/api/fetch.users';
 import { selectUser, UserState } from '../hooks/slices/user.slice';
 import { useAppSelector } from '../hooks';
 import { Auth } from 'aws-amplify';
-import { cognito } from '../remote/api/client';
+import { updateUserData } from '../remote/api/userDataApi';
 
 const styles = StyleSheet.create({
   searchBar: {
@@ -90,7 +90,7 @@ const UserSearchPage: React.FC<unknown> = () => {
         const users = (await getAllUsers()).filter(u => exclude(u));
         setExampleUsers([...users]);
         setUserList([...users]);
-        console.log(users)
+        console.log(users);
       })();
     } catch (err) {
       console.log('user search 2', err);
@@ -132,6 +132,7 @@ const UserSearchPage: React.FC<unknown> = () => {
 
               const oldUserContacts = user.contacts.filter(u => u);
               const oldAddUserContacs = add.contacts.filter(u => u);
+              console.log(oldUserContacts, oldAddUserContacs);
 
               console.log(user.contacts, add.contacts);
               if (tooLong([add.username, ...oldUserContacts])) {
@@ -145,22 +146,21 @@ const UserSearchPage: React.FC<unknown> = () => {
               }
 
               (async () => {
-                const cu = await Auth.currentAuthenticatedUser();
-                const a = await updateContacts(cu, [add.username, ...oldUserContacts]);
+                const a = await updateUserData(user.username, [add.username, ...oldUserContacts], user.chatRooms);
                 
                 if (a) {
-                  const b = await updateContacts(add.username, [user.username, ...oldAddUserContacs]);
+                  const b = await updateUserData(add.username, [user.username, ...oldAddUserContacs], add.chatRooms);
 
                   if (!b) {
-                    await updateContacts(user.username, oldUserContacts);
-                    await updateContacts(add.username, oldAddUserContacs);
+                    await updateUserData(user.username, oldUserContacts, user.chatRooms);
+                    await updateUserData(add.username, oldAddUserContacs, add.chatRooms);
                     Alert.alert('Falied to update contacts');
                   } else {
                     Alert.alert('Your friend request has been sent!');
                     return;
                   }
                 } else {
-                  await updateContacts(user.username, oldUserContacts);
+                  await updateUserData(user.username, oldUserContacts);
                   Alert.alert('Failed to send the friend request.');
                 }
 

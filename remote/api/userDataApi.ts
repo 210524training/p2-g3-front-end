@@ -28,12 +28,12 @@ export const deleteUserData = async (id: string): Promise<boolean> => {
   return data;
 };
 
-export const updateUserData = async (user: User): Promise<boolean> => {
-  const { data } = await client.post<boolean>('users', JSON.stringify({
-    id: user.username,
-    username: user.username,
-    contacts: user.contacts?.map(contact => contact.username) || [],
-    chatRoomIds: user.chatRooms || [],
+export const updateUserData = async (username: string, contacts: string[], chatRoomIds: string[]): Promise<boolean> => {
+  const { data } = await client.put<boolean>('users', JSON.stringify({
+    id: username,
+    username: username,
+    contacts: contacts || [],
+    chatRoomIds: chatRoomIds || [],
   }));
   console.log('added forum', data);
   return data;
