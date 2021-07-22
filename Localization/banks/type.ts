@@ -4,6 +4,14 @@ type Bank = {
   reject: string,
   accept: string,
   name: string,
+
+  noName: string,
+  addForum: string,
+  editProfile: string,
+  pickAnImage: string,
+  confirmCode: string,
+
+
   send: string,
   doYouWantToSendThisPicture: string,
   doYouWantToSendThisVideo: string,
@@ -52,7 +60,7 @@ type Bank = {
   size: string,
   fileSize: string,
   duration: string,
-  
+  comments: string, 
   update: string,
   more: string,
   touchToUpdate: string,

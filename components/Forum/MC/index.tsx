@@ -31,11 +31,11 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
   const colorScheme = useColorScheme();
   const styles = createStyle(colorScheme);
   const nav = useNavigation();
-  
+
   const [modalViewComment, setModalViewComment] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [likeCount, setLikeCount] = useState(forum.likes);
-  const [currentForum, setCurrentForum] = useState<Forum>({...forum});
+  const [currentForum, setCurrentForum] = useState<Forum>({ ...forum });
 
   const isOwner = user?.username === forum.user.username || user?.isSuperAdmin;
 
@@ -48,11 +48,11 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
 
   const handleOnForumDelete = () => {
     deleteForum(forum.id);
-    nav.navigate('GeneralDiscussions')
+    nav.navigate('GeneralDiscussions');
   };
 
   const handleOnLikePressed = () => {
-    const nf = {...currentForum};
+    const nf = { ...currentForum };
     if (nf.likes) {
       nf.likes = nf.likes + 1;
     }
@@ -69,7 +69,7 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
   };
 
   const submitComment = () => {
-    const newComment:Comment = {
+    const newComment: Comment = {
       id: shortid(),
       user: user as User,
       createdAt: new Date().toISOString(),
@@ -78,19 +78,21 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
       numberOfComments: 0,
       comments: [],
     }
-    const nf = {...currentForum};
-    if(nf.comments && nf.comments.length) {
-    nf.comments[nf.comments.length] = newComment;}
-    else{nf.comments = [newComment];}
-    if(nf.numberOfComments){
-    nf.numberOfComments = nf.numberOfComments + 1;}
-    else{
+    const nf = { ...currentForum };
+    if (nf.comments && nf.comments.length) {
+      nf.comments[nf.comments.length] = newComment;
+    }
+    else { nf.comments = [newComment]; }
+    if (nf.numberOfComments) {
+      nf.numberOfComments = nf.numberOfComments + 1;
+    }
+    else {
       nf.numberOfComments = 1;
     }
     setCurrentForum(nf);
     updateForum(nf);
     setModalViewComment(false);
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -162,45 +164,45 @@ const MainContainer: React.FC<MCProps> = ({ forum }): JSX.Element => {
       </View>
 
       <Modal isVisible={modalViewComment}
-              animationIn='slideInUp'
-              backdropColor='#DDDDDD'
-              backdropOpacity={1}
-              onBackdropPress={() => { setModalViewComment(false); }}>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                padding: 10,
-                width: '100%',
-                alignItems: 'center',
-              }}>
-                <Text style={{
-                  color: Colors[colorScheme].text,
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                }}>{t('enterYourComment')}</Text>
-              </View>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                padding: 10,
-                width: '100%',
-                alignItems: 'center',
-              }}>
-                <TextInput
-                  style={{ backgroundColor: 'white', flex: 1, height: 500 }}
-                  multiline={true}
-                  numberOfLines={10}
-                  onChangeText={(text) => setCommentText(text)}
-                  placeholder={t('comment')}
-                  value={commentText}
-                />
-              </View>
-              <Button
-                title={t('submit')}
-                color={Colors[colorScheme].tint}
-                onPress={submitComment}
-              />
-            </Modal>
+        animationIn='slideInUp'
+        backdropColor='#DDDDDD'
+        backdropOpacity={1}
+        onBackdropPress={() => { setModalViewComment(false); }}>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          padding: 10,
+          width: '100%',
+          alignItems: 'center',
+        }}>
+          <Text style={{
+            color: Colors[colorScheme].text,
+            fontSize: 12,
+            fontWeight: 'bold',
+          }}>{t('enterYourComment')}</Text>
+        </View>
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          padding: 10,
+          width: '100%',
+          alignItems: 'center',
+        }}>
+          <TextInput
+            style={{ backgroundColor: 'white', flex: 1, height: 500 }}
+            multiline={true}
+            numberOfLines={10}
+            onChangeText={(text) => setCommentText(text)}
+            placeholder={t('comment')}
+            value={commentText}
+          />
+        </View>
+        <Button
+          title={t('submit')}
+          color={Colors[colorScheme].tint}
+          onPress={submitComment}
+        />
+      </Modal>
     </View>
   );
 };

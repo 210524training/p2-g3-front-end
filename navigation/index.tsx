@@ -84,6 +84,17 @@ function RootNavigator() {
               }}
               >
                 {/* <PressableIcon
+                  IconProvider={Feather}
+                  props={{
+                    name: 'info',
+                    size: 22,
+                    color: Colors[colorScheme].background,
+                  }}
+                  style={{
+                    paddingRight: 15,
+                  }}
+                /> */}
+                {/* <PressableIcon
                   IconProvider={AntDesign}
                   props={{
                     name: 'search1',
@@ -161,14 +172,23 @@ function RootNavigator() {
       <Stack.Screen
         name="Contacts"
         component={ContactsScreen}
+        options={{
+          title: t('contacts')
+        }}
       />
       <Stack.Screen
         name="ForumScreen"
         component={ForumScreen}
+        options={({ route }) => ({
+          title: route.params.forum.title || t('noName'),
+        })}
       />
       <Stack.Screen
         name="Camera"
         component={CameraScreen}
+        options={{
+          title: t('camera')
+        }}
       />
       <Stack.Screen
         name="Login"
@@ -180,40 +200,62 @@ function RootNavigator() {
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
+        options={{
+          title: t('register')
+        }}
       />
       <Stack.Screen
         name="ConfirmCode"
         component={ConfirmCode}
+        options={{
+          title: t('confirmCode')
+        }}
       />
       <Stack.Screen
         name="EditProfile"
         component={EditProfileScreen}
+        options={{
+          title: t('editProfile')
+        }}
       />
       <Stack.Screen
         name="PickImage"
         component={PickImage}
+        options={{
+          title: t('pickAnImage')
+        }}
       />
-      <Stack.Screen name="EditChatRoom" component={EditChatRoom} 
+      <Stack.Screen name="EditChatRoom" component={EditChatRoom}
         options={({ route }) => ({
-          title: route.params.chatRoom.title || 'No Name',
+          title: route.params.chatRoom.title || t('noName'),
         })} />
       <Stack.Screen name="EditForum" component={EditForum}
         options={({ route }) => ({
-          title: route.params.forum.title || 'No Name',
-        })} />
-      <Stack.Screen name="AddForum" 
-      component={AddForum}
+          title: route.params.forum.title || t('noName'),
+        })}
+      />
+      <Stack.Screen name="AddForum"
+        component={AddForum}
+        options={{
+          title: t('addForum')
+        }}
       />
       <Stack.Screen
         name="UserSearch"
         component={UserSearchPage}
+        options={{
+          title: t('search')
+        }}
       />
       <Stack.Screen
         name="Help"
         component={HelpPage}
+        options={{
+          title: t('help')
+        }}
       />
-      <Stack.Screen name="FileView" component={FileViewScreen} options={{ title: 'File View' }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="FileView" component={FileViewScreen} options={{ title: t('file') }} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'oops!' }} />
     </Stack.Navigator>
   );
 }
