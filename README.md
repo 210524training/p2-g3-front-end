@@ -36,14 +36,6 @@
 * Setting rooms to public or private
 * Changing interests when editing profile
 
-## Getting Started
-   
-> To get a local clone of this repository, in Git Bash navigate to the folder you want this repository to be stored in then copy this command:
-   - `git clone https://github.com/210524training/p2-g3-front-end.git`
-> Make sure to have `node.js` set up on your device. Once finished, use this command to install all dempendancies for the application:
-   - `npm install`
-> Once complete, make sure to also go to the backend repository of this application and clone it as well.
-
 ## Usage
 
 > Once the application has loaded onto an device or virtual machine, you will be greeted by the login screen.
