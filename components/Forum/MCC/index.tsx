@@ -16,6 +16,7 @@ import ForumTag from '../ForumTag';
 import PressableIcon from '../PressebleIcon';
 import createStyle from './styles';
 import { useNavigation } from '@react-navigation/native';
+import NewForum from '../../NewForum';
 
 export type MCCProps = {
   comment: ForumComment,
@@ -41,9 +42,13 @@ const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Eleme
     const idx = currentForum.comments?.indexOf(currentComment);
     if (idx != undefined) {
       currentForum.comments?.splice(idx, 1);
+<<<<<<< HEAD
       if (currentForum.numberOfComments) {
         currentForum.numberOfComments = currentForum.numberOfComments - 1;
       }
+=======
+      currentForum.numberOfComments = currentForum.comments?.length;
+>>>>>>> 8b355a1752ba9c87de2025c34ee01f4e226f7f26
       setCurrentForum(currentForum);
       updateForum(currentForum);
     }
@@ -51,14 +56,30 @@ const MainCommentContainer: React.FC<MCCProps> = ({ forum, comment }): JSX.Eleme
   };
 
   const handleOnLikePressed = () => {
+<<<<<<< HEAD
     const idx = currentForum.comments?.indexOf(currentComment);
     currentComment.likes = currentComment.likes + 1;
     if (idx != undefined && currentForum.comments) {
       currentForum.comments[idx] = currentComment;
+=======
+    const nf = { ...currentForum };
+    const nc = { ...currentComment }
+    const idxObj = nf.comments?.find(obj => {
+      return obj.id === nc.id;
+    })
+    let idx = undefined;
+    if (idxObj != undefined) {
+      idx = nf.comments?.indexOf(idxObj);
     }
-    setCurrentComment(currentComment);
-    setCurrentForum(currentForum);
-    updateForum(currentForum);
+    console.log(idx)
+    nc.likes = nc.likes + 1;
+    if (idx != undefined && nf.comments) {
+      nf.comments[idx] = nc;
+>>>>>>> 8b355a1752ba9c87de2025c34ee01f4e226f7f26
+    }
+    setCurrentComment(nc);
+    setCurrentForum(nf);
+    updateForum(nf);
   };
 
   // const handleOnCommentPressed = () => {
