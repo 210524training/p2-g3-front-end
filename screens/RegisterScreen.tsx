@@ -77,7 +77,7 @@ const RegisterScreen: React.FC<unknown> = (props) => {
           'custom:answerOne': answerOne,
           'custom:answerTwo': answerTwo,
           'custom:answerThree': answerThree,
-          'custom:isSuperAdmin': '',
+          'custom:isSuperAdmin': username === 'admin' ? '1' : '',
           'custom:imageUri': '',
           'custom:interests': JSON.stringify(interests),
           'custom:status': 'No status',
