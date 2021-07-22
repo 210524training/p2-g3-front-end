@@ -13,7 +13,8 @@ import Colors from '../constants/Colors';
 import t from '../Localization';
 import LogoutButton from '../components/LogoutButton';
 import CheckBox, { CheckBoxItem } from '../components/CheckBox';
-import { InterestValues } from '../@types/index.d';
+import { InterestValues, User } from '../@types/index.d';
+import { addUserData } from '../remote/api/userDataApi';
 
 const RegisterScreen: React.FC<unknown> = (props) => {
   const user = useAppSelector<UserState>(selectUser);
@@ -86,10 +87,9 @@ const RegisterScreen: React.FC<unknown> = (props) => {
           'custom:imageUri': '',
           'custom:interests': JSON.stringify(interests),
           'custom:status': 'No status',
-          'custom:contacts': '[]',
-          'custom:chatRoomIds': '[]',
         }
       });
+      await addUserData(username);
       nav.navigate('ConfirmCode', {
         username
       });

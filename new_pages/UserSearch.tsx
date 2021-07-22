@@ -90,6 +90,7 @@ const UserSearchPage: React.FC<unknown> = () => {
         const users = (await getAllUsers()).filter(u => exclude(u));
         setExampleUsers([...users]);
         setUserList([...users]);
+        console.log(users)
       })();
     } catch (err) {
       console.log('user search 2', err);
@@ -148,8 +149,6 @@ const UserSearchPage: React.FC<unknown> = () => {
                 const a = await updateContacts(cu, [add.username, ...oldUserContacts]);
                 
                 if (a) {
-                  const cogusers = (await (await cognito()).get('/users')).data.Users;
-                  const idxB = cogusers.findIndex(cu => cu.Username === add.username);
                   const b = await updateContacts(add.username, [user.username, ...oldAddUserContacs]);
 
                   if (!b) {

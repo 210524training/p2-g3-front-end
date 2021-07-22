@@ -11,8 +11,10 @@ export const getAllForums = async (): Promise<Forum[]> => {
   for (let i = 0; i < forums.length; i++) {
     forums[i].user = users[users.findIndex(u => u.username === forums[i].username)];
     delete forums[i]['username'];
-    for (let j = 0; j < forums[i].comments.length; j++) {
-      forums[i].comments[j].user = users[users.findIndex(u => u.username === forums[i].comments[j].username)];
+    if (forums && forums[i] && forums[i].comments) {
+      for (let j = 0; j < forums[i].comments.length; j++) {
+        forums[i].comments[j].user = users[users.findIndex(u => u.username === forums[i].comments[j].username)];
+      }
     }
   }
   console.log(forums[0]);

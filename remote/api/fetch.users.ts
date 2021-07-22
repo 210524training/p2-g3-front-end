@@ -3,7 +3,7 @@ import { cognito } from './client';
 import { Auth, API } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
-
+import { getUserDataByID } from './userDataApi';
 /**
  * 
  * @deprecated 
@@ -26,32 +26,39 @@ const extractAttribute = (data: any, find: string): string | undefined => {
 export const getAllUsers = async (): Promise<User[]> => {
   try {
     const res = await (await cognito()).get('/users');
-    // console.log('fetch all users', res);
-    const users: User[] = res?.data?.Users?.map((cu) => ({
-      id: cu?.Username,
-      username: cu?.Username,
-      email: extractAttribute(cu, 'email'),
-      password: '<you thought!>',
-      isSuperAdmin: !!extractAttribute(cu, 'custom:isSuperAdmin'),
-      status: extractAttribute(cu, 'custom:status'),
-      interests: JSON.parse(extractAttribute(cu, 'custom:interests') || '[]'),
-      imageUri: extractAttribute(cu, 'custom:imageUri'),
-      securityQuestionOne: {
-        question: extractAttribute(cu, 'custom:questionOne'),
-        answer: extractAttribute(cu, 'custom:answerOne'),
-      },
-      securityQuestionTwo: {
-        question: extractAttribute(cu, 'custom:questionTwo'),
-        answer: extractAttribute(cu, 'custom:answerTwo'),
-      },
-      securityQuestionThree: {
-        question: extractAttribute(cu, 'custom:questionThree'),
-        answer: extractAttribute(cu, 'custom:answerThree'),
-      },
-      phoneNumber: extractAttribute(cu, 'custom:phoneNumber'),
-      contacts: extractAttribute(cu, 'custom:contacts') || [],
-      chatRoomIds: extractAttribute(cu, 'custom:chatRoomIds') || [],
-    })) || [];
+
+    const users: User[] = res?.data?.Users?.map((cu) => {
+      let contacts, chatRoomIds;
+      getUserDataByID(cu.Username).then((e) => {
+        contacts = e.contacts;
+        chatRoomIds = e.chatRoomIds;
+      }).catch(() => console.log('-'));
+      return {
+        id: cu?.Username,
+        username: cu?.Username,
+        email: extractAttribute(cu, 'email'),
+        password: '<you thought!>',
+        isSuperAdmin: !!extractAttribute(cu, 'custom:isSuperAdmin'),
+        status: extractAttribute(cu, 'custom:status'),
+        interests: JSON.parse(extractAttribute(cu, 'custom:interests') || '[]'),
+        imageUri: extractAttribute(cu, 'custom:imageUri'),
+        securityQuestionOne: {
+          question: extractAttribute(cu, 'custom:questionOne'),
+          answer: extractAttribute(cu, 'custom:answerOne'),
+        },
+        securityQuestionTwo: {
+          question: extractAttribute(cu, 'custom:questionTwo'),
+          answer: extractAttribute(cu, 'custom:answerTwo'),
+        },
+        securityQuestionThree: {
+          question: extractAttribute(cu, 'custom:questionThree'),
+          answer: extractAttribute(cu, 'custom:answerThree'),
+        },
+        phoneNumber: extractAttribute(cu, 'custom:phoneNumber'),
+        contacts: contacts,
+        chatRoomIds: chatRoomIds,
+      };
+    }) || [];
 
     for (let i = 0; i < users.length; i++) { // O(n)
       const contacts = users[i].contacts;
@@ -78,13 +85,11 @@ export const sendLogin = async (username: string, password: string): Promise<Use
   const users = await getAllUsers();
   return Auth.signIn(username, password).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
-    const friends = JSON.parse(values['custom:contacts'] || '[]');
-    const contacts = users.filter(c => friends.includes(
-      c.username.startsWith('*') || c.username.startsWith('~')
-        ? c.username.substring(1, c.username.length)
-        : c.username
-    ));
-    const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
+    let contacts, chatRoomIds;
+    getUserDataByID(values['cognito:username']).then((e) => {
+      contacts = e.contacts;
+      chatRoomIds = e.chatRoomIds;
+    }).catch(() => console.log('-'));
     return {
       id: values['cognito:username'] as string,
       username: values['cognito:username'] as string,
@@ -108,6 +113,8 @@ export const sendLogin = async (username: string, password: string): Promise<Use
       },
       phoneNumber: values['custom:phoneNumber'] as string,
       contacts: contacts || [],
+      chatRooms: chatRoomIds || [],
+
     };
   });
 };
@@ -118,13 +125,12 @@ export const sendLoginCache = async (): Promise<User> => {
     bypassCache: true,
   }).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
-    const friends = JSON.parse(values['custom:contacts'] || '[]');
-    const contacts = users.filter(c => friends.includes(
-      c.username.startsWith('*') || c.username.startsWith('~')
-        ? c.username.substring(1, c.username.length)
-        : c.username
-    ));
-    const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
+
+    let contacts, chatRoomIds;
+    getUserDataByID(values['cognito:username']).then((e) => {
+      contacts = e.contacts;
+      chatRoomIds = e.chatRoomIds;
+    }).catch(() => console.log('-'));
 
     return {
       id: values['cognito:username'] as string,
@@ -149,6 +155,7 @@ export const sendLoginCache = async (): Promise<User> => {
       },
       phoneNumber: values['custom:phoneNumber'] as string,
       contacts: contacts || [],
+      chatRooms: chatRoomIds || [],
     };
   });
 };
@@ -167,8 +174,6 @@ export const updateAttributes = async (cognitoUser: any, user: User): Promise<bo
       'custom:answerTwo': user.securityQuestionTwo.answer,
       'custom:answerThree': user.securityQuestionThree.answer,
       'custom:phoneNumber': user.phoneNumber || '',
-      'custom:contacts': JSON.stringify(user.contacts?.map(_c => _c.username) || []),
-      'custom:chatRoomId': user.chatRooms || '[]',
     });
     console.debug(res);
     return true;
