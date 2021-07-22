@@ -3,16 +3,19 @@ import InterestInterface from './interests';
 export enum MediaHeader {
   IMAGE,
   VIDEO,
-  /** not implemented yet */
-  S3,
-};
+}
+
+export enum FriendRequest {
+  PENDING = '*',
+  AWAITING = '~',
+}
 
 export type SecurityQuestion = {
   question: string,
   answer: string,
 };
 
-export const InterestValues = Object.keys(t(InterestInterface));
+export const InterestValues = Object.keys(InterestInterface);
 
 export type InterestType = typeof InterestInterface;
 export type Interest = keyof InterestType;

@@ -41,7 +41,7 @@ const ProfileScreen: React.FC<unknown> = () => {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView style={{ height: '100%', flex: 1, }}>
       <View style={styles.container}>
         {
           user

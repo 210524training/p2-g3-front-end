@@ -1,11 +1,12 @@
-import { User } from '../../@types';
+import { FriendRequest, User } from '../../@types/index.d';
 import { cognito } from './client';
 import { Auth, API } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
-
+import { CognitoIdentityServiceProvider } from 'aws-sdk';
+import { getUserDataByID, updateUserData } from './userDataApi';
 /**
  * 
- * @deprecated 
+ * @deprecated returns nothing
  */
 export const getFriends = (username: string): Promise<User[]> => {
   const friends: User[] = [];
@@ -25,45 +26,70 @@ const extractAttribute = (data: any, find: string): string | undefined => {
 export const getAllUsers = async (): Promise<User[]> => {
   try {
     const res = await (await cognito()).get('/users');
-    // console.log('fetch all users', res);
-    const users: User[] = res?.data?.Users?.map((cu) => ({
-      id: cu?.Username,
-      username: cu?.Username,
-      email: extractAttribute(cu, 'email'),
-      password: '<you thought!>',
-      isSuperAdmin: !!extractAttribute(cu, 'custom:isSuperAdmin'),
-      status: extractAttribute(cu, 'custom:status'),
-      interests: JSON.parse(extractAttribute(cu, 'custom:interests') || '[]'),
-      imageUri: extractAttribute(cu, 'custom:imageUri'),
-      securityQuestionOne: {
-        question: extractAttribute(cu, 'custom:questionOne'),
-        answer: extractAttribute(cu, 'custom:answerOne'),
-      },
-      securityQuestionTwo: {
-        question: extractAttribute(cu, 'custom:questionTwo'),
-        answer: extractAttribute(cu, 'custom:answerTwo'),
-      },
-      securityQuestionThree: {
-        question: extractAttribute(cu, 'custom:questionThree'),
-        answer: extractAttribute(cu, 'custom:answerThree'),
-      },
-      phoneNumber: extractAttribute(cu, 'custom:phoneNumber'),
-      contacts: extractAttribute(cu, 'custom:contacts') || [],
-      chatRoomIds: extractAttribute(cu, 'custom:chatRoomIds') || [],
-    })) || [];
+
+    const loop = res?.data?.Users;
+    const users: User[] = [];
+
+    for (const cu of loop) {
+      const res = await getUserDataByID(cu.Username);
+      const _contacts = res.contacts;
+      const _chatRoomIds = res.chatRoomIds;
+      users.push({
+        id: cu?.Username,
+        username: cu?.Username,
+        email: extractAttribute(cu, 'email') as string,
+        password: '<you thought!>',
+        isSuperAdmin: !!extractAttribute(cu, 'custom:isSuperAdmin'),
+        status: extractAttribute(cu, 'custom:status'),
+        interests: JSON.parse(extractAttribute(cu, 'custom:interests') || '[]'),
+        imageUri: extractAttribute(cu, 'custom:imageUri'),
+        securityQuestionOne: {
+          question: extractAttribute(cu, 'custom:questionOne') || '',
+          answer: extractAttribute(cu, 'custom:answerOne') || '',
+        },
+        securityQuestionTwo: {
+          question: extractAttribute(cu, 'custom:questionTwo') || '',
+          answer: extractAttribute(cu, 'custom:answerTwo') || '',
+        },
+        securityQuestionThree: {
+          question: extractAttribute(cu, 'custom:questionThree') || '',
+          answer: extractAttribute(cu, 'custom:answerThree') || '',
+        },
+        phoneNumber: extractAttribute(cu, 'custom:phoneNumber'),
+        contacts: _contacts as User[],
+        chatRoomIds: _chatRoomIds,
+      });
+    }
 
     for (let i = 0; i < users.length; i++) { // O(n)
       const contacts = users[i].contacts;
+      console.log('>>', contacts)
       const newContacts: User[] = [];
       if (contacts) {
         for (let j = 0; j < contacts.length; j++) { // O(n)
-          const idx = users.findIndex(u => u.username === contacts[j].username); // O(n) = O(n^3) - oof
+          const awaiting = contacts[j].startsWith(FriendRequest.AWAITING);
+          const pending = contacts[j].startsWith(FriendRequest.PENDING);
+          const idx = users.findIndex(u => {
+            console.log(u.username, '===', contacts[j], contacts[j].substring(1, contacts[j].length));
+            return awaiting || pending
+              ? u.username === contacts[j].substring(1, contacts[j].length)
+              : u.username === contacts[j];
+          }); // O(n) = O(n^3) - oof
           const contact = users[idx];
+          if (awaiting) {
+            contact.username = FriendRequest.AWAITING + contact.username;
+          } else if (pending) {
+            contact.username = FriendRequest.PENDING + contact.username;
+          }
+
           newContacts.push(contact);
+          console.log('*', idx, contact);
         }
       }
       users[i].contacts = newContacts;
+      console.log('new contacts', newContacts);
     }
+
     return users;
   } catch (err) {
     console.error('fetch users error', err);
@@ -73,17 +99,13 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 
 export const sendLogin = async (username: string, password: string): Promise<User> => {
-  // console.log(username, password);
-  const users = await getAllUsers();
   return Auth.signIn(username, password).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
-    const friends = JSON.parse(values['custom:contacts'] || '[]');
-    const contacts = users.filter(c => friends.includes(
-      c.username.startsWith('*') || c.username.startsWith('~')
-        ? c.username.substring(1, c.username.length)
-        : c.username
-    ));
-    const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
+    let contacts, chatRoomIds;
+    getUserDataByID(values['cognito:username']).then((e) => {
+      contacts = e.contacts;
+      chatRoomIds = e.chatRoomIds;
+    }).catch(() => console.log('-'));
     return {
       id: values['cognito:username'] as string,
       username: values['cognito:username'] as string,
@@ -107,23 +129,23 @@ export const sendLogin = async (username: string, password: string): Promise<Use
       },
       phoneNumber: values['custom:phoneNumber'] as string,
       contacts: contacts || [],
+      chatRooms: chatRoomIds || [],
+
     };
   });
 };
 
 export const sendLoginCache = async (): Promise<User> => {
-  const users = await getAllUsers();
   return Auth.currentAuthenticatedUser({
     bypassCache: true,
   }).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
-    const friends = JSON.parse(values['custom:contacts'] || '[]');
-    const contacts = users.filter(c => friends.includes(
-      c.username.startsWith('*') || c.username.startsWith('~')
-        ? c.username.substring(1, c.username.length)
-        : c.username
-    ));
-    const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
+
+    let contacts, chatRoomIds;
+    getUserDataByID(values['cognito:username']).then((e) => {
+      contacts = e.contacts;
+      chatRoomIds = e.chatRoomIds;
+    }).catch(() => console.log('-'));
 
     return {
       id: values['cognito:username'] as string,
@@ -148,6 +170,7 @@ export const sendLoginCache = async (): Promise<User> => {
       },
       phoneNumber: values['custom:phoneNumber'] as string,
       contacts: contacts || [],
+      chatRooms: chatRoomIds || [],
     };
   });
 };
@@ -166,8 +189,6 @@ export const updateAttributes = async (cognitoUser: any, user: User): Promise<bo
       'custom:answerTwo': user.securityQuestionTwo.answer,
       'custom:answerThree': user.securityQuestionThree.answer,
       'custom:phoneNumber': user.phoneNumber || '',
-      'custom:contacts': JSON.stringify(user.contacts?.map(_c => _c.username) || []),
-      'custom:chatRoomId': user.chatRooms || '[]',
     });
     console.debug(res);
     return true;
@@ -190,3 +211,5 @@ export const updateStatus = async (cognitoUser: any, status: string): Promise<bo
   return false;
 
 };
+
+
