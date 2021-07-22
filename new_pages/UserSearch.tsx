@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const tooLong = (arg: any): boolean => {
-  return JSON.stringify(arg).length > 2048;
+export const includesFR = (list: string[], username: string): boolean => {
+  return list.map(str => str.replace(FriendRequest.PENDING, '').replace(FriendRequest.AWAITING, '')).includes(username);
 };
 
 const UserSearchPage: React.FC<unknown> = () => {
@@ -134,20 +134,9 @@ const UserSearchPage: React.FC<unknown> = () => {
               const oldUserContacts = user.contacts.map(u => u.username);
               const oldAddUserContacs = add.contacts.map(u => u.username);
               console.log('before', oldUserContacts, oldAddUserContacs);
-              let alreadyFriends = false;
-              for (const c of oldUserContacts) {
-                if (c === add.username){
-                  alreadyFriends = true;
-                  break;
-                }
-              }
-
-              for (const c of oldAddUserContacs) {
-                if (alreadyFriends || c === user.username){
-                  alreadyFriends = true;
-                  break;
-                }
-              }
+              const alreadyFriends =
+                oldUserContacts.map(str => str.replace(FriendRequest.PENDING, '').replace(FriendRequest.AWAITING, '')).includes(add.username)
+                || oldAddUserContacs.map(str => str.replace(FriendRequest.PENDING, '').replace(FriendRequest.AWAITING, '')).includes(user.username);
 
               if (alreadyFriends) {
                 Alert.alert('You are already friends with this user.');
@@ -156,9 +145,7 @@ const UserSearchPage: React.FC<unknown> = () => {
 
               const newUserContacts = [FriendRequest.PENDING + add.username, ...oldUserContacts];
               const newAddUserContacs = [FriendRequest.AWAITING + user.username, ...oldAddUserContacs];
-
-              console.log('after', [FriendRequest.PENDING + add.username, ...oldUserContacts], [FriendRequest.AWAITING + user.username, ...oldAddUserContacs]);
-
+              
               (async () => {
                 const a = await updateUserData(user.username, newUserContacts, user.chatRooms);
 
