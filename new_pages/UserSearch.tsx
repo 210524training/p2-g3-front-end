@@ -6,14 +6,14 @@ import { Searchbar } from 'react-native-paper';
 import { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Button, Alert } from 'react-native';
 import { useEffect } from 'react';
-import { User } from '../@types';
+import { FriendRequest, User } from '../@types/index.d';
 import ContactListItem from '../components/ContactListItem';
 import t from '../Localization';
 import { getAllUsers } from '../remote/api/fetch.users';
-import { selectUser, UserState } from '../hooks/slices/user.slice';
-import { useAppSelector } from '../hooks';
+import { loginCache, selectUser, UserState } from '../hooks/slices/user.slice';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { Auth } from 'aws-amplify';
-import { cognito } from '../remote/api/client';
+import { updateUserData } from '../remote/api/userDataApi';
 
 const styles = StyleSheet.create({
   searchBar: {
@@ -61,11 +61,12 @@ const styles = StyleSheet.create({
   }
 });
 
-const tooLong = (arg: any): boolean => {
-  return JSON.stringify(arg).length > 2048;
+export const includesFR = (list: string[], username: string): boolean => {
+  return list.map(str => str.replace(FriendRequest.PENDING, '').replace(FriendRequest.AWAITING, '')).includes(username);
 };
 
 const UserSearchPage: React.FC<unknown> = () => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector<UserState>(selectUser);
   const [search, setSearch] = useState<string>('');
   const [exampleUsers, setExampleUsers] = useState<User[]>([]);
@@ -90,6 +91,7 @@ const UserSearchPage: React.FC<unknown> = () => {
         const users = (await getAllUsers()).filter(u => exclude(u));
         setExampleUsers([...users]);
         setUserList([...users]);
+        console.log(users);
       })();
     } catch (err) {
       console.log('user search 2', err);
@@ -129,18 +131,43 @@ const UserSearchPage: React.FC<unknown> = () => {
                 add.contacts = [];
               }
 
-              if (tooLong([add.username, ...user.contacts.map(c => c.username)])) {
-                Alert.alert('You have too many friends.');
+              const oldUserContacts = user.contacts.map(u => u.username);
+              const oldAddUserContacs = add.contacts.map(u => u.username);
+              console.log('before', oldUserContacts, oldAddUserContacs);
+              const alreadyFriends =
+                oldUserContacts.map(str => str.replace(FriendRequest.PENDING, '').replace(FriendRequest.AWAITING, '')).includes(add.username)
+                || oldAddUserContacs.map(str => str.replace(FriendRequest.PENDING, '').replace(FriendRequest.AWAITING, '')).includes(user.username);
+
+              if (alreadyFriends) {
+                Alert.alert('You are already friends with this user.');
                 return;
               }
 
-              if (tooLong([user.username, ...add.contacts.map(c => c.username)])) {
-                Alert.alert(`${add.username} doesn't have space for more friends.`);
-                return;
-              }
-
+              const newUserContacts = [FriendRequest.PENDING + add.username, ...oldUserContacts];
+              const newAddUserContacs = [FriendRequest.AWAITING + user.username, ...oldAddUserContacs];
               
+              (async () => {
+                const a = await updateUserData(user.username, newUserContacts, user.chatRooms);
 
+                if (a) {
+                  const b = await updateUserData(add.username, newAddUserContacs, add.chatRooms);
+
+                  if (!b) {
+                    await updateUserData(user.username, oldUserContacts, user.chatRooms);
+                    await updateUserData(add.username, oldAddUserContacs, add.chatRooms);
+
+                    Alert.alert('Falied to update contacts');
+                  } else {
+                    Alert.alert('Your friend request has been sent!');
+                    await dispatch(loginCache({ username: user.username, password: '' }));
+                    return;
+                  }
+                } else {
+                  await updateUserData(user.username, oldUserContacts);
+                  Alert.alert('Failed to send the friend request.');
+                }
+
+              })();
 
             } else {
               Alert.alert('You cannot add yourself');

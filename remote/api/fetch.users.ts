@@ -1,15 +1,12 @@
-import { User } from '../../@types';
+import { FriendRequest, User } from '../../@types/index.d';
 import { cognito } from './client';
 import { Auth, API } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
-import {db} from './client'
+import {db} from './client';
 
 const client = db();
 
-/**
- * 
- * @deprecated 
- */
+
 export const getFriends = (username: string): Promise<User[]> => {
   const friends: User[] = [];
   return new Promise<User[]>((resolve, reject) => {
@@ -160,17 +157,13 @@ export const getUserDataByID = async (id: string): Promise<{
 
 
 export const sendLogin = async (username: string, password: string): Promise<User> => {
-  // console.log(username, password);
-  const users = await getAllUsers();
   return Auth.signIn(username, password).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
-    const friends = JSON.parse(values['custom:contacts'] || '[]');
-    const contacts = users.filter(c => friends.includes(
-      c.username.startsWith('*') || c.username.startsWith('~')
-        ? c.username.substring(1, c.username.length)
-        : c.username
-    ));
-    const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
+    let contacts, chatRoomIds;
+    getUserDataByID(values['cognito:username']).then((e) => {
+      contacts = e.contacts;
+      chatRoomIds = e.chatRoomIds;
+    }).catch(() => console.log('-'));
     return {
       id: values['cognito:username'] as string,
       username: values['cognito:username'] as string,
@@ -194,23 +187,23 @@ export const sendLogin = async (username: string, password: string): Promise<Use
       },
       phoneNumber: values['custom:phoneNumber'] as string,
       contacts: contacts || [],
+      chatRooms: chatRoomIds || [],
+
     };
   });
 };
 
 export const sendLoginCache = async (): Promise<User> => {
-  const users = await getAllUsers();
   return Auth.currentAuthenticatedUser({
     bypassCache: true,
   }).then((cu: CognitoUser) => {
     const values = cu.signInUserSession.idToken.payload;
-    const friends = JSON.parse(values['custom:contacts'] || '[]');
-    const contacts = users.filter(c => friends.includes(
-      c.username.startsWith('*') || c.username.startsWith('~')
-        ? c.username.substring(1, c.username.length)
-        : c.username
-    ));
-    const crids = JSON.parse(values['custom:chatRoomIds'] || '[]');
+
+    let contacts, chatRoomIds;
+    getUserDataByID(values['cognito:username']).then((e) => {
+      contacts = e.contacts;
+      chatRoomIds = e.chatRoomIds;
+    }).catch(() => console.log('-'));
 
     return {
       id: values['cognito:username'] as string,
@@ -235,6 +228,7 @@ export const sendLoginCache = async (): Promise<User> => {
       },
       phoneNumber: values['custom:phoneNumber'] as string,
       contacts: contacts || [],
+      chatRooms: chatRoomIds || [],
     };
   });
 };
@@ -253,8 +247,6 @@ export const updateAttributes = async (cognitoUser: any, user: User): Promise<bo
       'custom:answerTwo': user.securityQuestionTwo.answer,
       'custom:answerThree': user.securityQuestionThree.answer,
       'custom:phoneNumber': user.phoneNumber || '',
-      'custom:contacts': JSON.stringify(user.contacts?.map(_c => _c.username) || []),
-      'custom:chatRoomId': user.chatRooms || '[]',
     });
     console.debug(res);
     return true;
@@ -277,3 +269,5 @@ export const updateStatus = async (cognitoUser: any, status: string): Promise<bo
   return false;
 
 };
+
+
